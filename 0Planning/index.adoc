@@ -1,0 +1,126 @@
+= Planung Webprojekt
+Thomas Spindler
+1.0.0, {docdate}: ITP
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+:stylesheet: ./css/dark.css
+
+
+
+
+
+
+
+
+
+== Datenbank UML Diagram
+UML Diagramm der Datenbank:
+
+[plantuml, db]
+----
+skinparam backgroundcolor transparent
+skinparam shadowing false
+
+
+class User {
+    <u>UserID: number(*)</u>
+    ..
+    username: varchar(30)
+    desc: varchar(30)
+    profilePicturePath: varchar(60)
+    ---
+    phoneNumber: varchar(15)
+    email: varchar(254)
+    --
+    passwordHash: hashValue
+    deleted: boolean
+    lastLogin: dateTime
+    lastTriedLogin: dateTime
+    permission: Permission
+}
+
+class Post {
+    <u>postID: number(*)</u>
+    ..
+    postedBy: User
+    path: varchar(60)
+    title: varchar(30)
+    desc: varchar(300)
+    postedOn: dateTime
+    --
+    deleted: boolean
+}
+class Post_Liked {
+    <u>Post_LikedID: varchar(*)</u>
+    ..
+    <w>userID: User</w>
+    <w>post: Post</w>
+}
+
+class Category {
+    <u>CategoryID: number(*)</u>
+    ..
+    name: varchar(20)
+    desc: varchar(120)
+}
+
+class Post_Category {
+    <u>Post_CategoryID: number(*)</u>
+    ..
+    <w>postID: Post</w>
+    category: PostCategory
+}
+
+class Comment {
+    <u>commentID: varchar(*)</u>
+    ..
+    <w>postID: Post</w>
+    <w>userID: User</w>
+    content: varchar(250)
+    time: dateTime
+}
+
+class Permission {
+    <u>PermissionID: number(*)</u>
+    ..
+    isAdmin: boolean
+    canPost: boolean
+}
+
+class Token {
+    <u>TokenID</u>
+    ..
+    <w>userID: User</w>
+    token: hash
+    lastLogin: dateTime
+    validUntil: dateTime
+}
+
+class Follows {
+    owner: User
+    follows: User
+}
+
+note "Diese sagt aus, was der User darf, und was nicht" as NPer
+Permission .right. NPer
+
+Post "*" -- "1" User
+
+Post "*" -- "*" Category
+(Post, Category) .. Post_Category
+
+Post_Liked "*" -- "1" User
+Post_Liked "*" -- "1" Post
+
+Comment "*" -- "1" Post
+Comment "*" -- "1" User
+
+Permission "1" --- "*" User
+
+Token "*" -- "1" User
+
+Follows "*" - "1" User
+----
