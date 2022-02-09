@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.16">
+<meta name="author" content="Mctom Spdo">
+<title>Planung Webprojekt</title>
+<style>
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+
+@import url(//fonts.googleapis.com/css?family=Noto+Sans);
+@import url(https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css); /* Default asciidoc style framework - important */
+
+/* CUSTOMISATIONS */
+/* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
+:root{
+--maincolor:#282c34;
+--primarycolor:#f39c12;
+--secondarycolor:#03a9f4;
+--tertiarycolor:#4db6ac;
+--sidebarbackground:#21252b;
+--linkcolor:#f44336;
+--linkcoloralternate:#ff9800;
+--white:#FFFFFF;
+}
+
+/* custom added styles */
+.listingblock > .content > pre{
+  background: var(--sidebarbackground);
+  color: var(--white);
+}
+
+/* Text styles */
+body{font-family: "Noto Sans",sans-serif;background-color: var(--maincolor);color:var(--white);}
+
+h1{color:var(--primarycolor) !important;font-family:"Noto Sans",sans-serif;}
+h2,h3,h4,h5,h6{color:var(--secondarycolor) !important;font-family:"Noto Sans",sans-serif;}
+.title{color:var(--white) !important;font-family:"Noto Sans",sans-serif;font-style: normal; font-weight: normal;}
+p{font-family: "Noto Sans",sans-serif ! important}
+#toc.toc2 a:link{color:var(--linkcolor);}
+blockquote{color:var(--tertiarycolor) !important}
+.quoteblock{color:var(--white)}
+code{color:var(--linkcoloralternate);background-color: var(--sidebarbackground) !important}
+
+
+/* Table styles */
+th{background-color: var(--maincolor);color:var(--white) !important;}
+td{background-color: var(--maincolor);color: var(--linkcoloralternate) !important}
+
+
+#toc.toc2{background-color:var(--sidebarbackground);}
+#toctitle{color:var(--white);}
+
+/* Responsiveness fixes */
+video {
+  max-width: 100%;
+}
+
+@media all and (max-width: 600px) {
+  table {
+    width: 55vw!important;
+    font-size: 3vw;
+  }
+}
+
+.exampleblock > .content {
+  background-color: var(--maincolor);
+}
+
+a {
+  color: var(--secondarycolor);
+}
+
+.admonitionblock td.icon .icon-tip::before {
+  text-shadow: none;
+  color: var(--white);
+}
+.admonitionblock td.icon .icon-note::before {
+  color: var(--tertiarycolor);
+}
+.admonitionblock td.icon .icon-important::before {
+  color: var(--linkcolor);
+}
+/*.admonitionblock td.icon .icon-caution::before {
+  color: var(--linkcoloralternate);
+}*/
+.admonitionblock td.icon .icon-warning::before {
+  color: var(--primarycolor);
+}
+
+#preamble > .sectionbody > .paragraph:first-of-type p {
+  color: var(--white);
+}
+
+.quoteblock blockquote::before {
+  color: var(--primarycolor);
+}
+.quoteblock .attribution cite, .verseblock .attribution cite {
+  color: var(--white);
+}
+.verseblock pre {
+  color: var(--white);
+}
+.quoteblock blockquote, .quoteblock blockquote p {
+  color: var(--white);
+}
+
+.sidebarblock {
+  background: var(--sidebarbackground);
+}
+.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint {
+  background: var(--sidebarbackground);
+  color: var(--white);
+}
+
+#header .details {
+  color: var(--white);
+}
+#header .details span.email a {
+  color: var(--linkcoloralternate);
+}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Planung Webprojekt</h1>
+<div class="details">
+<span id="author" class="author">Mctom Spdo</span><br>
+<span id="revnumber">version 1.0.0,</span>
+<span id="revdate">2022-02-09</span>
+<br><span id="revremark">MEDT</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_beschreibung">1. Beschreibung</a></li>
+<li><a href="#_features">2. Features</a>
+<ul class="sectlevel2">
+<li><a href="#_bilder_posten">2.1. Bilder Posten</a></li>
+<li><a href="#_bilder_liken">2.2. Bilder liken</a></li>
+<li><a href="#_bilder_kommentieren">2.3. Bilder kommentieren</a></li>
+<li><a href="#_user_folgen">2.4. User Folgen</a></li>
+<li><a href="#_permission_management">2.5. Permission Management</a></li>
+</ul>
+</li>
+<li><a href="#_design">3. Design</a>
+<ul class="sectlevel2">
+<li><a href="#_moodboard">3.1. Moodboard</a></li>
+<li><a href="#_fonts">3.2. Fonts</a></li>
+</ul>
+</li>
+<li><a href="#_verwendete_technologien">4. Verwendete Technologien</a></li>
+<li><a href="#_datenbank_uml_diagram">5. Datenbank UML Diagram</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_beschreibung">1. Beschreibung</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Das Projekt wird eine Art Plattform, wo jeder User, der registriert ist, Bilder hochladen kann, unter diesen kommentieren und liken kann. Also im Grunde genommen so eine Art von Social Media.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/MctomSpdo/Medt_SSProject2022">Github Repository</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_features">2. Features</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_bilder_posten">2.1. Bilder Posten</h3>
+<div class="paragraph">
+<p>Ein User kann jederzeit ein Bild veröffentlichen. Dies kann er einfach Hochladen, einen Titel und eine Beschreibung hinzufügen. Zu jedem Bild kann auch eine Kategorie hinzugefügt werden, wie z.B. Autos, Fotografie oder Programmierung</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bilder_liken">2.2. Bilder liken</h3>
+<div class="paragraph">
+<p>Ein User kann ein Bild liken, wenn ihm dieses Gefällt.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bilder_kommentieren">2.3. Bilder kommentieren</h3>
+<div class="paragraph">
+<p>Jeder User kann Bilder kommentieren, und andere Benutzer können diese dann sehen.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_user_folgen">2.4. User Folgen</h3>
+<div class="paragraph">
+<p>Jeder Benutzer kann einem anderen Benutzer folgen, wenn er die posts von diesem sehen möchte.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_permission_management">2.5. Permission Management</h3>
+<div class="paragraph">
+<p>Die Berechtigungen für Benutzer können angepasst werden. Daher kann ein Administrator z.B. die Verwaltungsseiten aufrufen, allerdings ein normaler User nicht. Je nach noch verbleibender Zeit wird das Admin-interface kleiner oder größer sein.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_design">3. Design</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Das Design sollte schlicht und einfach gehalten werden, um nicht zu sehr abzulenken.</p>
+</div>
+<div class="sect2">
+<h3 id="_moodboard">3.1. Moodboard</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/colors.png" alt="colors">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_fonts">3.2. Fonts</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/font-1.png" alt="font 1">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/font-2.png" alt="font 2">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_verwendete_technologien">4. Verwendete Technologien</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Die dafür verwendeten Technologien:</p>
+</div>
+<div class="paragraph">
+<p>Dokumentation:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Asciidoctor</p>
+</li>
+<li>
+<p>PlantUML</p>
+</li>
+<li>
+<p>Github Pages (generieren der HTML Files mit adoc)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Haupttechnologien:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>HTML</p>
+</li>
+<li>
+<p>CSS</p>
+</li>
+<li>
+<p>JavaScript</p>
+</li>
+<li>
+<p>PHP</p>
+</li>
+<li>
+<p>Mysql</p>
+</li>
+<li>
+<p>Git / Github</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_datenbank_uml_diagram">5. Datenbank UML Diagram</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>UML Diagramm der Datenbank:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/dbConcept-1.png" alt="dbConcept 1" width="1090" height="1045">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 1.0.0<br>
+Last updated 2022-02-09 23:21:05 +0100
+</div>
+</div>
+</body>
+</html>

@@ -1,126 +1,167 @@
 = Planung Webprojekt
-Thomas Spindler
-1.0.0, {docdate}: ITP
-//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+Mctom Spdo
+1.0.0, {docdate}: MEDT
 :sourcedir: ../src/main/java
 :icons: font
-:sectnums:    // Nummerierung der Überschriften / section numbering
+:sectnums:
 :toc: left
 :stylesheet: ./css/dark.css
+ifndef::imagesdir[:imagesdir: images]
 
+== Beschreibung
+Das Projekt wird eine Art Plattform, wo jeder User, der registriert ist, Bilder hochladen kann, unter diesen kommentieren und liken kann. Also im Grunde genommen so eine Art von Social Media.
 
+https://github.com/MctomSpdo/Medt_SSProject2022[Github Repository]
 
+== Features
 
+=== Bilder Posten
+Ein User kann jederzeit ein Bild veröffentlichen. Dies kann er einfach Hochladen, einen Titel und eine Beschreibung hinzufügen. Zu jedem Bild kann auch eine Kategorie hinzugefügt werden, wie z.B. Autos, Fotografie oder Programmierung
 
+=== Bilder liken
+Ein User kann ein Bild liken, wenn ihm dieses Gefällt.
 
+=== Bilder kommentieren
+Jeder User kann Bilder kommentieren, und andere Benutzer können diese dann sehen.
 
+=== User Folgen
+Jeder Benutzer kann einem anderen Benutzer folgen, wenn er die posts von diesem sehen möchte.
 
+=== Permission Management
+Die Berechtigungen für Benutzer können angepasst werden. Daher kann ein Administrator z.B. die Verwaltungsseiten aufrufen, allerdings ein normaler User nicht. Je nach noch verbleibender Zeit wird das Admin-interface kleiner oder größer sein.
+
+== Design
+Das Design sollte schlicht und einfach gehalten werden, um nicht zu sehr abzulenken.
+
+=== Moodboard
+image::../images/colors.png[]
+
+=== Fonts
+image::../images/font-1.png[]
+
+image::../images/font-2.png[]
+
+== Verwendete Technologien
+Die dafür verwendeten Technologien:
+
+Dokumentation:
+
+* Asciidoctor
+* PlantUML
+* Github Pages (generieren der HTML Files mit adoc)
+
+Haupttechnologien:
+
+* HTML
+* CSS
+* JavaScript
+* PHP
+* Mysql
+* Git / Github
 
 == Datenbank UML Diagram
 UML Diagramm der Datenbank:
 
-[plantuml, db]
+[plantuml, dbConcept-1]
 ----
+@startuml
 skinparam backgroundcolor transparent
 skinparam shadowing false
 
+scale 1.3
 
 class User {
-    <u>UserID: number(*)</u>
+    <u>UserID: int</u>
     ..
-    username: varchar(30)
-    desc: varchar(30)
-    profilePicturePath: varchar(60)
-    ---
+    username: varchar(30) [unique]
+    desc: varchar(300)
+    gender: varchar(1)
+    profilePicturePath: varchar(?)
+    createdOn: dateTime
+    --
     phoneNumber: varchar(15)
     email: varchar(254)
     --
-    passwordHash: hashValue
-    deleted: boolean
+    password: hashValue
+    deleted: tinyint
     lastLogin: dateTime
-    lastTriedLogin: dateTime
-    permission: Permission
+    lastLoginTry: dateTime
+    <w>permission: Permission</w>
 }
 
 class Post {
-    <u>postID: number(*)</u>
+    <u>PostID</u>
     ..
-    postedBy: User
-    path: varchar(60)
+    imagePath: varchar(60)
     title: varchar(30)
-    desc: varchar(300)
+    desc: varchar(2000)
     postedOn: dateTime
     --
-    deleted: boolean
-}
-class Post_Liked {
-    <u>Post_LikedID: varchar(*)</u>
-    ..
-    <w>userID: User</w>
-    <w>post: Post</w>
+    <w>from: User</w>
+    isDeleted: tinyint
 }
 
 class Category {
-    <u>CategoryID: number(*)</u>
+    <u>CategoryID</u>
     ..
-    name: varchar(20)
-    desc: varchar(120)
-}
-
-class Post_Category {
-    <u>Post_CategoryID: number(*)</u>
-    ..
-    <w>postID: Post</w>
-    category: PostCategory
-}
-
-class Comment {
-    <u>commentID: varchar(*)</u>
-    ..
-    <w>postID: Post</w>
-    <w>userID: User</w>
-    content: varchar(250)
-    time: dateTime
-}
-
-class Permission {
-    <u>PermissionID: number(*)</u>
-    ..
-    isAdmin: boolean
-    canPost: boolean
+    name: varchar(30) [unique]
+    desc: varchar(300)
 }
 
 class Token {
     <u>TokenID</u>
     ..
-    <w>userID: User</w>
-    token: hash
-    lastLogin: dateTime
-    validUntil: dateTime
+    token: varchar(254)
+    --
+    <w>owner: User</w>
+    created: dateTime
+    valid_until: dateTime
 }
 
-class Follows {
-    owner: User
-    follows: User
+class Follow {
+    <u>FollowID</u>
+    ..
+    <w>owner: User</w>
+    <w>follows: User</w>
 }
 
-note "Diese sagt aus, was der User darf, und was nicht" as NPer
-Permission .right. NPer
+class PostLiked {
+    <u>PostLikedID</u>
+    ..
+    <w>Owner: User</w>
+    <w>Post: Post</w>
+}
 
-Post "*" -- "1" User
+class Permission {
+    <u>PermissionID</u>
+    ..
+    name: varchar(30) [unique]
+    canPost: boolean
+    canLike: boolean
+    canComment: boolean
+    isAdmin: boolean
+}
 
+class Comment {
+    <u>CommentID</u>
+    ..
+    content: varchar(300)
+    --
+    <w>owner: User</w>
+    <w>post: Post</w>
+    isDeleted: tinyint
+}
+
+User "1" -- "*" Post
+User "1" -- "*" Token
+User "2" -- "*" Follow
+User "1" -- "*" PostLiked
+User "*" -- "1" Permission
+
+Post "1" -- "*" PostLiked
+Post "1" -- "*" Comment
 Post "*" -- "*" Category
 (Post, Category) .. Post_Category
 
-Post_Liked "*" -- "1" User
-Post_Liked "*" -- "1" Post
-
-Comment "*" -- "1" Post
-Comment "*" -- "1" User
-
-Permission "1" --- "*" User
-
-Token "*" -- "1" User
-
-Follows "*" - "1" User
+@enduml
 ----
