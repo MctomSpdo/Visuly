@@ -1,4 +1,4 @@
-./idea/*
+.idea/*
 *.iml
 
 # Created by https://www.toptal.com/developers/gitignore/api/maven,linux,windows,intellij,visualstudio,visualstudiocode,java,phpstorm
