@@ -1,0 +1,83 @@
+
+@font-face {
+    font-family: Poppins;
+    src: url(../fonts/Poppins/Poppins-Medium.ttf);
+}
+
+
+html, body {
+    padding: 0;
+    margin: 0;
+    font-family: Poppins;
+}
+
+/******************************** BASIC STRUCTURE *******************************/
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/******************************* HEADER ***********************/
+header {
+    background-color: red;
+    height: 5vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 20% 50% 30%;
+}
+
+#header-logo {
+    
+}
+
+#header-search {
+    
+}
+
+#header-icons {
+    display: grid;
+    grid-template-columns: ;
+}
+
+/******************************** MAIN *******************************/
+
+main {
+    background-color: blue;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+}
+
+#main-wrapper {
+    background-color: red;
+}
+
+#side-section {
+    background-color: brown;
+}
+
+/******************************** NAV *******************************/
+
+nav {
+    background-color: yellow;
+}
+
+nav > div {
+    display: grid;
+    grid-template-columns: 15% 85%;
+    padding: 2% 5%;
+}
+
+.nav-img {
+    padding: 10%;
+}
+
+.nav-img > img {
+    width: 100%;
+    height: auto;
+}
+
+.nav-text {
+    padding-left: 5%;
+}
