@@ -1,7 +1,20 @@
+:root {
+    --color: #000;
+    --colorA: #CAD2C5;
+    --colorB: #84A98C;
+    --colorC: #52796F;
+    --colorD: #354F52;
+    --colorE: #2F3E46;
+}
 
 @font-face {
     font-family: Poppins;
     src: url(../fonts/Poppins/Poppins-Medium.ttf);
+}
+
+@font-face {
+    font-family: architect;
+    src: url(../fonts/ArchitectsDaugther-Regular/ArchitectsDaughter-Regular.ttf)
 }
 
 
@@ -9,75 +22,89 @@ html, body {
     padding: 0;
     margin: 0;
     font-family: Poppins;
+    color: var(--color);
 }
 
-/******************************** BASIC STRUCTURE *******************************/
-
-body {
-    display: flex;
-    flex-direction: column;
+main {
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 18% 60% 18%;
+    grid-gap: 2%;
 }
 
+/************************************************ HEADER ************************************************/
 
-/******************************* HEADER ***********************/
 header {
     background-color: red;
     height: 5vh;
-    width: 100%;
     display: grid;
-    grid-template-columns: 20% 50% 30%;
+    grid-template-columns: 20% 60% 20%;
+    padding: 0.4vh 4%
 }
 
 #header-logo {
-    
+    font-family: architect;
+    font-size: 3.5vh;
 }
 
-#header-search {
-    
+#header-user-img {
+    width: 10%;
+    height: 100%;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
 }
 
-#header-icons {
+#header-user-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+    clip-path: circle(50% at 50% 50%);
+}
+
+/************************************************ NAV ************************************************/
+#nav-active {
+    color: var(--colorC);  /* For some reason not working */
+}
+
+nav > a {
+    height: 7vh;
+    display: block;
+    color: var(--color);
+}
+
+nav > a > div {
+    height: 100%;
     display: grid;
-    grid-template-columns: ;
+    grid-template-columns: 10% 90%;
+    padding-left: 2vw;
 }
 
-/******************************** MAIN *******************************/
-
-main {
-    background-color: blue;
-    display: grid;
-    grid-template-columns: 20% 60% 20%;
+.nav-txt {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 2vw;
 }
 
-#main-wrapper {
-    background-color: red;
-}
-
-#side-section {
-    background-color: brown;
-}
-
-/******************************** NAV *******************************/
-
-nav {
-    background-color: yellow;
-}
-
-nav > div {
-    display: grid;
-    grid-template-columns: 15% 85%;
-    padding: 2% 5%;
+.nav-txt p {
+    padding: 0;
+    margin: 0;
 }
 
 .nav-img {
-    padding: 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10%;
 }
 
-.nav-img > img {
+.nav-img img {
     width: 100%;
     height: auto;
-}
-
-.nav-text {
-    padding-left: 5%;
+    display: block;
+    margin: auto;
 }
