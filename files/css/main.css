@@ -1,10 +1,10 @@
 :root {
     --color: #000;
-    --colorA: #CAD2C5;
-    --colorB: #84A98C;
-    --colorC: #52796F;
-    --colorD: #354F52;
-    --colorE: #2F3E46;
+    --colorA: #cad2c5;
+    --colorB: #84a98c;
+    --colorC: #52796f;
+    --colorD: #354f52;
+    --colorE: #2f3e46;
 }
 
 @font-face {
@@ -14,11 +14,11 @@
 
 @font-face {
     font-family: architect;
-    src: url(../fonts/ArchitectsDaugther-Regular/ArchitectsDaughter-Regular.ttf)
+    src: url(../fonts/ArchitectsDaugther-Regular/ArchitectsDaughter-Regular.ttf);
 }
 
-
-html, body {
+html,
+body {
     padding: 0;
     margin: 0;
     font-family: Poppins;
@@ -32,14 +32,18 @@ main {
     grid-gap: 2%;
 }
 
+.txt-red {
+    color: #ff0000;
+}
+
 /************************************************ HEADER ************************************************/
 
 header {
-    background-color: red;
+    background-color: var(--colorD);
     height: 5vh;
     display: grid;
     grid-template-columns: 20% 60% 20%;
-    padding: 0.4vh 4%
+    padding: 0.4vh 4%;
 }
 
 #header-logo {
@@ -50,23 +54,84 @@ header {
 #header-user-img {
     width: 10%;
     height: 100%;
-    display: flex; 
+    display: flex;
     justify-content: center;
     align-items: center;
     margin-left: auto;
 }
 
 #header-user-img img {
-    width: 100%;
-    height: auto;
+    width: 3vh;
+    height: 3vh;
     display: block;
     margin: auto;
     clip-path: circle(50% at 50% 50%);
 }
 
+#header-dropdown {
+    position: absolute;
+    right: 0.5vw;
+    top: 6.5vh;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 0.5vh;
+    display: none;
+}
+
+#header-dropdown > a:first-child {
+    border-top-left-radius: 0.5vh;
+    border-top-right-radius: 0.5vh;
+}
+
+#header-dropdown > a:last-child {
+    border-bottom-right-radius: 0.5vh;
+    border-bottom-left-radius: 0.5vh;
+}
+
+#header-dropdown > a {
+    height: 7vh;
+    display: block;
+    color: var(--color);
+    text-decoration: none;
+    transition: background-color linear 0.2s;
+}
+
+#header-dropdown > a:hover {
+    background-color: var(--colorA);
+}
+
+#header-dropdown > a > div {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    padding-left: 2vw;
+}
+
+.header-dropdown-text {
+    padding: 0 0 0 10%;
+}
+
+.header-dropdown-image {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10%;
+}
+
+.header-dropdown-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+}
+
+#header-user-icon:hover {
+    cursor: pointer;
+}
+
 /************************************************ NAV ************************************************/
 #nav-active {
-    color: var(--colorC);  /* For some reason not working */
+    color: var(--colorC); /* For some reason not working */
 }
 
 nav > a {
