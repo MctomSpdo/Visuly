@@ -138,6 +138,11 @@ nav > a {
     height: 7vh;
     display: block;
     color: var(--color);
+    transition: background-color linear 0.2s;    
+}
+
+nav > a:hover {
+    background-color: var(--colorA);
 }
 
 nav > a > div {
