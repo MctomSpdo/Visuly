@@ -6,6 +6,8 @@
     --colorD: #354f52;
     --colorE: #2f3e46;
     --searchPlaceholder: rgb(214, 214, 214);
+    --defaultTextColor: #000;
+    --likeColor: #A41C1C;
 }
 
 @font-face {
@@ -109,6 +111,8 @@ header {
 
 .header-dropdown-text {
     padding: 0 0 0 10%;
+    display: flex;
+    align-items: center;
 }
 
 .header-dropdown-image {
@@ -187,7 +191,8 @@ header {
     border-bottom-right-radius: 5vh;
 }
 
-#header-search button:hover, #header-search input[type="text"]:hover {
+#header-search button:hover,
+#header-search input[type="text"]:hover {
     cursor: pointer;
 }
 
@@ -239,4 +244,113 @@ nav > a > div {
     height: auto;
     display: block;
     margin: auto;
+}
+
+/************************************************ CONTENT ************************************************/
+
+#content {
+    width: 100%;
+}
+
+/************************************************ POST ************************************************/
+
+.post {
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 1%;
+    margin: 2vh 0;
+    border-radius: 0.5vh;
+}
+
+.post-header {
+    padding-left: 1.5%
+}
+
+.post-user-wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 5% 75% 20%;
+    color: var(--defaultTextColor);
+    text-decoration: none;
+}
+
+.post-user-image {
+    padding: 10%;
+    display: flex;
+    align-items: center;
+}
+
+.post-user-image img {
+    width: 100%;
+    height: auto;
+    font-size: 0;
+    clip-path: circle(50% at 50% 50%);
+}
+
+.post-user-name {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 1vw;
+    font-size: 1.2rem;
+}
+
+.post-title-wrapper {
+    margin: 0 0 1vh 0;
+}
+
+.post-title-wrapper h3 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+/*
+* POST-BODY
+*/
+
+.post-body {
+    padding-left: 1.5%
+}
+
+.post-img-wrapper img{
+    width: 100%;
+    height: auto;
+}
+
+.post-interaction-wrapper {
+    height: 3vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.post-interaction-wrapper > div {
+    width: 20%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 15% 80%;
+}
+
+.post-interaction-imgwrapper {
+    display: flex;
+    align-items: center;
+}
+
+.post-interaction-imgwrapper img{
+    width: 100%;
+    height: auto;
+    font-size: 0;
+}
+
+.post-interaction-textwrapper {
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
+}
+
+.post-interaction-textwrapper p {
+    margin: 0;
+    padding: 0;
 }
