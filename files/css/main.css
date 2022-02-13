@@ -5,6 +5,7 @@
     --colorC: #52796f;
     --colorD: #354f52;
     --colorE: #2f3e46;
+    --searchPlaceholder: rgb(214, 214, 214);
 }
 
 @font-face {
@@ -129,6 +130,67 @@ header {
     cursor: pointer;
 }
 
+/************************************************ HEADER ************************************************/
+
+#header-search form {
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#header-search input[type="text"] {
+    width: 90%;
+    height: 70%;
+    padding: 0.5vh 0.5vh 0.5vh 2%;
+    font-size: 1.5vh;
+    border: none;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-top-left-radius: 5vh;
+    border-bottom-left-radius: 5vh;
+}
+
+#header-search input[type="text"]::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: var(--searchPlaceholder);
+    opacity: 1; /* Firefox */
+}
+
+#header-search input[type="text"]:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: var(--searchPlaceholder);
+}
+
+#header-search input[type="text"]::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: var(--searchPlaceholder);
+}
+
+#header-search input:focus {
+    border: none;
+    outline: none;
+}
+
+#header-search button {
+    height: 70%;
+    width: 10%;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-top-right-radius: 5vh;
+    border-bottom-right-radius: 5vh;
+}
+
+#header-search button:hover, #header-search input[type="text"]:hover {
+    cursor: pointer;
+}
+
 /************************************************ NAV ************************************************/
 #nav-active {
     color: var(--colorC); /* For some reason not working */
@@ -138,7 +200,7 @@ nav > a {
     height: 7vh;
     display: block;
     color: var(--color);
-    transition: background-color linear 0.2s;    
+    transition: background-color linear 0.2s;
 }
 
 nav > a:hover {

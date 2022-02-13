@@ -8,13 +8,19 @@
     <title>Home</title>
 
     <link rel="stylesheet" href="./files/css/main.css">
+
+    <!-- icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
     <header>
         <div id="header-logo">NAME</div>
-        <div id="header-serach">
-
+        <div id="header-search">
+            <form action="search.php" autocomplete="off">
+                <input type="text" placeholder="Search" name="search" id="header-searchbar" maxlength="2048">
+                <button type="submit" id="header-search-submit"><i class="fa fa-search"></i></button>
+            </form>
         </div>
         <div id="header-user">
             <div id="header-user-img">
