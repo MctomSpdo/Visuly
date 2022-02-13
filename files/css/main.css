@@ -1,12 +1,12 @@
 :root {
-    --color: #000;
+    --color: rgb(0, 0, 0);
     --colorA: #cad2c5;
     --colorB: #84a98c;
     --colorC: #52796f;
     --colorD: #354f52;
     --colorE: #2f3e46;
     --searchPlaceholder: rgb(214, 214, 214);
-    --defaultTextColor: #000;
+    --defaultBg: rgb(255, 255, 255);
     --likeColor: #A41C1C;
 }
 
@@ -26,6 +26,7 @@ body {
     margin: 0;
     font-family: Poppins;
     color: var(--color);
+    background-color: var(--defaultBg);
 }
 
 main {
@@ -78,6 +79,7 @@ header {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 0.5vh;
     display: none;
+    background-color: var(--defaultBg);
 }
 
 #header-dropdown > a:first-child {
@@ -270,7 +272,7 @@ nav > a > div {
     width: 100%;
     display: grid;
     grid-template-columns: 5% 75% 20%;
-    color: var(--defaultTextColor);
+    color: var(--color);
     text-decoration: none;
 }
 
