@@ -6,7 +6,7 @@
     --colorD: #354f52;
     --colorE: #2f3e46;
     --searchPlaceholder: rgb(214, 214, 214);
-    --defaultBg: rgb(255, 255, 255);
+    --defaultBg: #fff
     --likeColor: #A41C1C;
 }
 
@@ -27,6 +27,7 @@ body {
     font-family: Poppins;
     color: var(--color);
     background-color: var(--defaultBg);
+    overflow-x: hidden;
 }
 
 main {
@@ -48,6 +49,7 @@ header {
     display: grid;
     grid-template-columns: 20% 60% 20%;
     padding: 0.4vh 4%;
+    position: static;
 }
 
 #header-logo {
@@ -326,6 +328,7 @@ nav > a > div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-bottom: 1%;
 }
 
 .post-interaction-wrapper > div {
@@ -355,4 +358,12 @@ nav > a > div {
 .post-interaction-textwrapper p {
     margin: 0;
     padding: 0;
+}
+
+.post-descr {
+    margin: 1vh 0;
+}
+
+.post-descr p {
+    margin: 0;
 }

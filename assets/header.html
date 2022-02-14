@@ -1,0 +1,60 @@
+<header>
+    <div id="header-logo">NAME</div>
+    <div id="header-search">
+        <form action="search.php" autocomplete="off">
+            <input type="text" placeholder="Search" name="search" id="header-searchbar" maxlength="2048">
+            <button type="submit" id="header-search-submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+    <div id="header-user">
+        <div id="header-user-img">
+            <img src="files/img/users/user.svg" alt="User" id="header-user-icon">
+        </div>
+    </div>
+
+    <div id="header-dropdown">
+        <a href="myuser.php">
+            <div>
+                <div class="header-dropdown-image">
+                    <img src="files/img/users/user.svg" alt="user">
+                </div>
+                <div class="header-dropdown-text">
+                    <p>Profile</p>
+                </div>
+            </div>
+        </a>
+        <a href="settings.php">
+            <div>
+                <div class="header-dropdown-image">
+                    <img src="files/img/settings.svg" alt="settings">
+                </div>
+                <div class="header-dropdown-text">
+                    <p>Settings</p>
+                </div>
+            </div>
+        </a>
+        <a href="logout.php">
+            <div>
+                <div class="header-dropdown-image"></div>
+                <div class="header-dropdown-text txt-red">
+                    <p>Log out</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- header script -->
+    <script>
+        let headerDropDownIsDisplayed = false;
+
+        document.getElementById("header-user-icon").addEventListener("click", () => {
+            if (headerDropDownIsDisplayed) {
+                document.getElementById("header-dropdown").style.display = "none";
+            } else {
+                document.getElementById("header-dropdown").style.display = "block";
+            }
+
+            headerDropDownIsDisplayed = !headerDropDownIsDisplayed;
+        });
+    </script>
+</header>
