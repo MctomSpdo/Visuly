@@ -50,7 +50,7 @@ body, html {
     margin-bottom: 2vh;
 }
 
-#login-box input {
+#login-box input[type=text], #login-box input[type=email], #login-box input[type=password] {
     width: 80%;
     height: 4vh;
     margin: 1vh 0;
@@ -181,4 +181,34 @@ body, html {
 		transform: translateY(-90vh) rotate(360deg);
 		opacity: 0;
 	}
+}
+
+/************************************************ SIGNUP ************************************************/
+
+#name-input {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    width: 80%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+#name-input > input {
+    width: 95%;
+    
+}
+
+#name-input > input:nth-child(1) {
+    margin-right: auto;
+}
+
+#name-input > input:nth-child(2) {
+    margin-left: auto;
+}
+
+.gender-box {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    width: 80%;
+    margin: 0 auto;
 }

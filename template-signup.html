@@ -17,16 +17,33 @@
         <div id="login-box">
             <h2>Sign Up</h2>
             <form >
-                <input type="name" placeholder="Username" name="username">
+                <input type="text" placeholder="Username" name="username">
+                <input type="email" placeholder="Email" name="email">
+                
+                <div class="gender-box">
+                    <div>
+                        <input type="radio" name="gender" value="female" id="female">
+                        <label for="female">Female</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="gender" value="male" id="male">
+                        <label for="male">Male</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="gender" value="other" id="other">
+                        <label for="other">Other</label>
+                    </div>
+                </div>
+                
+                <!-- <input type="name" placeholder="Username" name="username">
                 <br>
                 <input type="email" placeholder="email" name="email">
                 <input type="password" name="password" id="login-password" placeholder="Password">
                 <p id="sign-in-error"></p>
-                <button type="submit">Log in</button>
+                <button type="submit">Log in</button> -->
                 
             </form>
-            <a href="create-account.php">Create Account</a>
-            <a href="reset-password.php">Reset password</a>
+            <a href="login.php">Log in</a>
         </div>
     </div>
 
