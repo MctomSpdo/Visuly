@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" href="./files/css/main.css">
     <link rel="stylesheet" href="./files/css/login.css">
+
+    <script src="files/js/signup.js" defer></script>
 </head>
 <body>
     <div id="login-wrapper">
@@ -17,8 +19,12 @@
         <div id="login-box">
             <h2>Sign Up</h2>
             <form >
-                <input type="text" placeholder="Username" name="username">
-                <input type="email" placeholder="Email" name="email">
+                <div>
+                    <input type="text" placeholder="Username" name="username" id="input-username">
+                    <div class="input-error"></div>
+                </div>
+                
+                <input type="email" placeholder="Email" name="email" id="input-email">
                 
                 <div class="gender-box">
                     <div>
@@ -34,6 +40,9 @@
                         <label for="other">Other</label>
                     </div>
                 </div>
+
+                <input type="password" name="password1" placeholder="Password" id="input-pwd1">
+                <input type="password" name="password2" placeholder="retype password" id="input-pwd2">
                 
                 <!-- <input type="name" placeholder="Username" name="username">
                 <br>
