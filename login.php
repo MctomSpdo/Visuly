@@ -25,7 +25,7 @@
                 
             </form>
             <a href="signup.php">Create Account</a>
-            <a href="pwreset.php">Reset password</a>
+            <a href="reset-password.php">Reset password</a>
         </div>
     </div>
 
