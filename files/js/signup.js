@@ -1,3 +1,6 @@
+//config:
+let api_createUser = './API/user/create-user.php';
+
 //inputs:
 let inputUsername = document.getElementById("input-username");
 let inputEmail = document.getElementById("input-email");
@@ -10,11 +13,21 @@ let outputError = document.getElementById("signup-error");
 
 //add Eventlistener:
 document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('keypress', checkName);
     input.addEventListener("change", check);
     input.addEventListener("keyup", check);
 });
 
 /************************************************ TYPE Input ************************************************/
+
+function checkName(evt) {
+    let charcode = evt.charCode;
+    if (charcode != 0) {
+        if (charcode == 13) {
+            evt.preventDefault();
+        }
+    }
+}
 
 /**
  * Check for inputs
@@ -129,7 +142,7 @@ function emailCheck() {
  * @returns {String} "" if false, errors listed above otherwise
  */
 function genderCheck() {
-    if(genderValue() === null) {
+    if (genderValue() === null) {
         return "Please select a gender";
     }
     return "";
@@ -142,7 +155,7 @@ function genderCheck() {
  * @param {String} str String to check
  * @returns {Boolean} true, if there is a lowercase letter, false otherwise
  */
- function hasLowerCase(str) {
+function hasLowerCase(str) {
     return str.toUpperCase() !== str;
 }
 
@@ -177,8 +190,8 @@ function error(message) {
  * Value of the Gender radio buttons
  */
 function genderValue() {
-    for(let i = 0; i < inputGenders.length; i++) {
-        if(inputGenders[i].checked) {
+    for (let i = 0; i < inputGenders.length; i++) {
+        if (inputGenders[i].checked) {
             return inputGenders[i].value;
         }
     }
@@ -189,48 +202,77 @@ function genderValue() {
 
 function createUser() {
     let errorMessage = "";
-    
+
     //check Username: 
     errorMessage = usernameCheck();
-    if(errorMessage != "") {
+    if (errorMessage != "") {
         error(errorMessage);
         return false;
     }
-    if(inputUsername.value == "") {
+    if (inputUsername.value == "") {
         error("Choose a username first!");
         return false;
     }
 
     //email:
     errorMessage = emailCheck();
-    if(errorMessage != "") {
+    if (errorMessage != "") {
         error(errorMessage);
         return false;
     }
-    if(inputEmail.value == "") {
+    if (inputEmail.value == "") {
         error("Email required");
         return false;
     }
 
     //gender: 
     errorMessage = genderCheck();
-    if(errorMessage != "") {
+    if (errorMessage != "") {
         error(errorMessage);
         return false;
     }
 
     //password:
     errorMessage = pwdCheck();
-    if(errorMessage != "") {
+    if (errorMessage != "") {
         error(errorMessage);
         return false;
     }
-    if(inputPwd1.value == "" || inputPwd2.value == "") {
+    if (inputPwd1.value == "" || inputPwd2.value == "") {
         error("Password is required");
         return false;
     }
 
     //TODO: send request to Server: 
+    let username = inputUsername.value;
+    let gender = genderValue();
+    let email = inputEmail.value;
+    let password = inputPwd1.value;
+
+    class User {
+        username
+        gender
+        email
+        password
+
+        constructor(username, gender, email, password) {
+            this.username = username;
+            this.gender = gender;
+            this.email = email;
+            this.password = password;
+        }
+    }
+
+    let user = new User(username, gender, email, password);
+
+    fetch(api_createUser, {
+        method: 'post',
+        body: JSON.stringify(user)
+    }).then(function (response) {
+        return response.text();
+    }).then(function (data) {
+        console.log(data);
+    });
 
     return false;
 }

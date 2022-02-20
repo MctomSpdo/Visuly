@@ -18,13 +18,13 @@
         </div>
         <div id="login-box">
             <h2>Sign Up</h2>
-            <form onsubmit="return createUser()">
+            <form onsubmit="return createUser()" method="post" id="signup-form">
                 <div>
-                    <input type="text" placeholder="Username" name="username" id="input-username">
+                    <input type="text" placeholder="Username" name="username" id="input-username" autocomplete="username">
                     <div class="input-error"></div>
                 </div>
                 
-                <input type="email" placeholder="Email" name="email" id="input-email">
+                <input type="email" placeholder="Email" name="email" id="input-email" autocomplete="email">
                 
                 <div class="gender-box">
                     <div>
@@ -41,8 +41,8 @@
                     </div>
                 </div>
 
-                <input type="password" name="password1" placeholder="Password" id="input-pwd1">
-                <input type="password" name="password2" placeholder="retype password" id="input-pwd2">
+                <input type="password" name="password1" placeholder="Password" id="input-pwd1" autocomplete="new-password">
+                <input type="password" name="password2" placeholder="retype password" id="input-pwd2" autocomplete="new-password">
 
                 <p id="signup-error" class="txt-red"></p> 
 
