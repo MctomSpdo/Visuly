@@ -2,6 +2,7 @@
 let api_createUser = './API/user/create-user.php';
 
 //inputs:
+let form = document.getElementById("signup-form");
 let inputUsername = document.getElementById("input-username");
 let inputEmail = document.getElementById("input-email");
 let inputPwd1 = document.getElementById("input-pwd1");
@@ -17,6 +18,11 @@ document.querySelectorAll('input').forEach(input => {
     input.addEventListener("change", check);
     input.addEventListener("keyup", check);
 });
+
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    createUser();
+})
 
 /************************************************ TYPE Input ************************************************/
 
@@ -272,6 +278,9 @@ function createUser() {
         return response.text();
     }).then(function (data) {
         console.log(data);
+        if(data == "User already exists") {//if the user exists
+            error("Email or username already exists");
+        }
     });
 
     return false;
