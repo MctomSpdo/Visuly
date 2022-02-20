@@ -1,6 +1,9 @@
 .idea/*
 *.iml
 
+#config file, since it will be generated, and contains longin information
+files/config.json
+
 # Created by https://www.toptal.com/developers/gitignore/api/maven,linux,windows,intellij,visualstudio,visualstudiocode,java,phpstorm
 # Edit at https://www.toptal.com/developers/gitignore?templates=maven,linux,windows,intellij,visualstudio,visualstudiocode,java,phpstorm
 
