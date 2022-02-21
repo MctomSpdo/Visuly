@@ -1,6 +1,9 @@
 //config:
 let api_createUser = './API/user/create-user.php';
 let api_lookUpUser = './API/user/username-exists.php';
+let api_lookUpEmail = './API/user/email-used.php';
+
+let typeDelayTime = 1000;
 
 //inputs:
 let form = document.getElementById("signup-form");
@@ -33,10 +36,18 @@ inputUsername.addEventListener('keyup', (e) => {
     clearTimeout(usernameTimer);
     usernameTimer = setTimeout(() => {
         userLookUp(inputUsername.value);
-    }, 1000);
+    }, typeDelayTime);
 });
 
 //email eventlistener (email already in use):
+let emailTimer;
+
+inputEmail.addEventListener('keyup', (e) => {
+    clearTimeout(emailTimer);
+    usernameTimer = setTimeout(() => {
+        emailLookUp(inputEmail.value);
+    }, typeDelayTime);
+});
 
 /************************************************ TYPE Input ************************************************/
 
@@ -220,6 +231,12 @@ function genderValue() {
 
 /************************************************ SUBMIT ************************************************/
 
+/**
+ * sends user create request to the Server
+ * 
+ * before it sends it, all the inputs will be checked
+ * @returns false if failed, true if user was created
+ */
 function createUser() {
     let errorMessage = "";
 
@@ -291,10 +308,10 @@ function createUser() {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data);
         if(data.error == "User already exists") {//if the user exists
-            error("Email or username already exists");
+            error("Email or username already in use");
         }
+        //TODO: redirect if signed up
     });
 
     return false;
@@ -313,11 +330,31 @@ function userLookUp(username) {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data);
         let username = inputUsername.value;
 
-        if(data.username == username && data.exists) {
+        if(data.username == username && data.exists) {//to prevent problems if API is slow
             error("Username already exists");
+        }
+    });
+}
+
+/************************************************ EMAIL EXISTS ************************************************/
+
+/**
+ * Looks up if a email is already in use
+ * @param {String} email email
+ */
+function emailLookUp(email) {
+    fetch(api_lookUpEmail, {
+        method: 'post',
+        body: JSON.stringify({"email" : email})
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        let email = inputEmail.value;
+
+        if(data.email == email && data.exists) {//to prevent problems if API is slow
+            error("Email is already in use");
         }
     });
 }
