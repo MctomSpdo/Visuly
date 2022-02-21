@@ -28,19 +28,35 @@ $password = $data->password;
 //checkValues:
 
 if(strlen($username) < 4 || strlen($username) > 30) {
-    exit("Invalid Request: username");
+    $resp = new stdClass();
+    $resp->error = "username";
+    $resp->result = "invalid Request";
+    echo json_encode($resp);
+    exit;
 }
 
 if(preg_match($emailReg, $email) == 0) {
-    exit("Invalid Request: email");
+    $resp = new stdClass();
+    $resp->error = "email";
+    $resp->result = "invalid Request";
+    echo json_encode($resp);
+    exit;
 }
 
 if(!(strcmp($gender, 'male') == 0 || strcmp($gender, 'female') == 0 || strcmp($gender, 'divers') == 0)) {
-    exit("Invalid Request: gender");
+    $resp = new stdClass();
+    $resp->error = "gender";
+    $resp->result = "invalid Request";
+    echo json_encode($resp);
+    exit;
 }
 
 if(strlen($password) < 8 && hasLowerCase($password) && hasUpperCase($password) && preg_match('~[0-9]~', $password) == 0) {
-    exit("Invalid Request: password");
+    $resp = new stdClass();
+    $resp->error = "password";
+    $resp->result = "invalid Request";
+    echo json_encode($resp);
+    exit;
 }
 
 //Db connection:
@@ -48,7 +64,11 @@ if(strlen($password) < 8 && hasLowerCase($password) && hasUpperCase($password) &
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if($db->connect_error) {
-    exit("Internal Server error(E001)");
+    $resp = new stdClass();
+    $resp->error = "Internal Server Error (E004)";
+    $resp->result = "ERROR";
+    echo json_encode($resp);
+    exit;
 }
 
 $dbusername = $db->real_escape_string($username);
@@ -71,19 +91,32 @@ $sql = "insert into USER
     (username, gender, profilePic, createdOn, email, password,deleted, permission)
     values ('$dbusername', '$dbgender', '$profilePic', now(), '$dbemail', md5('$dbpassword'), 0, $defaultPermission);";
 
+$resp = new stdClass();
+
 if($res = $db->query($sql)) {
-    echo "successful!";
+
+    $resp->error = "";
+    $resp->result = "success";
+    echo json_encode($resp);
 } else {
     $sqlExists = "select username from user where username like '$dbusername' or email like '$dbemail' limit 1;";
 
     if($resExists = $db->query($sqlExists)) {
         if($resExists->num_rows > 0) {
-            echo "User already exists";
+            $resp->error = "User already exists";
+            $resp->result = "exists";
+            echo json_encode($resp);
         } else {
-            echo "Internal Server error (E003)";
+            $resp->error = "Internal Server error (E003)";
+            $resp->result = "ERROR";
+            echo json_encode($resp);
+            $db->close();
+            exit();
         }
     } else {
-        echo "Internal Server error(E002)";
+        $resp->error = "Internal Server error(E002)";
+        $resp->result = "ERROR";
+        echo json_encode($resp);
     }
     $resExists->close();
 }
