@@ -1,5 +1,6 @@
 //config:
 let api_createUser = './API/user/create-user.php';
+let api_lookUpUser = './API/user/username-exists.php';
 
 //inputs:
 let form = document.getElementById("signup-form");
@@ -19,10 +20,23 @@ document.querySelectorAll('input').forEach(input => {
     input.addEventListener("keyup", check);
 });
 
+//submit eventlistener: 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
     createUser();
 })
+
+//username eventlistener (username already taken): 
+let usernameTimer;
+
+inputUsername.addEventListener('keyup', (e) => {
+    clearTimeout(usernameTimer);
+    usernameTimer = setTimeout(() => {
+        userLookUp(inputUsername.value);
+    }, 1000);
+});
+
+//email eventlistener (email already in use):
 
 /************************************************ TYPE Input ************************************************/
 
@@ -275,13 +289,35 @@ function createUser() {
         method: 'post',
         body: JSON.stringify(user)
     }).then(function (response) {
-        return response.text();
+        return response.json();
     }).then(function (data) {
         console.log(data);
-        if(data == "User already exists") {//if the user exists
+        if(data.error == "User already exists") {//if the user exists
             error("Email or username already exists");
         }
     });
 
     return false;
+}
+
+/************************************************ USERNAME EXISTS ************************************************/
+
+/**
+ * Looks up if a username already exists in the database
+ * @param {String} username 
+ */
+function userLookUp(username) {
+    fetch(api_lookUpUser, {
+        method: 'post',
+        body: JSON.stringify({"username" : username})
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+        let username = inputUsername.value;
+
+        if(data.username == username && data.exists) {
+            error("Username already exists");
+        }
+    });
 }

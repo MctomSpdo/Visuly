@@ -17,7 +17,11 @@ $config = json_decode(file_get_contents($configPath));
 $data = json_decode(file_get_contents('php://input'));
 
 if((isset($data->username) && isset($data->email) && isset($data->gender) && isset($dat->password))) {
-    exit("Invalid Request: values inconsistent");
+    $resp = new stdClass();
+    $resp->error = "values inconsistent";
+    $resp->result = "invalid Request";
+    echo json_encode($resp);
+    exit;
 }
 
 $username = $data->username;
@@ -107,7 +111,7 @@ if($res = $db->query($sql)) {
             $resp->result = "exists";
             echo json_encode($resp);
         } else {
-            $resp->error = "Internal Server error (E003)";
+            $resp->error = "Internal Server error (E002)";
             $resp->result = "ERROR";
             echo json_encode($resp);
             $db->close();
