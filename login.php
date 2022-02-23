@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 
+    <script src="./files/js/login.js" defer></script>
+
     <link rel="stylesheet" href="./files/css/main.css">
     <link rel="stylesheet" href="./files/css/login.css">
 </head>
@@ -16,7 +18,7 @@
         </div>
         <div id="login-box">
             <h2>Login</h2>
-            <form >
+            <form method="post" id="login-form">
                 <input type="text" name="username" id="login-username" placeholder="Username or Email">
                 <br>
                 <input type="password" name="password" id="login-password" placeholder="Password">

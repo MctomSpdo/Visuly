@@ -3,3 +3,4 @@ E002    Database request error
 E003
 E004    Database connection error
 E005    Token generation failed
+E006    User login results in 2 possible users

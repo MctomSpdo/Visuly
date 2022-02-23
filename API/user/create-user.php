@@ -10,7 +10,8 @@ function hasUpperCase($str) {
     return strtolower($str) != $str;
 }
 
-function generateRandomString($length = 10) {
+function generateRandomString($length = 30): string
+{
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
@@ -111,7 +112,7 @@ if($res = $db->query($sql)) {
 
 
     $token = generateRandomString(30);
-    $dbtoken = $db->real_escape_string($token);
+    $dbtoken = $db->real_escape_string($config->tokenSalt . $token);
 
 
     $sqlToken = "insert into token (Token, Owner, Created, ValidUntil) 
@@ -120,7 +121,7 @@ if($res = $db->query($sql)) {
         now(), date_add(now(), INTERVAL 2 year));";
 
     if($resToken = $db->query($sqlToken)) {
-        setcookie($config->LoginTokenName, $token, time() + (31536000) * 1, "/", "", true);//expires in x year (x = 1)
+        setcookie($config->loginTokenName, $token, time() + (31536000) * 1, "/", "", true);//expires in x year (x = 1)
         $resp->error = "";
         $resp->result = "success";
         $resp->created = true;

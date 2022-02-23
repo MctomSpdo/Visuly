@@ -3,7 +3,7 @@ $configPath = 'files/config.json';
 $config = json_decode(file_get_contents($configPath));
 
 //checks if user is logged in:
-if (!isset($_COOKIE[$config->LoginTokenName])) {
+if (!isset($_COOKIE[$config->loginTokenName])) {
     header("Location: ./login.php");
     exit();
 }
