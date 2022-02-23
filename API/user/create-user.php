@@ -10,6 +10,16 @@ function hasUpperCase($str) {
     return strtolower($str) != $str;
 }
 
+function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
 
 $config = json_decode(file_get_contents($configPath));
 
@@ -99,8 +109,24 @@ $resp = new stdClass();
 
 if($res = $db->query($sql)) {
 
-    $resp->error = "";
-    $resp->result = "success";
+
+    $token = generateRandomString(30);
+    $dbtoken = $db->real_escape_string($token);
+
+
+    $sqlToken = "insert into token (Token, Owner, Created, ValidUntil) 
+    values (md5('$dbtoken'), 
+        (select UserID from user where email like '$dbemail'), 
+        now(), date_add(now(), INTERVAL 2 year));";
+
+    if($resToken = $db->query($sqlToken)) {
+        setcookie($config->LoginTokenName, $token, time() + (31536000) * 1, "/", "", true);//expires in x year (x = 1)
+        $resp->error = "";
+        $resp->result = "success";
+        $resp->created = true;
+    } else {
+        $resp->error = "Internal Server error (E005)";
+    }
     echo json_encode($resp);
 } else {
     $sqlExists = "select username from user where username like '$dbusername' or email like '$dbemail' limit 1;";

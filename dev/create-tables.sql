@@ -125,7 +125,7 @@ create table token
 (
     TokenID    int auto_increment
         primary key,
-    Token      varchar(254) not null,
+    Token      varchar(32) not null,
     Owner      int          not null,
     Created    datetime     not null,
     ValidUntil datetime     not null

@@ -1,3 +1,14 @@
+<?php
+$configPath = 'files/config.json';
+$config = json_decode(file_get_contents($configPath));
+
+//checks if user is logged in:
+if (!isset($_COOKIE[$config->LoginTokenName])) {
+    header("Location: ./login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,15 +25,15 @@
 </head>
 
 <body>
+<?php
+include "assets/header.html";
+?>
+<main>
     <?php
-        include "assets/header.html";
+    include "assets/nav.html";
     ?>
-    <main>
-        <?php
-            include "assets/nav.html";
-        ?>
-        <div></div>
-        <div></div>
-    </main>
+    <div></div>
+    <div></div>
+</main>
 </body>
 </html>

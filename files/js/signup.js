@@ -311,7 +311,9 @@ function createUser() {
         if(data.error == "User already exists") {//if the user exists
             error("Email or username already in use");
         }
-        //TODO: redirect if signed up
+        if(data.created) {
+            window.location.replace("./");
+        }
     });
 
     return false;
