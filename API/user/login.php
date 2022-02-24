@@ -26,7 +26,7 @@ $password = $data->password;
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 $dbusername = $db->real_escape_string($username);
-$dbpassword = $db->real_escape_string($password);
+$dbpassword = $db->real_escape_string($config->passwordSalt . $password);
 
 $sql = "select UserID, username
 from user

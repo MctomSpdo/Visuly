@@ -88,7 +88,7 @@ if($db->connect_error) {
 
 $dbusername = $db->real_escape_string($username);
 $dbemail = $db->real_escape_string($email);
-$dbpassword = $db->real_escape_string($password);
+$dbpassword = $db->real_escape_string($config->passwordSalt . $password);
 $dbgender = '';
 
 if(strcmp($gender, 'male') == 0) {
