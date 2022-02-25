@@ -1,0 +1,46 @@
+= Visuly Image Platform
+Mctom Spdo
+1.0.0, {docdate}: MEDT
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:
+:toc: left
+:stylesheet: ./css/dark.css
+ifndef::imagesdir[:imagesdir: images]
+
+== Index
+
+https://mctomspdo.github.io/Medt_SSProject2022/doc/planning.html[Planning] (German)
+
+https://mctomspdo.github.io/Medt_SSProject2022/doc/db.adoc[Database]
+
+== Technologies used
+
+Front End:
+
+* HTML
+* CSS
+* JavaScript
+
+Backend:
+
+* PHP
+* Mysql
+
+Doc:
+
+* Asciidoctor
+* PlantUML
+
+Other:
+
+* Git / Github
+
+IDEs and programs: (for interest)
+
+* VSCode (frontend)
+* PHPStorm (backend)
+* IntelliJ (automation & documentation)
+* Google Chrome (Web)
+* Mozilla Firefox (Web)
+* XAMPP (Apache Webserver & MySQL / MariaDB)

@@ -1,0 +1,27 @@
+= Visuly Database
+Mctom Spdo
+1.0.0, {docdate}: MEDT
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:
+:toc: left
+:stylesheet: ./css/dark.css
+ifndef::imagesdir[:imagesdir: images]
+
+Visuly uses PHP and MySQL for backend. To use Visuly, you have to create the database. This should also be possible when using the init.php file, that will be created later in the project.
+
+== Datastructure
+
+Created using PlantUML.
+
+[plantuml, conceptDB]
+----
+include::plantuml/dbconcept.puml[]
+----
+
+== SQL create tables
+
+[source, sql]
+----
+include::../dev/create-tables.sql[]
+----

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.16">
+<meta name="author" content="Mctom Spdo">
+<title>Visuly Database</title>
+<style>
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+
+@import url(//fonts.googleapis.com/css?family=Noto+Sans);
+@import url(https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css); /* Default asciidoc style framework - important */
+
+/* CUSTOMISATIONS */
+/* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
+:root{
+--maincolor:#282c34;
+--primarycolor:#f39c12;
+--secondarycolor:#03a9f4;
+--tertiarycolor:#4db6ac;
+--sidebarbackground:#21252b;
+--linkcolor:#f44336;
+--linkcoloralternate:#ff9800;
+--white:#FFFFFF;
+}
+
+/* custom added styles */
+.listingblock > .content > pre{
+  background: var(--sidebarbackground);
+  color: var(--white);
+}
+
+/* Text styles */
+body{font-family: "Noto Sans",sans-serif;background-color: var(--maincolor);color:var(--white);}
+
+h1{color:var(--primarycolor) !important;font-family:"Noto Sans",sans-serif;}
+h2,h3,h4,h5,h6{color:var(--secondarycolor) !important;font-family:"Noto Sans",sans-serif;}
+.title{color:var(--white) !important;font-family:"Noto Sans",sans-serif;font-style: normal; font-weight: normal;}
+p{font-family: "Noto Sans",sans-serif ! important}
+#toc.toc2 a:link{color:var(--linkcolor);}
+blockquote{color:var(--tertiarycolor) !important}
+.quoteblock{color:var(--white)}
+code{color:var(--linkcoloralternate);background-color: var(--sidebarbackground) !important}
+
+
+/* Table styles */
+th{background-color: var(--maincolor);color:var(--white) !important;}
+td{background-color: var(--maincolor);color: var(--linkcoloralternate) !important}
+
+
+#toc.toc2{background-color:var(--sidebarbackground);}
+#toctitle{color:var(--white);}
+
+/* Responsiveness fixes */
+video {
+  max-width: 100%;
+}
+
+@media all and (max-width: 600px) {
+  table {
+    width: 55vw!important;
+    font-size: 3vw;
+  }
+}
+
+.exampleblock > .content {
+  background-color: var(--maincolor);
+}
+
+a {
+  color: var(--secondarycolor);
+}
+
+.admonitionblock td.icon .icon-tip::before {
+  text-shadow: none;
+  color: var(--white);
+}
+.admonitionblock td.icon .icon-note::before {
+  color: var(--tertiarycolor);
+}
+.admonitionblock td.icon .icon-important::before {
+  color: var(--linkcolor);
+}
+/*.admonitionblock td.icon .icon-caution::before {
+  color: var(--linkcoloralternate);
+}*/
+.admonitionblock td.icon .icon-warning::before {
+  color: var(--primarycolor);
+}
+
+#preamble > .sectionbody > .paragraph:first-of-type p {
+  color: var(--white);
+}
+
+.quoteblock blockquote::before {
+  color: var(--primarycolor);
+}
+.quoteblock .attribution cite, .verseblock .attribution cite {
+  color: var(--white);
+}
+.verseblock pre {
+  color: var(--white);
+}
+.quoteblock blockquote, .quoteblock blockquote p {
+  color: var(--white);
+}
+
+.sidebarblock {
+  background: var(--sidebarbackground);
+}
+.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint {
+  background: var(--sidebarbackground);
+  color: var(--white);
+}
+
+#header .details {
+  color: var(--white);
+}
+#header .details span.email a {
+  color: var(--linkcoloralternate);
+}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Visuly Database</h1>
+<div class="details">
+<span id="author" class="author">Mctom Spdo</span><br>
+<span id="revnumber">version 1.0.0,</span>
+<span id="revdate">2022-02-25</span>
+<br><span id="revremark">MEDT</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_datastructure">1. Datastructure</a></li>
+<li><a href="#_sql_create_tables">2. SQL create tables</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Visuly uses PHP and MySQL for backend. To use Visuly, you have to create the database. This should also be possible when using the init.php file, that will be created later in the project.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_datastructure">1. Datastructure</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Created using PlantUML.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/conceptDB.png" alt="conceptDB" width="1060" height="1045">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sql_create_tables">2. SQL create tables</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="sql"><span style="color:#777">/* User */</span>
+<span style="color:#B06;font-weight:bold">DROP</span> <span style="color:#339;font-weight:bold">TABLE</span> <span style="color:#080;font-weight:bold">IF</span> <span style="color:#080;font-weight:bold">EXISTS</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">`</span><span style="color:#D20">user</span><span style="color:#710">`</span></span>;
+<span style="color:#B06;font-weight:bold">create</span> <span style="color:#339;font-weight:bold">table</span> user
+(
+    UserID         <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#088;font-weight:bold">auto_increment</span>
+        <span style="color:#088;font-weight:bold">primary</span> <span style="color:#339;font-weight:bold">key</span>,
+    username       <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">30</span>)  <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    description    <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">300</span>) <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    gender         <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">1</span>)   <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    profilePic     <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">30</span>)  <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    createdOn      <span style="color:#0a8;font-weight:bold">datetime</span>     <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    phoneNumber    <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">15</span>)  <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    email          <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">254</span>) <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    password       <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">32</span>)  <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    deleted        <span style="color:#0a8;font-weight:bold">tinyint</span>      <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    lastLogin      <span style="color:#0a8;font-weight:bold">datetime</span>     <span style="color:#069">null</span>,
+    lastTriedLogin <span style="color:#0a8;font-weight:bold">datetime</span>     <span style="color:#069">null</span>,
+    permission     <span style="color:#0a8;font-weight:bold">int</span>          <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    <span style="color:#339;font-weight:bold">constraint</span> email
+        <span style="color:#088;font-weight:bold">unique</span> (email),
+    <span style="color:#339;font-weight:bold">constraint</span> username
+        <span style="color:#088;font-weight:bold">unique</span> (username)
+);
+
+<span style="color:#777">/* Permissions */</span>
+<span style="color:#B06;font-weight:bold">DROP</span> <span style="color:#339;font-weight:bold">TABLE</span> <span style="color:#080;font-weight:bold">IF</span> <span style="color:#080;font-weight:bold">EXISTS</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">`</span><span style="color:#D20">permission</span><span style="color:#710">`</span></span>;
+<span style="color:#B06;font-weight:bold">create</span> <span style="color:#339;font-weight:bold">table</span> permission
+(
+    PermID     <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#088;font-weight:bold">auto_increment</span>
+        <span style="color:#088;font-weight:bold">primary</span> <span style="color:#339;font-weight:bold">key</span>,
+    name       <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">30</span>) <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    isBlocked  <span style="color:#0a8;font-weight:bold">tinyint</span>(<span style="color:#00D">1</span>)  <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    isAdmin    <span style="color:#0a8;font-weight:bold">tinyint</span>(<span style="color:#00D">1</span>)  <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    canPost    <span style="color:#0a8;font-weight:bold">tinyint</span>(<span style="color:#00D">1</span>)  <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    canLike    <span style="color:#0a8;font-weight:bold">tinyint</span>(<span style="color:#00D">1</span>)  <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    canComment <span style="color:#0a8;font-weight:bold">tinyint</span>(<span style="color:#00D">1</span>)  <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    <span style="color:#339;font-weight:bold">constraint</span> name
+        <span style="color:#088;font-weight:bold">unique</span> (name)
+);
+
+<span style="color:#777">/*default permissions: */</span>
+<span style="color:#B06;font-weight:bold">INSERT</span> <span style="color:#B06;font-weight:bold">INTO</span> permission (name, isBlocked, isAdmin, canPost, canLike, canComment) <span style="color:#080;font-weight:bold">VALUES</span> (<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Admin</span><span style="color:#710">'</span></span>, <span style="color:#00D">0</span>, <span style="color:#00D">1</span>, <span style="color:#00D">1</span>, <span style="color:#00D">1</span>, <span style="color:#00D">1</span>);
+<span style="color:#B06;font-weight:bold">INSERT</span> <span style="color:#B06;font-weight:bold">INTO</span> permission (name, isBlocked, isAdmin, canPost, canLike, canComment) <span style="color:#080;font-weight:bold">VALUES</span> (<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">User</span><span style="color:#710">'</span></span>, <span style="color:#00D">0</span>, <span style="color:#00D">0</span>, <span style="color:#00D">1</span>, <span style="color:#00D">1</span>, <span style="color:#00D">1</span>);
+<span style="color:#B06;font-weight:bold">INSERT</span> <span style="color:#B06;font-weight:bold">INTO</span> permission (name, isBlocked, isAdmin, canPost, canLike, canComment) <span style="color:#080;font-weight:bold">VALUES</span> (<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Blocked</span><span style="color:#710">'</span></span>, <span style="color:#00D">1</span>, <span style="color:#00D">0</span>, <span style="color:#00D">0</span>, <span style="color:#00D">0</span>, <span style="color:#00D">0</span>);
+
+<span style="color:#777">/* Category */</span>
+<span style="color:#B06;font-weight:bold">DROP</span> <span style="color:#339;font-weight:bold">TABLE</span> <span style="color:#080;font-weight:bold">IF</span> <span style="color:#080;font-weight:bold">EXISTS</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">`</span><span style="color:#D20">category</span><span style="color:#710">`</span></span>;
+<span style="color:#B06;font-weight:bold">create</span> <span style="color:#339;font-weight:bold">table</span> category
+(
+    CategoryID  <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#088;font-weight:bold">auto_increment</span>
+        <span style="color:#088;font-weight:bold">primary</span> <span style="color:#339;font-weight:bold">key</span>,
+    name        <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">30</span>)  <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    description <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">300</span>) <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    <span style="color:#339;font-weight:bold">constraint</span> name
+        <span style="color:#088;font-weight:bold">unique</span> (name)
+);
+
+<span style="color:#777">/* Post */</span>
+<span style="color:#B06;font-weight:bold">DROP</span> <span style="color:#339;font-weight:bold">TABLE</span> <span style="color:#080;font-weight:bold">IF</span> <span style="color:#080;font-weight:bold">EXISTS</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">`</span><span style="color:#D20">post</span><span style="color:#710">`</span></span>;
+<span style="color:#B06;font-weight:bold">create</span> <span style="color:#339;font-weight:bold">table</span> post
+(
+    PostID      <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#088;font-weight:bold">auto_increment</span>
+        <span style="color:#088;font-weight:bold">primary</span> <span style="color:#339;font-weight:bold">key</span>,
+    ImgPath     <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">60</span>)   <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    Title       <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">30</span>)   <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    Description <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">2000</span>) <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    PostedOn    <span style="color:#0a8;font-weight:bold">datetime</span>      <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    FromUser    <span style="color:#0a8;font-weight:bold">int</span>           <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    IsDeleted   <span style="color:#0a8;font-weight:bold">tinyint</span>       <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>
+);
+
+<span style="color:#777">/* Post_Category */</span>
+<span style="color:#B06;font-weight:bold">DROP</span> <span style="color:#339;font-weight:bold">TABLE</span> <span style="color:#080;font-weight:bold">IF</span> <span style="color:#080;font-weight:bold">EXISTS</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">`</span><span style="color:#D20">post_category</span><span style="color:#710">`</span></span>;
+<span style="color:#B06;font-weight:bold">create</span> <span style="color:#339;font-weight:bold">table</span> post_category
+(
+    PoCaID   <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#088;font-weight:bold">auto_increment</span>
+        <span style="color:#088;font-weight:bold">primary</span> <span style="color:#339;font-weight:bold">key</span>,
+    Post     <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    Category <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>
+);
+
+<span style="color:#777">/* Comment */</span>
+<span style="color:#B06;font-weight:bold">DROP</span> <span style="color:#339;font-weight:bold">TABLE</span> <span style="color:#080;font-weight:bold">IF</span> <span style="color:#080;font-weight:bold">EXISTS</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">`</span><span style="color:#D20">comment</span><span style="color:#710">`</span></span>;
+<span style="color:#B06;font-weight:bold">create</span> <span style="color:#339;font-weight:bold">table</span> <span style="color:#B06;font-weight:bold">comment</span>
+(
+    CommentID <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#088;font-weight:bold">auto_increment</span>
+        <span style="color:#088;font-weight:bold">primary</span> <span style="color:#339;font-weight:bold">key</span>,
+    Content   <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">300</span>) <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    Owner     <span style="color:#0a8;font-weight:bold">int</span>          <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    Post      <span style="color:#0a8;font-weight:bold">int</span>          <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    isDeleted <span style="color:#0a8;font-weight:bold">tinyint</span>      <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>
+);
+
+<span style="color:#777">/* PostLiked */</span>
+<span style="color:#B06;font-weight:bold">DROP</span> <span style="color:#339;font-weight:bold">TABLE</span> <span style="color:#080;font-weight:bold">IF</span> <span style="color:#080;font-weight:bold">EXISTS</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">`</span><span style="color:#D20">postliked</span><span style="color:#710">`</span></span>;
+<span style="color:#B06;font-weight:bold">create</span> <span style="color:#339;font-weight:bold">table</span> postliked
+(
+    PostLikedID <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#088;font-weight:bold">auto_increment</span>
+        <span style="color:#088;font-weight:bold">primary</span> <span style="color:#339;font-weight:bold">key</span>,
+    Post        <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    User        <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>
+);
+
+<span style="color:#777">/* Follow */</span>
+<span style="color:#B06;font-weight:bold">DROP</span> <span style="color:#339;font-weight:bold">TABLE</span> <span style="color:#080;font-weight:bold">IF</span> <span style="color:#080;font-weight:bold">EXISTS</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">`</span><span style="color:#D20">follow</span><span style="color:#710">`</span></span>;
+<span style="color:#B06;font-weight:bold">create</span> <span style="color:#339;font-weight:bold">table</span> follow
+(
+    FollowID <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#069">null</span>,
+    owner    <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    Follows  <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>
+);
+
+<span style="color:#777">/* Token */</span>
+<span style="color:#B06;font-weight:bold">DROP</span> <span style="color:#339;font-weight:bold">TABLE</span> <span style="color:#080;font-weight:bold">IF</span> <span style="color:#080;font-weight:bold">EXISTS</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">`</span><span style="color:#D20">token</span><span style="color:#710">`</span></span>;
+<span style="color:#B06;font-weight:bold">create</span> <span style="color:#339;font-weight:bold">table</span> token
+(
+    TokenID    <span style="color:#0a8;font-weight:bold">int</span> <span style="color:#088;font-weight:bold">auto_increment</span>
+        <span style="color:#088;font-weight:bold">primary</span> <span style="color:#339;font-weight:bold">key</span>,
+    Token      <span style="color:#0a8;font-weight:bold">varchar</span>(<span style="color:#00D">32</span>) <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    Owner      <span style="color:#0a8;font-weight:bold">int</span>          <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    Created    <span style="color:#0a8;font-weight:bold">datetime</span>     <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>,
+    ValidUntil <span style="color:#0a8;font-weight:bold">datetime</span>     <span style="color:#080;font-weight:bold">not</span> <span style="color:#069">null</span>
+);</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 1.0.0<br>
+Last updated 2022-02-25 21:18:47 +0100
+</div>
+</div>
+</body>
+</html>
