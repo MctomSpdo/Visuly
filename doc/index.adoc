@@ -12,7 +12,7 @@ ifndef::imagesdir[:imagesdir: images]
 
 https://mctomspdo.github.io/Medt_SSProject2022/doc/planning.html[Planning] (German)
 
-https://mctomspdo.github.io/Medt_SSProject2022/doc/db.adoc[Database]
+https://mctomspdo.github.io/Medt_SSProject2022/doc/db.html[Database]
 
 == Technologies used
 
