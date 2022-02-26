@@ -14,7 +14,7 @@
 <body>
 <div id="login-wrapper">
     <div id="login-logo">
-        <h1>NAME</h1>
+        <h1>VISULY</h1>
     </div>
     <div id="login-box">
         <h2>Sign Up</h2>
@@ -55,7 +55,15 @@
 </div>
 
 <div id="login-backdrop">
-
+    <ul class="box-area" id="signup-animation">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
 </div>
+
 </body>
 </html>

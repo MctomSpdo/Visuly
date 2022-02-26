@@ -14,7 +14,7 @@
 <body>
     <div id="login-wrapper">
         <div id="login-logo">
-            <h1>NAME</h1>
+            <h1>VISULY</h1>
         </div>
         <div id="login-box">
             <h2>Login</h2>

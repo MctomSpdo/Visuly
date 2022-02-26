@@ -2,7 +2,7 @@
 $configPath = 'files/config.json';
 $config = json_decode(file_get_contents($configPath));
 
-//checks if user is logged in:
+//check if user cookies exists, if not redirect them to login
 if (!isset($_COOKIE[$config->loginTokenName])) {
     header("Location: ./login.php");
     exit();
