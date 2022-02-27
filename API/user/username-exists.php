@@ -1,16 +1,16 @@
 <?php
 $configPath = '../../files/config.json';
 
+require_once('../../assets/user.php');
 
 $config = json_decode(file_get_contents($configPath));
 
 $data = json_decode(file_get_contents('php://input'));
 $username = $data->username;
 
-//respond object:
+//Respond object
 $resp = new stdClass();
 $resp->username = $username;
-$resp->error = "";
 
 //Database connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
@@ -21,21 +21,14 @@ if($db->connect_error) {
     exit;
 }
 
-//Database sql:
-$dbusername = $db->real_escape_string($username);
+$user = new User();
+$res = $user->DBExistsFromUsername($username, $db);
 
-$sql = "select username from user where username like '$dbusername' limit 1;";
-
-if($res = $db->query($sql)) {
-    if($res->num_rows > 0) {
-        $resp->exists = true;
-    } else {
-        $resp->exists = false;
-    }
-} else {
+if($res === -1) {
     $resp->error = "Internal Server error(E002)";
+} else {
+    $resp->exists = $res;
 }
 
 echo json_encode($resp);
-$res->close();
 $db->close();

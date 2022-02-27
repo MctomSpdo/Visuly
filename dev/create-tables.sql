@@ -4,6 +4,7 @@ create table user
 (
     UserID         int auto_increment
         primary key,
+    UUID           varchar(30)  not null,
     username       varchar(30)  not null,
     description    varchar(300) not null,
     gender         varchar(1)   not null,
@@ -19,7 +20,9 @@ create table user
     constraint email
         unique (email),
     constraint username
-        unique (username)
+        unique (username),
+    constraint UUID
+        unique(UUID)
 );
 
 /* Permissions */
@@ -39,9 +42,12 @@ create table permission
 );
 
 /*default permissions: */
-INSERT INTO permission (name, isBlocked, isAdmin, canPost, canLike, canComment) VALUES ('Admin', 0, 1, 1, 1, 1);
-INSERT INTO permission (name, isBlocked, isAdmin, canPost, canLike, canComment) VALUES ('User', 0, 0, 1, 1, 1);
-INSERT INTO permission (name, isBlocked, isAdmin, canPost, canLike, canComment) VALUES ('Blocked', 1, 0, 0, 0, 0);
+INSERT INTO permission (name, isBlocked, isAdmin, canPost, canLike, canComment)
+VALUES ('Admin', 0, 1, 1, 1, 1);
+INSERT INTO permission (name, isBlocked, isAdmin, canPost, canLike, canComment)
+VALUES ('User', 0, 0, 1, 1, 1);
+INSERT INTO permission (name, isBlocked, isAdmin, canPost, canLike, canComment)
+VALUES ('Blocked', 1, 0, 0, 0, 0);
 
 /* Category */
 DROP TABLE IF EXISTS `category`;
@@ -117,7 +123,7 @@ create table token
     TokenID    int auto_increment
         primary key,
     Token      varchar(32) not null,
-    Owner      int          not null,
-    Created    datetime     not null,
-    ValidUntil datetime     not null
+    Owner      int         not null,
+    Created    datetime    not null,
+    ValidUntil datetime    not null
 );

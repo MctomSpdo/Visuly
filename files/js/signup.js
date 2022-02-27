@@ -306,7 +306,7 @@ function createUser() {
         method: 'post',
         body: JSON.stringify(user)
     }).then(function (response) {
-        return response.text();
+        return response.json();
     }).then(function (data) {
         console.log(data);
         if(data.error == "User already exists") {//if the user exists
@@ -332,7 +332,7 @@ function userLookUp(username) {
         body: JSON.stringify({"username" : username})
     }).then(function (response) {
         return response.json();
-    }).then(function (data) {
+    }).then(function (data) { 
         let username = inputUsername.value;
 
         if(data.username == username && data.exists) {//to prevent problems if API is slow

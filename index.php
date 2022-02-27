@@ -7,6 +7,10 @@ require_once('./assets/token.php');
 //database connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
+if($db->connect_error) {
+    header("Location: ./error.php");
+}
+
 //check if user cookies exists, if not redirect them to login
 if (!isset($_COOKIE[$config->loginTokenName])) {
     header("Location: ./login.php");

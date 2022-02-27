@@ -3,6 +3,7 @@ $configPath = '../../files/config.json';
 $emailReg = '/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
 
 require_once('../../assets/token.php');
+require_once('../../assets/user.php');
 
 function hasLowerCase($str) {
     return strtoupper($str) != $str;
@@ -77,30 +78,13 @@ if($db->connect_error) {
     exit;
 }
 
-$dbusername = $db->real_escape_string($username);
-$dbemail = $db->real_escape_string($email);
-$dbpassword = $db->real_escape_string($config->passwordSalt . $password);
-$dbgender = '';
-
-if(strcmp($gender, 'male') == 0) {
-    $dbgender = $db->real_escape_string('m');
-} else if (strcmp($gender, 'female') == 0) {
-    $dbgender = $db->real_escape_string('f');
-} else {
-    $dbgender = $db->real_escape_string('d');
-}
-$profilePic = $config->userDefaultImage;
-$defaultPermission = $config->userDefaultPermission;
-
-//insert to db:
-$sql = "insert into USER
-    (username, gender, profilePic, createdOn, email, password,deleted, permission)
-    values ('$dbusername', '$dbgender', '$profilePic', now(), '$dbemail', md5('$dbpassword'), 0, $defaultPermission);";
-
+//create user:
+$user = new User();
+$userDB = $user->createUser($username, $email, $password, $gender, $config, $db);
 $resp = new stdClass();
 
-if($res = $db->query($sql)) {
-    $token = newTokenEmail($db, $config, $dbemail);
+if($userDB) {
+    $token = newTokenEmail($db, $config, $email);
 
     if($token == false) {
         $resp->error = "Internal Server error (E005)";
@@ -108,27 +92,22 @@ if($res = $db->query($sql)) {
         $resp->result = "success";
         $resp->created = true;
     }
-    echo json_encode($resp);
 } else {
-    $sqlExists = "select username from user where username like '$dbusername' or email like '$dbemail' limit 1;";
+    $resExists = $user->DBExistsFromUsernameOrEmail($email, $username, $db);
 
-    if($resExists = $db->query($sqlExists)) {
-        if($resExists->num_rows > 0) {
-            $resp->error = "User already exists";
-            $resp->result = "exists";
-            echo json_encode($resp);
-        } else {
-            $resp->error = "Internal Server error (E002)";
-            $resp->result = "ERROR";
-            echo json_encode($resp);
-            $db->close();
-            exit();
-        }
-    } else {
-        $resp->error = "Internal Server error(E002)";
+    if($resExists === -1) {
+        $resp->error = "Internal Server error (E002)";
         $resp->result = "ERROR";
-        echo json_encode($resp);
     }
-    $resExists->close();
+
+    if($resExists) {
+        $resp->error = "User already exists";
+        $resp->result = "exists";
+    } else {
+        $resp->error = "Internal Server error (E002)";
+        $resp->result = "ERROR";
+    }
+
 }
+echo json_encode($resp);
 $db->close();
