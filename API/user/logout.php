@@ -1,5 +1,7 @@
 <?php
 
+require_once('../../assets/token.php');
+
 $configPath = '../../files/config.json';
 $config = json_decode(file_get_contents($configPath));
 
@@ -9,7 +11,7 @@ if (isset($_COOKIE[$config->loginTokenName])) {
 }
 
 //delete cookie:
-setcookie($config->loginTokenName, null, 2, '/');
+deleteTokenCookies($config);
 
 //response
 $resp = new stdClass();

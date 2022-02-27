@@ -306,8 +306,9 @@ function createUser() {
         method: 'post',
         body: JSON.stringify(user)
     }).then(function (response) {
-        return response.json();
+        return response.text();
     }).then(function (data) {
+        console.log(data);
         if(data.error == "User already exists") {//if the user exists
             error("Email or username already in use");
         }

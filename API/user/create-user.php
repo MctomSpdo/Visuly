@@ -2,23 +2,14 @@
 $configPath = '../../files/config.json';
 $emailReg = '/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
 
+require_once('../../assets/token.php');
+
 function hasLowerCase($str) {
     return strtoupper($str) != $str;
 }
 
 function hasUpperCase($str) {
     return strtolower($str) != $str;
-}
-
-function generateRandomString($length = 30): string
-{
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    return $randomString;
 }
 
 
@@ -109,24 +100,13 @@ $sql = "insert into USER
 $resp = new stdClass();
 
 if($res = $db->query($sql)) {
+    $token = newTokenEmail($db, $config, $dbemail);
 
-
-    $token = generateRandomString(30);
-    $dbtoken = $db->real_escape_string($config->tokenSalt . $token);
-
-
-    $sqlToken = "insert into token (Token, Owner, Created, ValidUntil) 
-    values (md5('$dbtoken'), 
-        (select UserID from user where email like '$dbemail'), 
-        now(), date_add(now(), INTERVAL 2 year));";
-
-    if($resToken = $db->query($sqlToken)) {
-        setcookie($config->loginTokenName, $token, time() + (31536000) * 1, "/", "", true);//expires in x year (x = 1)
-        $resp->error = "";
+    if($token == false) {
+        $resp->error = "Internal Server error (E005)";
+    } else {
         $resp->result = "success";
         $resp->created = true;
-    } else {
-        $resp->error = "Internal Server error (E005)";
     }
     echo json_encode($resp);
 } else {
