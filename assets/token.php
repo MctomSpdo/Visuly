@@ -105,9 +105,10 @@ function saveTokenDB(String $token, mysqli $db, int $userID, $config)
 {
     $dbToken = $db->real_escape_string($config->token->salt . $token);
     $dbUserId = $db->real_escape_string($userID);
+    $dbLifeSpan = $db->real_escape_string($config->token->lifespan);
 
     $sql = "insert into token (Token, Owner, Created, ValidUntil)
-        values (md5('$dbToken'), $dbUserId, now(), date_add(now(), INTERVAL 2 year))";
+        values (md5('$dbToken'), $dbUserId, now(), date_add(now(), INTERVAL $dbLifeSpan month))";
 
     if(!$db->query($sql)) {
         return false;
@@ -126,11 +127,12 @@ function saveTokenDB(String $token, mysqli $db, int $userID, $config)
 function saveTokenDBEmail(String $token, mysqli $db, String $email, $config) {
     $dbToken = $db->real_escape_string($config->token->salt . $token);
     $dbEmail = $db->real_escape_string($email);
+    $dbLifeSpan = $db->real_escape_string($config->token->lifespan);
 
     $sql = "insert into token (Token, Owner, Created, ValidUntil) 
     values (md5('$dbToken'), 
         (select UserID from user where email like '$dbEmail'), 
-        now(), date_add(now(), INTERVAL 2 year));";
+        now(), date_add(now(), INTERVAL $dbLifeSpan month));";
 
     if(!$db->query($sql)) {
         return false;
