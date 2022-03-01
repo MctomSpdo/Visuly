@@ -1,0 +1,17 @@
+{
+  "database": {
+    "host": "",
+    "database": "",
+    "username": "",
+    "password": ""
+  },
+  "token" : {
+    "salt" : "",
+    "length" : 30,
+    "name" : "",
+    "lifespan" : 24
+  },
+  "userDefaultImage" : "",
+  "userDefaultPermission" : "",
+  "passwordSalt" : ""
+}
