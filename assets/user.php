@@ -11,7 +11,7 @@ class User
     public $createdOn;
     public $phoneNumber;
     public $email;
-    public $password;
+    private $password;
     public $deleted;
     public $lastLogin;
     public $lastTriedLogin;
@@ -19,42 +19,6 @@ class User
 
     function __construct()
     {
-    }
-
-    /**
-     * Loads a user with the help of the UUID
-     * @param mysqli $db database to pull the data from
-     * @return bool false if error, true otherwise
-     */
-    function DBLoadFromUUID(mysqli $db): bool
-    {
-        if ($this->UUID == null) {
-            return false;
-        }
-
-        $dbUUID = $db->real_escape_string($this->UUID);
-        $sql = "select * from user where UUID like '$dbUUID' limit 1";
-
-        if (!$res = $db->query($sql)) {
-            return false;
-        }
-        $result = $res->fetch_all()[0];
-
-        $this->UserID = $result[0];
-        $this->UUID = $result[1];
-        $this->username = $result[2];
-        $this->desc = $result[3];
-        $this->gender = $result[4];
-        $this->profilePic = $result[5];
-        $this->createdOn = $result[6];
-        $this->phoneNumber = $result[7];
-        $this->email = $result[8];
-        $this->password = $result[9];
-        $this->deleted = $result[10];
-        $this->lastLogin = $result[11];
-        $this->lastTriedLogin = $result[12];
-        $this->permission = $result[13];
-        return true;
     }
 
     /**
@@ -177,6 +141,65 @@ class User
         $ret = $res->num_rows > 0;
         $res->close();
         return $ret;
+    }
+
+    //load user from DB:
+
+    function DBLoadFromUserID(int $userID, mysqli $db) {
+        $dbUserId = $db->real_escape_string($userID);
+        $sql = "select * from user where UserID like $userID;";
+
+        if(!$res = $db->query($sql)) {
+            return false;
+        }
+
+        $result = $res->fetch_all()[0];
+
+        $this->loadFromResult($result);
+
+        $res->close();
+        return true;
+    }
+
+    /**
+     * Loads a user with the help of the UUID
+     * @param mysqli $db database to pull the data from
+     * @return bool false if error, true otherwise
+     */
+    function DBLoadFromUUID(mysqli $db): bool
+    {
+        if ($this->UUID == null) {
+            return false;
+        }
+
+        $dbUUID = $db->real_escape_string($this->UUID);
+        $sql = "select * from user where UUID like '$dbUUID' limit 1";
+
+        if (!$res = $db->query($sql)) {
+            return false;
+        }
+        $result = $res->fetch_all()[0];
+
+        $this->loadFromResult($result);
+        $res->close();
+        return true;
+    }
+
+    private function loadFromResult($result) {
+        $this->UserID = $result[0];
+        $this->UUID = $result[1];
+        $this->username = $result[2];
+        $this->desc = $result[3];
+        $this->gender = $result[4];
+        $this->profilePic = $result[5];
+        $this->createdOn = $result[6];
+        $this->phoneNumber = $result[7];
+        $this->email = $result[8];
+        $this->password = $result[9];
+        $this->deleted = $result[10];
+        $this->lastLogin = $result[11];
+        $this->lastTriedLogin = $result[12];
+        $this->permission = $result[13];
     }
 
     private function generateString($length): string

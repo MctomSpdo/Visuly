@@ -3,6 +3,7 @@ $configPath = 'files/config.json';
 $config = json_decode(file_get_contents($configPath));
 
 require_once('./assets/token.php');
+require_once ('./assets/user.php');
 
 //database connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
@@ -12,14 +13,17 @@ if($db->connect_error) {
 }
 
 //check if user cookies exists, if not redirect them to login
-if (!isset($_COOKIE[$config->loginTokenName])) {
+if (!isset($_COOKIE[$config->token->name])) {
     header("Location: ./login.php");
     exit();
 }
 
-$token = $_COOKIE[$config->loginTokenName];
+$token = $_COOKIE[$config->token->name];
 //check token in db:
 $userId = checkTokenWRedirect($token, $config, $db);
+
+$user = new User();
+$user->DBLoadFromUserID($userId, $db);
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +43,7 @@ $userId = checkTokenWRedirect($token, $config, $db);
 
 <body>
 <?php
-include "assets/header.html";
+include "assets/header.php";
 ?>
 <main>
     <?php

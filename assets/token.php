@@ -9,7 +9,7 @@
  */
 function checkTokenWRedirect(String $token, $config, mysqli $db)
 {
-    $dbToken = $db->real_escape_string($config->tokenSalt . $token);
+    $dbToken = $db->real_escape_string($config->token->salt . $token);
     $sql = "select * from token where Token like md5('$dbToken') and ValidUntil > current_date();";
 
     //if database statement fails, redirect to the error page:

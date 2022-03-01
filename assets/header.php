@@ -1,3 +1,10 @@
+<?php
+    $img = "user.svg";
+    if(isset($user)) {
+        $img = $user->profilePic;
+    }
+?>
+
 <header>
     <div id="header-logo">VISULY</div>
     <div id="header-search">
@@ -8,7 +15,7 @@
     </div>
     <div id="header-user">
         <div id="header-user-img">
-            <img src="files/img/users/user.svg" alt="User" id="header-user-icon">
+            <img src="files/img/users/<?php echo $img?>" alt="User" id="header-user-icon">
         </div>
     </div>
 
