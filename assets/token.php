@@ -2,6 +2,8 @@
 
 /**
  * Checks if the token is valid (exists in the database)
+ *
+ * THIS DOES CLOSE THE DB CONNECTION (if redirected)
  * @param String $token token to be checked
  * @param $config * parsed JSON
  * @param mysqli $db database connection (MySQL)
@@ -15,6 +17,7 @@ function checkTokenWRedirect(String $token, $config, mysqli $db)
     //if database statement fails, redirect to the error page:
     if (!$res = $db->query($sql)) {
         header("Location: ./error.html");
+        $db->close();
         exit();
     }
 
@@ -22,6 +25,7 @@ function checkTokenWRedirect(String $token, $config, mysqli $db)
     if ($res->num_rows < 1) {
         header("Location: ./login.php");
         $res->close();
+        $db->close();
         exit();
     }
     $result = $res->fetch_all()[0];

@@ -20,7 +20,7 @@
     </div>
 
     <div id="header-dropdown">
-        <a href="myuser.php">
+        <a href="user.php">
             <div>
                 <div class="header-dropdown-image">
                     <img src="files/img/users/user.svg" alt="user">

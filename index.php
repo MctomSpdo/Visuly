@@ -2,20 +2,20 @@
 $configPath = 'files/config.json';
 $config = json_decode(file_get_contents($configPath));
 
-require_once('./assets/token.php');
-require_once ('./assets/user.php');
+require_once './assets/token.php';
+require_once './assets/user.php';
+
+//check user token:
+if (!isset($_COOKIE[$config->token->name])) {
+    header("Location: ./login.php");
+    exit();
+}
 
 //database connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if($db->connect_error) {
     header("Location: ./error.php");
-}
-
-//check if user cookies exists, if not redirect them to login
-if (!isset($_COOKIE[$config->token->name])) {
-    header("Location: ./login.php");
-    exit();
 }
 
 $token = $_COOKIE[$config->token->name];

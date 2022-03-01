@@ -6,7 +6,7 @@
     --colorD: #354f52;
     --colorE: #2f3e46;
     --searchPlaceholder: rgb(214, 214, 214);
-    --defaultBg: #fff
+    --defaultBg: #fff;
     --likeColor: #A41C1C;
 }
 
@@ -366,4 +366,55 @@ nav > a > div {
 
 .post-descr p {
     margin: 0;
+}
+
+/************************************************ USER ************************************************/
+
+#user {
+    margin-top: 4vh;
+}
+
+/** USER-HEADER **/
+
+#user-header {
+    display: flex;
+    height: 30vh;
+}
+
+#user-header-pfp  {
+    display: flex;
+    align-items: baseline;
+    width: 40vh;
+}
+
+#user-header-pfp img {
+    width: 80%;
+    height: auto;
+    margin: 0 auto;
+    clip-path: circle(50% at 50% 50%);
+}
+
+#user-header-info {
+    width: 100%;
+    padding-left: 5%;
+    display: grid;
+    grid-template-rows: 30% 70%;
+}
+
+#user-info-username {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#user-info-username h1 {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+#user-advancedInfo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }

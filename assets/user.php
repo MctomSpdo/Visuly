@@ -20,7 +20,6 @@ class User
     function __construct()
     {
     }
-
     /**
      * @param mysqli $db Database for the user
      * @return false|string false if error, UUID otherwise
@@ -145,6 +144,12 @@ class User
 
     //load user from DB:
 
+    /**
+     * Loads the user from the DB based on the given UserID
+     * @param int $userID userid of the user
+     * @param mysqli $db database
+     * @return bool true if exists, false otherwise (if fails false too)
+     */
     function DBLoadFromUserID(int $userID, mysqli $db) {
         $dbUserId = $db->real_escape_string($userID);
         $sql = "select * from user where UserID like $userID;";
@@ -183,6 +188,19 @@ class User
         $this->loadFromResult($result);
         $res->close();
         return true;
+    }
+
+    function DBJoinDateFormat(string $format, mysqli $db) {
+        $dbFormat = $db->real_escape_string($format);
+        $sql = "select date_format(createdOn, '$dbFormat') from user where UserID like $this->UserID;";
+
+        if(!$res = $db->query($sql)) {
+            return false;
+        }
+
+        $result = $res->fetch_all()[0];
+        $res->close();
+        return $result[0];
     }
 
     private function loadFromResult($result) {

@@ -6,8 +6,8 @@ $configPath = '../../files/config.json';
 $config = json_decode(file_get_contents($configPath));
 
 //unset variable:
-if (isset($_COOKIE[$config->loginTokenName])) {
-    unset($_COOKIE[$config->loginTokenName]);
+if (isset($_COOKIE[$config->token->name])) {
+    unset($_COOKIE[$config->token->name]);
 }
 
 //delete cookie:
