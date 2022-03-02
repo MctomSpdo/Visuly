@@ -14,7 +14,7 @@ if (!isset($_COOKIE[$config->token->name])) {
 //database connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
-if($db->connect_error) {
+if ($db->connect_error) {
     header("Location: ./error.php");
 }
 
@@ -25,7 +25,7 @@ $userId = checkTokenWRedirect($token, $config, $db);
 $user = new User();
 $user->DBLoadFromUserID($userId, $db);
 
-if(isset($_GET['user'])) {
+if (isset($_GET['user'])) {
     $userDisplay = new User();
     $userDisplay->UUID = $_GET['user'];
     $userDisplay->DBLoadFromUUID($db);
@@ -60,31 +60,60 @@ include "assets/header.php";
         <div id="user">
             <div id="user-header">
                 <div id="user-header-pfp">
-                    <img src="./files/img/users/<?php echo $userDisplay->profilePic?>" alt="<?php echo $userDisplay->username?>">
+                    <img src="./files/img/users/<?php echo $userDisplay->profilePic ?>"
+                         alt="<?php echo $userDisplay->username ?>">
                 </div>
                 <div id="user-header-info">
                     <div id="user-info-username">
-                        <h1><?php echo $userDisplay->username?></h1>
+                        <h1><?php echo $userDisplay->username ?></h1>
                     </div>
                     <div id="user-info-body">
                         <p><?php
-                            if($userDisplay->desc == "") {
+                            if ($userDisplay->desc == "") {
                                 echo "This User doesn't have a bio yet!";
                             } else {
                                 echo $userDisplay->desc;
-                            }?></p>
+                            } ?></p>
                         <div id="user-advancedInfo">
                             <div>
-                                <p>12 Posts</p>
+                                <p><?php echo $userDisplay->DBGetPosts($db)?> Posts</p>
                             </div>
                             <div>
-                                <p>XXX Followers</p>
+                                <p><?php
+                                    $followers = $userDisplay->DBGetFollowers($db);
+                                    switch ($followers) {
+                                        case -1:
+                                            header("Location: ./error.php");
+                                            break;
+                                        case 0:
+                                            echo "no Followers";
+                                            break;
+                                        case 1:
+                                            echo "1 Follower";
+                                            break;
+                                        default:
+                                            echo $followers . "Followers";
+
+                                    } ?></p>
                             </div>
                             <div>
-                                <p>XXXX Following</p>
+                                <p><?php
+                                    $follows = $userDisplay->DBGetFollows($db);
+                                    switch ($followers) {
+                                        case -1:
+                                            header("Location: ./error.php");
+                                            break;
+                                        case 0:
+                                            echo "Follows none";
+                                            break;
+                                        default:
+                                            echo $follows . " Follows";
+                                            break;
+                                    }
+                                    ?></p>
                             </div>
                             <div>
-                                <p><?php echo $userDisplay->DBJoinDateFormat("%M %Y", $db)?></p>
+                                <p><?php echo $userDisplay->DBJoinDateFormat("%M %Y", $db) ?></p>
                             </div>
                         </div>
                     </div>

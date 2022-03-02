@@ -20,6 +20,7 @@ class User
     function __construct()
     {
     }
+
     /**
      * @param mysqli $db Database for the user
      * @return false|string false if error, UUID otherwise
@@ -77,7 +78,7 @@ class User
         (UUID, username, gender, profilePic, createdOn, email, password, deleted, permission)
         values ('$dbUUID', '$dbUsername', '$dbGender', '$profilePic', now(), '$dbEmail', md5('$dbPassword'), 0, $defaultPermission);";
 
-        if($db->query($sql)) {
+        if ($db->query($sql)) {
             return true;
         }
         return false;
@@ -90,13 +91,14 @@ class User
      * @param mysqli $db Database to look up
      * @return bool|int true if exists, -1 if error
      */
-    function DBExistsFromUsernameOrEmail(string $email, string $username, mysqli $db) {
+    function DBExistsFromUsernameOrEmail(string $email, string $username, mysqli $db)
+    {
         $dbUsername = $db->real_escape_string($username);
         $dbEmail = $db->real_escape_string($email);
 
         $sql = "select username from user where username like '$dbUsername' or email like '$dbEmail' limit 1;";
 
-        if(!$res = $db->query($sql)) {
+        if (!$res = $db->query($sql)) {
             return -1;
         }
 
@@ -111,11 +113,12 @@ class User
      * @param mysqli $db Database
      * @return bool|int true if exists, false otherwise, -1 if error
      */
-    function DBExistsFromUsername(string $username, mysqli $db) {
+    function DBExistsFromUsername(string $username, mysqli $db)
+    {
         $dbUsername = $db->real_escape_string($username);
         $sql = "select username from user where username like '$dbUsername' limit 1;";
 
-        if(!$res = $db->query($sql)) {
+        if (!$res = $db->query($sql)) {
             return -1;
         }
         $ret = $res->num_rows > 0;
@@ -129,11 +132,12 @@ class User
      * @param mysqli $db Database
      * @return bool|int true if exists, false otherwise, -1 if error
      */
-    function DBExistsFromEmail(string $email, mysqli $db) {
+    function DBExistsFromEmail(string $email, mysqli $db)
+    {
         $dbEmail = $db->real_escape_string($email);
         $sql = "select username from user where email like '$dbEmail' limit 1";
 
-        if(!$res = $db->query($sql)) {
+        if (!$res = $db->query($sql)) {
             return -1;
         }
 
@@ -150,11 +154,12 @@ class User
      * @param mysqli $db database
      * @return bool true if exists, false otherwise (if fails false too)
      */
-    function DBLoadFromUserID(int $userID, mysqli $db) {
+    function DBLoadFromUserID(int $userID, mysqli $db)
+    {
         $dbUserId = $db->real_escape_string($userID);
         $sql = "select * from user where UserID like $userID;";
 
-        if(!$res = $db->query($sql)) {
+        if (!$res = $db->query($sql)) {
             return false;
         }
 
@@ -190,11 +195,12 @@ class User
         return true;
     }
 
-    function DBJoinDateFormat(string $format, mysqli $db) {
+    function DBJoinDateFormat(string $format, mysqli $db)
+    {
         $dbFormat = $db->real_escape_string($format);
         $sql = "select date_format(createdOn, '$dbFormat') from user where UserID like $this->UserID;";
 
-        if(!$res = $db->query($sql)) {
+        if (!$res = $db->query($sql)) {
             return false;
         }
 
@@ -203,7 +209,65 @@ class User
         return $result[0];
     }
 
-    private function loadFromResult($result) {
+    /**
+     * Looks up how many followers the user has
+     * @param mysqli $db database
+     * @return int -1 is error, number otherwise
+     */
+    function DBGetFollowers(mysqli $db)
+    {
+        $dbUserId = $db->real_escape_string($this->UserID);
+        $sql = "select count(*) from follow where Follows like $dbUserId";
+
+        if (!$res = $db->query($sql)) {
+            return -1;
+        }
+
+        $request = $res->fetch_all()[0][0];
+        $res->close();
+        return (int)$request;
+    }
+
+    /**
+     * Look up how many users the user follows
+     * @param mysqli $db database
+     * @return int -1 if error, number otherwise
+     */
+    function DBGetFollows(mysqli $db)
+    {
+        $dbUserId = $db->real_escape_string($this->UserID);
+        $sql = "select count(*) from follow where owner like $dbUserId;";
+
+        if (!$res = $db->query($sql)) {
+            return -1;
+        }
+
+        $result = $res->fetch_all()[0][0];
+        $res->close();
+        return (int)$result;
+    }
+
+    /**
+     * Get the amount of posts the user posted to the db
+     * @param mysqli $db database
+     * @return int -1 if error, number otherwise
+     */
+    function DBGetPosts(mysqli $db)
+    {
+        $dbUserId = $db->real_escape_string($this->UserID);
+        $sql = "select count(*) from post where FromUser like $dbUserId;";
+
+        if(!$res = $db->query($sql)) {
+            return -1;
+        }
+
+        $result = $res->fetch_all()[0][0];
+        $res->close();
+        return (int)$result;
+    }
+
+    private function loadFromResult($result)
+    {
         $this->UserID = $result[0];
         $this->UUID = $result[1];
         $this->username = $result[2];
