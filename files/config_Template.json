@@ -5,13 +5,15 @@
     "username": "",
     "password": ""
   },
-  "token" : {
-    "salt" : "",
-    "length" : 30,
-    "name" : "",
-    "lifespan" : 24
+  "token": {
+    "name": "",
+    "salt": "",
+    "length": 30,
+    "lifespan": 24
   },
-  "userDefaultImage" : "",
-  "userDefaultPermission" : "",
-  "passwordSalt" : ""
+  "userImageFolder": "files/img/users",
+  "userDefaultImage": "user.png",
+  "userDefaultPermission": "2",
+  "postImageFolder" : "files/img/posts",
+  "passwordSalt": ""
 }
