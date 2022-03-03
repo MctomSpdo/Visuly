@@ -16,20 +16,20 @@ let inputGenders = document.getElementsByName("gender");
 //outputs:
 let outputError = document.getElementById("signup-error");
 
-//add Eventlistener:
+//add EventListener:
 document.querySelectorAll('input').forEach(input => {
     input.addEventListener('keypress', checkName);
     input.addEventListener("change", check);
     input.addEventListener("keyup", check);
 });
 
-//submit eventlistener: 
+//submit eventListener:
 form.addEventListener('submit', (event) => {
     event.preventDefault();
     createUser();
 })
 
-//username eventlistener (username already taken): 
+//username eventListener (username already taken):
 let usernameTimer;
 
 inputUsername.addEventListener('keyup', (e) => {
@@ -39,7 +39,7 @@ inputUsername.addEventListener('keyup', (e) => {
     }, typeDelayTime);
 });
 
-//email eventlistener (email already in use):
+//email eventListener (email already in use):
 let emailTimer;
 
 inputEmail.addEventListener('keyup', (e) => {
@@ -112,7 +112,7 @@ function pwdCheck() {
     }
 
     if (!containsNumber(pwd1)) {
-        return "Password muste contain a number!"
+        return "Password must contain a number!"
     }
 
     return "";
@@ -147,7 +147,7 @@ function usernameCheck() {
  * Checks the email
  * 
  * invalid: "Invalid Email"
- * @returns {String} "" if flase, errors listed above otherwise
+ * @returns {String} "" if false, errors listed above otherwise
  */
 function emailCheck() {
     let email = inputEmail.value;
@@ -173,60 +173,7 @@ function emailCheck() {
  * @returns {String} "" if false, errors listed above otherwise
  */
 function genderCheck() {
-    if (genderValue() === null) {
-        return "Please select a gender";
-    }
-    return "";
-}
-
-/************************************************ UTIL ************************************************/
-
-/**
- * checks if a String has a lowercase letter inside
- * @param {String} str String to check
- * @returns {Boolean} true, if there is a lowercase letter, false otherwise
- */
-function hasLowerCase(str) {
-    return str.toUpperCase() !== str;
-}
-
-/**
- * checks if a String has a uppercase letter inside
- * @param {String} str String to check
- * @returns {Boolean} true, if there is a uppercase letter, false othewise
- */
-function hasUpperCase(str) {
-    return str.toLowerCase() !== str;
-}
-
-/**
- * checks if a String contains a number
- * @param {String} str String to check
- * @returns {Boolean} true, if there is a number
- */
-function containsNumber(str) {
-    return /\d/.test(str);
-}
-
-/**
- * Displays the error
- * @param {String} message 
- */
-function error(message) {
-    outputError.style.display = "block";
-    outputError.innerHTML = message;
-}
-
-/**
- * Value of the Gender radio buttons
- */
-function genderValue() {
-    for (let i = 0; i < inputGenders.length; i++) {
-        if (inputGenders[i].checked) {
-            return inputGenders[i].value;
-        }
-    }
-    return null;
+    return genderValue() === null ? "Please select a gender" : "";
 }
 
 /************************************************ SUBMIT ************************************************/
@@ -280,31 +227,14 @@ function createUser() {
         return false;
     }
 
-    //TODO: send request to Server: 
     let username = inputUsername.value;
     let gender = genderValue();
     let email = inputEmail.value;
     let password = inputPwd1.value;
 
-    class User {
-        username
-        gender
-        email
-        password
-
-        constructor(username, gender, email, password) {
-            this.username = username;
-            this.gender = gender;
-            this.email = email;
-            this.password = password;
-        }
-    }
-
-    let user = new User(username, gender, email, password);
-
     fetch(api_createUser, {
         method: 'post',
-        body: JSON.stringify(user)
+        body: JSON.stringify({"username" : username, "gender" : gender, "email" : email, "password" : password})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -323,7 +253,7 @@ function createUser() {
 /************************************************ USERNAME EXISTS ************************************************/
 
 /**
- * Looks up if a username already exists in the database
+ * Looks up if an username already exists in the database
  * @param {String} username 
  */
 function userLookUp(username) {
@@ -344,7 +274,7 @@ function userLookUp(username) {
 /************************************************ EMAIL EXISTS ************************************************/
 
 /**
- * Looks up if a email is already in use
+ * Looks up if an email is already in use
  * @param {String} email email
  */
 function emailLookUp(email) {
@@ -360,4 +290,54 @@ function emailLookUp(email) {
             error("Email is already in use");
         }
     });
+}
+
+/************************************************ UTIL ************************************************/
+
+/**
+ * checks if a String has a lowercase letter inside
+ * @param {String} str String to check
+ * @returns {Boolean} true, if there is a lowercase letter, false otherwise
+ */
+function hasLowerCase(str) {
+    return str.toUpperCase() !== str;
+}
+
+/**
+ * checks if a String has a uppercase letter inside
+ * @param {String} str String to check
+ * @returns {Boolean} true, if there is a uppercase letter, false othewise
+ */
+function hasUpperCase(str) {
+    return str.toLowerCase() !== str;
+}
+
+/**
+ * checks if a String contains a number
+ * @param {String} str String to check
+ * @returns {Boolean} true, if there is a number
+ */
+function containsNumber(str) {
+    return /\d/.test(str);
+}
+
+/**
+ * Displays the error
+ * @param {String} message
+ */
+function error(message) {
+    outputError.style.display = "block";
+    outputError.innerHTML = message;
+}
+
+/**
+ * Value of the Gender radio buttons
+ */
+function genderValue() {
+    for (let i = 0; i < inputGenders.length; i++) {
+        if (inputGenders[i].checked) {
+            return inputGenders[i].value;
+        }
+    }
+    return null;
 }

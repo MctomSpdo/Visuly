@@ -55,12 +55,7 @@
         let headerDropDownIsDisplayed = false;
 
         document.getElementById("header-user-icon").addEventListener("click", () => {
-            if (headerDropDownIsDisplayed) {
-                document.getElementById("header-dropdown").style.display = "none";
-            } else {
-                document.getElementById("header-dropdown").style.display = "block";
-            }
-
+            document.getElementById("header-dropdown").style.display = (headerDropDownIsDisplayed) ? "none" : "block";
             headerDropDownIsDisplayed = !headerDropDownIsDisplayed;
         });
     </script>
