@@ -2,7 +2,7 @@
 
 class User
 {
-    private $UserID;
+    public $UserID;
     public $UUID;
     public $username;
     public $desc;

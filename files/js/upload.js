@@ -1,6 +1,6 @@
 let inputBoxHoverClass = "upload-filehover";
 
-let api_creatPost = "";
+let api_creatPost = "./API/post/create-post.php";
 
 //drag and drop API: https://www.w3schools.com/html/html5_draganddrop.asp
 
@@ -64,10 +64,10 @@ function check() {
     let title = inputTitle.value;
     let desc = inputDesc.value;
     
-    if(title != "" && title.length() > 30) {
+    if(title != "" && title.length > 30) {
         error("Title can't be over 30 characters long!");
         return true;
-    } else if(desc != "" && desc.length() > 2000) {
+    } else if(desc != "" && desc.length > 2000) {
         error("Description can't be over 2000 Characters long!");
         return true;
     }
@@ -89,12 +89,13 @@ function upload() {
 
     formData.append('title', inputTitle.value);
     formData.append('desc', inputDesc.value);
-    formData.append('Category', inputCategory.value);
-    formData.append('Location', inputLocation.value);
-    formData.append('photo', image);
+    formData.append('category', inputCategory.value);
+    formData.append('location', inputLocation.value);
+    formData.append('image', image);
 
     fetch(api_creatPost, {
         method: 'post',
+        credentials: 'same-origin',
         body: formData
     }).then(function (response) {
         return response.text();

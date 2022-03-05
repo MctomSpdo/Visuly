@@ -40,13 +40,96 @@ $user->DBLoadFromUserID($userId, $db);
 
     <!-- icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="./files/js/upload.js" defer></script>
 </head>
 
 <body>
 <?php include "assets/header.php"; ?>
 <main>
     <?php include "assets/nav.html"?>
-    <div></div>
+    <div>
+        <div id="upload-header">
+            <h2>Create a post</h2>
+        </div>
+
+        <!-- https://css-tricks.com/examples/DragAndDropFileUploading/ -->
+        <div id="upload-main">
+            <form id="upload">
+                <div id="upload-file" ondrop="drop(event);" ondragover="dragOverHandler(event);">
+                    <div id="file-upload">
+                        <div id="upload-file-img-wrapper">
+                            <div>
+                                <img src="./files/img/upload.svg" id="upload-icon">
+                            </div>
+
+                        </div>
+
+                        <input type="file" id="file"  accept="image/png, image/jpeg, image/gif">
+                        <label for="file" id="file-label">
+                            <strong>Choose a file</strong>
+                            <span>or drag it here</span>
+                        </label>
+                    </div>
+                    <div id="file-display">
+                        <img id="img-prev" alt="Uploaded Image">
+                    </div>
+                </div>
+                <div id="upload-inputs">
+                    <div>
+                        <label for="upload-title">Title</label>
+                        <br>
+                        <input type="text" name="upload-title" placeholder="Title" id="upload-title"
+                               autocomplete="off">
+                    </div>
+
+                    <div>
+                        <label for="upload-description">Description</label>
+                        <br>
+                        <textarea id="upload-description" name="upload-description" autocomplete="off"
+                                  placeholder="Description"></textarea>
+                    </div>
+
+                    <div>
+                        <label for="upload-category">Category</label>
+                        <br>
+                        <input id="upload-category" name="upload-category" autocomplete="off" placeholder="Category"
+                               multiple list="upload-category-list">
+
+                        <datalist id="upload-category-list">
+                            <option value="test1">Test1</option>
+                            <option value="test2">Test2</option>
+                            <option value="test3">Test3</option>
+                            <option value="test4">Test4</option>
+                            <option value="test5">Test5</option>
+                            <option value="test6">Test6</option>
+                        </datalist>
+                    </div>
+
+                    <div>
+                        <label for="upload-location">Location</label>
+                        <br>
+                        <input id="upload-location" name="upload-location" autocomplete="off" placeholder="Location"
+                               list="upload-location-list">
+
+                        <datalist id="upload-location-list">
+                            <option value="loc1">Location 1</option>
+                            <option value="loc2">Location 2</option>
+                            <option value="loc3">Location 3</option>
+
+                        </datalist>
+                    </div>
+
+                    <p id="upload-error"></p>
+
+                    <div id="upload-submit-wrapper">
+                        <button tpye="submit">Upload</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
     <div></div>
 </main>
 </body>

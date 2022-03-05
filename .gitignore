@@ -1,5 +1,6 @@
 .idea/*
 *.iml
+files/img/post/*;
 
 #config file, since it will be generated, and contains longin information
 files/config.json

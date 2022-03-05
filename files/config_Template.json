@@ -11,9 +11,13 @@
     "length": 30,
     "lifespan": 24
   },
+  "post": {
+    "defaultDir": "/files/img/post",
+    "nameLength": 60
+  },
   "userImageFolder": "files/img/users",
   "userDefaultImage": "user.png",
   "userDefaultPermission": "2",
-  "postImageFolder" : "files/img/posts",
+  "postImageFolder": "files/img/posts",
   "passwordSalt": ""
 }

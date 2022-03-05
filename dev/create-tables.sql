@@ -22,7 +22,7 @@ create table user
     constraint username
         unique (username),
     constraint UUID
-        unique(UUID)
+        unique (UUID)
 );
 
 /* Permissions */
@@ -67,12 +67,13 @@ create table post
 (
     PostID      int auto_increment
         primary key,
-    ImgPath     varchar(60)   not null,
+    uuid        varchar(30)   not null,
     Title       varchar(30)   not null,
     Description varchar(2000) not null,
     PostedOn    datetime      not null,
     FromUser    int           not null,
-    IsDeleted   tinyint       not null
+    IsDeleted   tinyint       not null,
+    extention   varchar(3)    not null
 );
 
 /* Post_Category */
