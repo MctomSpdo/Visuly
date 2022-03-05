@@ -1,0 +1,182 @@
+let inputBoxHoverClass = "upload-filehover";
+
+let api_creatPost = "";
+
+//drag and drop API: https://www.w3schools.com/html/html5_draganddrop.asp
+
+//elements:
+let inputFileBox = document.getElementById("upload-file");
+let previewFileBox = document.getElementById("file-display");
+let inputFile = document.getElementById("file");
+let inputFileInnerBox = document.getElementById("file-upload");
+
+let inputTitle = document.getElementById("upload-title");
+let inputDesc = document.getElementById("upload-description");
+
+let inputCategory = document.getElementById("upload-category");
+let inputCategoryList = document.getElementById("upload-category-list");
+
+let inputLocation = document.getElementById("upload-location");
+let inputLocationList = document.getElementById("upload-location-list");
+
+let outputError = document.getElementById("upload-error");
+
+
+
+let image = null;
+
+/************************************************ EVENTLISTENER ************************************************/
+
+//file:
+inputFileBox.addEventListener("dragenter", dragEnter);
+inputFileBox.addEventListener("dragleave", dragLeave);
+inputFileInnerBox.addEventListener("dragenter", dragEnter);
+inputFileInnerBox.addEventListener("dragleave", dragLeave);
+
+inputFile.addEventListener("change", () => {
+    let fileList = inputFile.files;
+
+    if(fileList.length == 0) {
+        return;
+    }
+    loadFile(fileList[0]);
+});
+
+function dragEnter() {
+    inputFileBox.classList.add(inputBoxHoverClass);
+}
+
+function dragLeave() {
+    inputFileBox.classList.remove(inputBoxHoverClass);
+}
+
+//inputs: 
+
+document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('keyup', check);
+    input.addEventListener('keypress', check);
+});
+
+/**
+ * Checks all the input fields
+ */
+function check() {
+    let title = inputTitle.value;
+    let desc = inputDesc.value;
+    
+    if(title != "" && title.length() > 30) {
+        error("Title can't be over 30 characters long!");
+        return true;
+    } else if(desc != "" && desc.length() > 2000) {
+        error("Description can't be over 2000 Characters long!");
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Call this function to upload everything
+ */
+function upload() {
+    if(check()) {
+        return;
+    } else if (image === null) {
+        error("Select an Image first");
+        return;
+    }
+
+    let formData = new FormData();
+
+    formData.append('title', inputTitle.value);
+    formData.append('desc', inputDesc.value);
+    formData.append('Category', inputCategory.value);
+    formData.append('Location', inputLocation.value);
+    formData.append('photo', image);
+
+    fetch(api_creatPost, {
+        method: 'post',
+        body: formData
+    }).then(function (response) {
+        return response.text();
+    }).then(function (data) { 
+        console.log(data);
+    });
+}
+
+/**
+ * receives dropped file
+ * @param {Event} ev Event
+ */
+function drop(ev) {
+    ev.preventDefault();
+    let file = "";
+
+    if (ev.dataTransfer.items) {
+        file = ev.dataTransfer.items[0].getAsFile();
+    } else {
+        file = ev.dataTransfer.files[0];
+    }
+
+    loadFile(file);
+    inputFileBox.classList.remove(inputBoxHoverClass);
+}
+
+/**
+ * Drag over event handler for fileinput
+ * @param {} ev Event
+ */
+function dragOverHandler(ev) {
+    ev.preventDefault();
+    inputFileBox.classList.add(inputBoxHoverClass);
+}
+
+/**
+ * Loads the file after selecting
+ * @param {File} file 
+ * @returns nothing
+ */
+function loadFile(file) {
+    if (!fileIsImage(file)) {
+        error("File is not an image!")
+        return;
+    }
+    image = file;
+
+    //https://stackoverflow.com/questions/20403778/display-image-after-drag-and-drop-on-html-page
+    let fd = new FormData();
+    fd.append('file', file);
+
+    let img = document.getElementById("img-prev");
+    img.classList.add("obj");
+    img.file = file;
+
+    let reader = new FileReader();
+    reader.onload = (function (aImg) { return function (e) { aImg.src = e.target.result; }; })(img);
+    reader.readAsDataURL(file);
+
+    inputFileInnerBox.style.display = "none";
+    previewFileBox.style.display = "flex";
+    inputFileBox.style.backgroundColor = "rgba(0, 0, 0, 0)"
+    inputFileBox.style.boxShadow = "none";
+
+    console.log(fileIsImage(file));
+}
+
+/**
+ * checks if a given File is an Image
+ * @param {File} file File to check 
+ * @returns true if image, false othewise
+ */
+function fileIsImage(file) {
+    const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+
+    return file && acceptedImageTypes.includes(file['type'])
+}
+
+/**
+ * Displays an error on the page
+ * @param {String} text 
+ */
+function error(text) {
+    outputError.innerHTML = text;
+}

@@ -48,7 +48,7 @@ function login() {
         } else if (data.successfull) {
             window.location.replace("./");
         } else {
-            error("An unknown error occured, please try again later");
+            error("An unknown error occurred, please try again later");
         }
     });
 }

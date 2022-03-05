@@ -418,3 +418,148 @@ nav > a > div {
     flex-wrap: wrap;
     justify-content: space-between;
 }
+
+/************************************************ UPLOAD ************************************************/
+
+#upload-header {
+    text-align: center;
+}
+
+/**
+UPLOAD FILE 
+**/
+
+#upload-file {
+    width: 80%;
+    background-color: var(--colorA);
+    margin: 0 auto 5vh auto;
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: background-color 0.3s;
+}
+
+.upload-filehover {
+    background-color: var(--colorD) !important;/* Important so that it gets displayed */
+    color: var(--defaultBg);
+}
+
+#upload-file-img-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5vh;
+}
+
+#upload-file-img-wrapper > div {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#upload-file-img-wrapper > img {
+    width: 100%;
+    height: auto;
+    opacity: 80%;
+}
+
+#upload input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+#file-label strong:hover {
+    color: var(--colorC);
+    cursor: pointer;
+}
+
+/**
+FILE DISPLAY (after drag and dropping or selecting)
+**/
+
+#file-display {
+    display: none;
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+    justify-content: center;
+}
+
+#file-display img {
+    height: auto;
+    max-height: 100% !important;
+    max-width: 100% !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, .09);
+}
+
+/**
+INPUTS 
+**/
+
+#upload-inputs {
+    width: 60%;
+    margin: 0 auto;
+}
+
+#upload-inputs > div {
+    margin: 0 0 1vh 0;
+}
+
+#upload-inputs > div input, #upload-inputs > div textarea {
+    width: 100%;
+
+    height: 4vh;
+    margin: 1vh 0;
+    padding-left: 2%;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+    border-radius: 0.5vh;
+    box-sizing: border-box;
+    font-family: Poppins;
+}
+
+#upload-inputs > div textarea {
+    height: 8vh;
+    resize: auto;
+    padding: 0.8em 1em;
+}
+
+#upload-inputs > div input:focus, #upload-inputs > div textarea:focus {
+    border: none;
+    outline: none;
+    border: rgba(0, 0, 0, 0.4) solid 1px;
+}
+
+#upload-submit-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#upload-inputs button {
+    text-align: center;
+    padding: 1vh 2vw;
+    outline: none;
+    border: none;
+    border-radius: 0.5vh;
+    transition: background-color linear 0.2s;
+    font-size: 1.1em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+    background-color: var(--colorA);
+}
+
+#upload-inputs button:hover {
+    background-color: var(--colorD);
+    color: var(--defaultBg);
+}
+
+#upload-error {
+    color: #ff0000;
+}
