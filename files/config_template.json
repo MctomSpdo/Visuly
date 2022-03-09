@@ -13,11 +13,11 @@
   },
   "post": {
     "defaultDir": "/files/img/post",
-    "nameLength": 60
+    "nameLength": 60,
+    "maxSize": 10000000
   },
   "userImageFolder": "files/img/users",
   "userDefaultImage": "user.png",
   "userDefaultPermission": "2",
-  "postImageFolder": "files/img/posts",
   "passwordSalt": ""
 }
