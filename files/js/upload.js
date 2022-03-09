@@ -5,6 +5,9 @@ let api_creatPost = "./API/post/create-post.php";
 //drag and drop API: https://www.w3schools.com/html/html5_draganddrop.asp
 
 //elements:
+let uploadForm = document.getElementById("upload");
+let uploadBox = document.getElementById("upload-main");
+
 let inputFileBox = document.getElementById("upload-file");
 let previewFileBox = document.getElementById("file-display");
 let inputFile = document.getElementById("file");
@@ -21,7 +24,7 @@ let inputLocationList = document.getElementById("upload-location-list");
 
 let outputError = document.getElementById("upload-error");
 
-
+let submitButton = document.getElementById("submit");
 
 let image = null;
 
@@ -41,6 +44,12 @@ inputFile.addEventListener("change", () => {
     }
     loadFile(fileList[0]);
 });
+
+
+uploadForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    upload();
+})
 
 function dragEnter() {
     inputFileBox.classList.add(inputBoxHoverClass);
@@ -75,9 +84,13 @@ function check() {
 }
 
 /**
- * Call this function to upload everything
+ * Call this function to upload everything, and redirect
  */
 function upload() {
+    //disable button:
+    submitButton.disabled = true;
+
+    //check user inputs:
     if(check()) {
         return;
     } else if (image === null) {
@@ -98,9 +111,17 @@ function upload() {
         credentials: 'same-origin',
         body: formData
     }).then(function (response) {
-        return response.text();
+        return response.json();
     }).then(function (data) { 
         console.log(data);
+        if(data.postid === undefined || data.postid == null) {
+            alert("Something went wrong during your upload, try again later");
+            window.location.replace("./error.html");
+        } else {
+            uploadBox.innerHTML = "Redirecting....";
+            window.location.replace(`./post.php?post=${data.postid}`);
+        }
+
     });
 }
 
@@ -124,7 +145,7 @@ function drop(ev) {
 
 /**
  * Drag over event handler for fileinput
- * @param {} ev Event
+ * @param {Event} ev Event
  */
 function dragOverHandler(ev) {
     ev.preventDefault();
@@ -159,8 +180,6 @@ function loadFile(file) {
     previewFileBox.style.display = "flex";
     inputFileBox.style.backgroundColor = "rgba(0, 0, 0, 0)"
     inputFileBox.style.boxShadow = "none";
-
-    console.log(fileIsImage(file));
 }
 
 /**

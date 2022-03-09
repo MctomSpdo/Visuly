@@ -123,7 +123,7 @@ $user->DBLoadFromUserID($userId, $db);
                     <p id="upload-error"></p>
 
                     <div id="upload-submit-wrapper">
-                        <button tpye="submit">Upload</button>
+                        <button type="submit" id="submit">Upload</button>
                     </div>
                 </div>
             </form>

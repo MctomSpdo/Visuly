@@ -67,7 +67,7 @@ create table post
 (
     PostID      int auto_increment
         primary key,
-    uuid        varchar(30)   not null,
+    uuid        varchar(60)   not null,
     Title       varchar(30)   not null,
     Description varchar(2000) not null,
     PostedOn    datetime      not null,
