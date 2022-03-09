@@ -48,7 +48,7 @@ $postUser->DBLoadFromUserID($post->fromUser, $db);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POST</title>
+    <title><?php echo $post->Title?>></title>
 
     <link rel="stylesheet" href="./files/css/main.css">
 
@@ -67,12 +67,12 @@ include "assets/header.php";
     <div id="content">
         <div class="post">
             <div class="post-header">
-                <a href="../index.php" class="post-user-wrapper">
+                <a href="./user.php?user=<?php echo $postUser->UUID?>" class="post-user-wrapper">
                     <div class="post-user-image">
-                        <img src="./files/img/users/<?php echo $user->profilePic?>" alt="User">
+                        <img src=".<?php echo $config->userImageFolder . "/" . $postUser->profilePic?>" alt="User">
                     </div>
                     <div class="post-user-name">
-                        <p><?php echo $user->username?></p>
+                        <p><?php echo $postUser->username?></p>
                     </div>
                     <div></div>
                 </a>
@@ -83,7 +83,7 @@ include "assets/header.php";
             </div>
             <div class="post-img">
                 <div class="post-img-wrapper">
-                    <img src="./files/img/post/<?php echo $post->getImagePath()?>" alt="Post">
+                    <img src=".<?php echo $config->post->defaultDir . "/" . $post->getImagePath()?>" alt="Post">
                 </div>
             </div>
             <div class="post-body">

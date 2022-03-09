@@ -16,7 +16,7 @@
     "nameLength": 60,
     "maxSize": 10000000
   },
-  "userImageFolder": "files/img/users",
+  "userImageFolder": "/files/img/users",
   "userDefaultImage": "user.png",
   "userDefaultPermission": "2",
   "passwordSalt": ""
