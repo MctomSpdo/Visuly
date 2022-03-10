@@ -36,6 +36,9 @@ class Post
             return false;
         }
         $result = $res->fetch_all()[0];
+        if(sizeof($result) == 0) {
+            return false;
+        }
         $res->close();
         return $result[0];
     }
@@ -58,6 +61,9 @@ class Post
         }
 
         $result = $res->fetch_all()[0];
+        if(sizeof($result) == 0) {
+            return false;
+        }
         $res->close();
         return $result[0];
     }
@@ -97,7 +103,12 @@ class Post
         if (!$res = $db->query($sql)) {
             return false;
         }
-        $result = $res->fetch_all()[0];
+        $result = $res->fetch_all();
+
+        if(sizeof($result) == 0) {
+            return false;
+        }
+        $result = $result[0];
 
         $this->loadFromResult($result);
         $res->close();
@@ -120,10 +131,55 @@ class Post
         if (!$res = $db->query($sql)) {
             return false;
         }
-        $result = $res->fetch_all()[0];
+        $result = $res->fetch_all();
+        if(sizeof($result) == 0) {
+            return false;
+        }
+        $result = $result[0];
+
         $this->loadFromResult($result);
         $res->close();
         return true;
+    }
+
+    /**
+     * Saves a like to the database
+     * @param int $postid postid
+     * @param int $userid userid
+     * @param mysqli $db database
+     * @return bool Returns true on success, false on failure
+     */
+    function DBSaveLike(int $postid, int $userid, mysqli $db) {
+        //see if the user has like the post already:
+        $dbPostId = $db->real_escape_string($postid);
+        $dbUserId = $db->real_escape_string($userid);
+        $sql = "select count(*) from postliked where User = $dbUserId and Post = $dbPostId";
+
+        if(!$res = $db->query($sql)) {
+            return false;
+        }
+        $result = $res->fetch_all()[0];
+        $res->close();
+        if($result[0] > 0) {
+            return true;
+        }
+
+        $stmt = $db->prepare("insert into postliked (Post, User) values (?, ?);");
+        $stmt->bind_param("ii", $postid, $userid);
+        return $stmt->execute() & $stmt->close();
+    }
+
+    /**
+     * Deletes a like in the database
+     * @param int $postid postId
+     * @param int $userid userId
+     * @param mysqli $db database
+     * @return bool Returns true on success, false on failure
+     */
+    function DBDeleteLike(int $postid, int $userid, mysqli $db) {
+        $stmt = $db->prepare("delete from postliked where Post = ? and User = ?");
+        $stmt->bind_param("ii", $postid, $userid);
+        return $stmt->execute() & $stmt->close();
     }
 
     private function loadFromResult($result)

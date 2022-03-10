@@ -48,12 +48,14 @@ $postUser->DBLoadFromUserID($post->fromUser, $db);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $post->Title?>></title>
+    <title><?php echo $post->Title?> - Visuly</title>
 
     <link rel="stylesheet" href="./files/css/main.css">
 
     <!-- icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="./files/js/main.js" defer></script>
 </head>
 
 <body>
@@ -65,7 +67,7 @@ include "assets/header.php";
     include "assets/nav.html";
     ?>
     <div id="content">
-        <div class="post">
+        <div class="post" id="<?php echo $post->ImgPath?>">
             <div class="post-header">
                 <a href="./user.php?user=<?php echo $postUser->UUID?>" class="post-user-wrapper">
                     <div class="post-user-image">
@@ -90,7 +92,7 @@ include "assets/header.php";
                 <div class="post-interaction-wrapper">
                     <div class="post-like">
                         <div class="post-interaction-imgwrapper">
-                            <img src="./files/img/heart.svg" alt="Likes">
+                            <img src="./files/img/heart.svg" alt="Likes" onclick="likeButtonPress(this);">
                         </div>
                         <div class="post-interaction-textwrapper">
                             <p><?php
@@ -100,9 +102,9 @@ include "assets/header.php";
                                 } else if ($likes == 0) {
                                     echo "no likes";
                                 } else if($likes == 1) {
-                                    echo $likes . "comment";
+                                    echo $likes . " like";
                                 } else {
-                                    echo $likes . "comments";
+                                    echo $likes . " likes";
                                 }
                                 ?></p>
                         </div>
