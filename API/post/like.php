@@ -65,9 +65,12 @@ if($_POST['like'] == 'like') {
     $resp->error = "Invalid Request";
     $cause = $_GET['like'];
     $resp->cause = "like: $cause";
+    $db->close();
+    exit(json_encode($resp));
 }
 $resp = new stdClass();
 $resp->success = true;
+$resp->likes = $post->getLikes($db);
 echo json_encode($resp);
 
 $db->close();

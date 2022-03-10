@@ -85,14 +85,15 @@ include "assets/header.php";
             </div>
             <div class="post-img">
                 <div class="post-img-wrapper">
-                    <img src=".<?php echo $config->post->defaultDir . "/" . $post->getImagePath()?>" alt="Post">
+                    <img src=".<?php echo $config->post->defaultDir . "/" . $post->getImagePath()?>" alt="<?php echo $post->Title?>">
                 </div>
             </div>
             <div class="post-body">
                 <div class="post-interaction-wrapper">
                     <div class="post-like">
                         <div class="post-interaction-imgwrapper">
-                            <img src="./files/img/heart.svg" alt="Likes" onclick="likeButtonPress(this);">
+                            <?php $userHasLiked = $post->DBUserHasLiked($user->UserID, $db); ?>
+                            <img src="./files/img/<?php echo ($userHasLiked) ? "heart_filled" : "heart"?>.svg" alt="Likes" onclick="likeButtonPress(this);" <?php echo ($userHasLiked) ? 'class="liked"' : ""?>>
                         </div>
                         <div class="post-interaction-textwrapper">
                             <p><?php

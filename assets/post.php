@@ -182,6 +182,25 @@ class Post
         return $stmt->execute() & $stmt->close();
     }
 
+    /**
+     * Checks if a user has liked the post
+     * @param int $userId userid
+     * @param mysqli $db database
+     * @return bool|int Returns true or false and -1 on error
+     */
+    function DBUserHasLiked(int $userId, mysqli $db) {
+        $dbUserId = $db->real_escape_string($userId);
+        $dbPostId = $db->real_escape_string($this->PostId);
+        $sql = "select count(*) from postliked where post like $dbPostId and user like $dbUserId;";
+
+        if(!$res = $db->query($sql)) {
+            return -1;
+        }
+        $result = $res->fetch_all()[0];
+        $res->close();
+        return $result[0] > 0;
+    }
+
     private function loadFromResult($result)
     {
         $this->PostId = $result[0];
