@@ -80,7 +80,7 @@ include "assets/header.php";
                 </a>
 
                 <div class="post-title-wrapper">
-                    <h3><?php echo $post->Title?></h3>
+                    <h3 onclick="redirectPost(this);"><?php echo $post->Title?></h3>
                 </div>
             </div>
             <div class="post-img">
@@ -129,7 +129,7 @@ include "assets/header.php";
                                 ?></p>
                         </div>
                     </div>
-                    <div class="post-share">
+                    <div class="post-share" onclick="shareEventHandler(this);">
                         <div class="post-interaction-imgwrapper">
                             <img src="./files/img/share.svg" alt="Share">
                         </div>

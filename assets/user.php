@@ -16,6 +16,11 @@ class User
     public $lastLogin;
     public $lastTriedLogin;
     public $permission;
+    public $isBlocked;
+    public $isAdmin;
+    public $canPost;
+    public $canLike;
+    public $canComment;
 
     function __construct()
     {
@@ -157,7 +162,7 @@ class User
     function DBLoadFromUserID(int $userID, mysqli $db)
     {
         $dbUserId = $db->real_escape_string($userID);
-        $sql = "select * from user where UserID like $userID;";
+        $sql = "select * from user inner join permission using (PermissionID) where UserID like $dbUserId";
 
         if (!$res = $db->query($sql)) {
             return false;
@@ -183,7 +188,7 @@ class User
         }
 
         $dbUUID = $db->real_escape_string($this->UUID);
-        $sql = "select * from user where UUID like '$dbUUID' limit 1";
+        $sql = "select * from user inner join permission using (PermissionID) where UUID like '$dbUUID' limit 1";
 
         if (!$res = $db->query($sql)) {
             return false;
@@ -282,6 +287,11 @@ class User
         $this->lastLogin = $result[11];
         $this->lastTriedLogin = $result[12];
         $this->permission = $result[13];
+        $this->isBlocked = $result[15];
+        $this->isAdmin = $result[16];
+        $this->canPost = $result[17];
+        $this->canLike = $result[18];
+        $this->canComment = $result[19];
     }
 
     private function generateString($length): string

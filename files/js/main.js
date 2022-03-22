@@ -39,7 +39,7 @@ function parsePostToHTML(post) {
                 </a>
 
                 <div class="post-title-wrapper">
-                    <h3>${post.title}</h3>
+                    <h3 onclick="redirectPost(this);">${post.title}</h3>
                 </div>
             </div>
             <div class="post-img">
@@ -65,7 +65,7 @@ function parsePostToHTML(post) {
                             <p>${post.comments}</p>
                         </div>
                     </div>
-                    <div class="post-share">
+                    <div class="post-share" onclick="shareEventHandler(this);">
                         <div class="post-interaction-imgwrapper">
                             <img src="./files/img/share.svg" alt="Share">
                         </div>
@@ -84,8 +84,6 @@ function parsePostToHTML(post) {
 
 
 /**************************************************** LIKE POST *******************************************************/
-
-
 
 function likeButtonPress(element) {
     let parentNumber = 5;
@@ -142,4 +140,36 @@ function likePost(post, like, element) {
             likeElement.innerHTML = `${likes} likes`;
         }
     });
+}
+
+/**************************************************************** SHARE POST *******************************************/
+
+function shareEventHandler(element) {
+    let postElement = element;
+    for(let i = 0; i < 3; i++) {
+        postElement = postElement.parentNode;
+    }
+
+    let postId = postElement.id;
+    navigator.clipboard.writeText(getPostLink(postId));
+    element.children[1].innerHTML = "copied";
+
+    setTimeout(() => {
+        element.children[1].innerHTML = "Share";
+    }, 2000)
+}
+
+function redirectPost(element) {
+    let postElement = element;
+    for(let i = 0; i < 3; i++) {
+        postElement = postElement.parentNode;
+    }
+
+    let postid = postElement.id;
+    window.location.href = getPostLink(postid);
+}
+
+function getPostLink(postId) {
+    let location = document.URL.substr(0,document.URL.lastIndexOf('/'));
+    return location + "/post.php?post=" + postId;
 }

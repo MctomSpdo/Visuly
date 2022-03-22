@@ -258,6 +258,18 @@ nav > a > div {
 
 /************************************************ POST ************************************************/
 
+.post-3-wrapper {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: 3%;
+    height: 100%;
+    margin-bottom: 5vh;
+}
+
+.post-3-wrapper > div {
+    box-sizing: border-box;
+}
+
 .post {
     width: 100%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -309,6 +321,10 @@ nav > a > div {
     margin: 0;
 }
 
+.post-title-wrapper h3:hover {
+    cursor: pointer;
+}
+
 /*
 * POST-BODY
 */
@@ -336,6 +352,10 @@ nav > a > div {
     height: 100%;
     display: grid;
     grid-template-columns: 15% 80%;
+}
+
+.post-interaction-wrapper > div:hover {
+    cursor: pointer;
 }
 
 .post-interaction-imgwrapper {

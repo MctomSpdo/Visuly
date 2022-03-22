@@ -52,7 +52,7 @@ include "assets/header.php";
     <?php
     include "assets/nav.html";
     ?>
-    <div id="content"></div>
+    <div id="content" class="post-3-wrapper"></div>
     <div></div>
 </main>
 </body>

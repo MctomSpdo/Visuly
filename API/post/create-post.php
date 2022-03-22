@@ -125,7 +125,7 @@ foreach($categories as $cat) {
 
     $catId = $result[0][0];
 
-    $sql = $db->prepare("insert into post_category (Post, Category) values (?, ?)");
+    $sql = $db->prepare("insert into post_category (PostID, CategoryID) values (?, ?)");
     $sql->bind_param("ss", $post->PostId, $catId);
 
     if(!$sql->execute()) {
