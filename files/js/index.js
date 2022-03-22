@@ -1,0 +1,1 @@
+loadHome(document.getElementById('content'));

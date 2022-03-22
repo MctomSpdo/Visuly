@@ -39,6 +39,9 @@ $user->DBLoadFromUserID($userId, $db);
 
     <!-- icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="files/js/main.js" defer></script>
+    <script src="files/js/index.js" defer></script>
 </head>
 
 <body>
@@ -49,7 +52,7 @@ include "assets/header.php";
     <?php
     include "assets/nav.html";
     ?>
-    <div></div>
+    <div id="content"></div>
     <div></div>
 </main>
 </body>

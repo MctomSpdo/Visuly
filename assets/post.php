@@ -201,7 +201,33 @@ class Post
         return $result[0] > 0;
     }
 
-    private function loadFromResult($result)
+    /**
+     * gets the newest 50 Posts
+     * @param mysqli $db database connection
+     * @return array|int array with posts, -1 if error, null if no posts
+     */
+    static function loadNewetPosts(mysqli $db) {
+        $sql = "select * from post order by now() - PostedOn limit 50;";
+
+        if(!$res = $db->query($sql)) {
+            return -1;
+        }
+
+        $result = $res->fetch_all();
+        $res->close();
+
+        $arr = null;
+
+        foreach ($result as $rest) {
+            $resPost = new Post();
+            $resPost->loadFromResult($rest);
+            $arr[] = $resPost;
+        }
+
+        return $arr;
+    }
+
+    function loadFromResult($result)
     {
         $this->PostId = $result[0];
         $this->ImgPath = $result[1];
