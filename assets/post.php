@@ -30,7 +30,7 @@ class Post
         }
 
         $dbPostId = $db->real_escape_string($this->PostId);
-        $sql = "select count(*) from postliked where post = $dbPostId;";
+        $sql = "select count(*) from postliked where PostID = $dbPostId;";
 
         if(!$res = $db->query($sql)) {
             return false;
@@ -54,7 +54,7 @@ class Post
         }
 
         $dbPostId = $db->real_escape_string($this->PostId);
-        $sql = "select count(*) from comment where Post = $dbPostId and isDeleted = 0;";
+        $sql = "select count(*) from comment where PostID = $dbPostId and isDeleted = 0;";
 
         if(!$res = $db->query($sql)) {
             return false;
@@ -84,7 +84,7 @@ class Post
         $dbFromUser = $db->real_escape_string($fromUser);
         $dbExtention = $db->real_escape_string($extention);
 
-        $sql = "insert into post (uuid, Title, Description, PostedOn, FromUser, IsDeleted, extention) values ('$dbUuid', '$dbTitle', '$dbDesc', now(), '$dbFromUser', 0, '$dbExtention')";
+        $sql = "insert into post (uuid, Title, Description, PostedOn, UserID, IsDeleted, extention) values ('$dbUuid', '$dbTitle', '$dbDesc', now(), '$dbFromUser', 0, '$dbExtention')";
 
         if($db->query($sql)) {
             return true;
@@ -153,7 +153,7 @@ class Post
         //see if the user has like the post already:
         $dbPostId = $db->real_escape_string($postid);
         $dbUserId = $db->real_escape_string($userid);
-        $sql = "select count(*) from postliked where User = $dbUserId and Post = $dbPostId";
+        $sql = "select count(*) from postliked where UserID = $dbUserId and PostID = $dbPostId";
 
         if(!$res = $db->query($sql)) {
             return false;
@@ -164,7 +164,7 @@ class Post
             return true;
         }
 
-        $stmt = $db->prepare("insert into postliked (Post, User) values (?, ?);");
+        $stmt = $db->prepare("insert into postliked (PostID, UserID) values (?, ?);");
         $stmt->bind_param("ii", $postid, $userid);
         return $stmt->execute() & $stmt->close();
     }
@@ -177,7 +177,7 @@ class Post
      * @return bool Returns true on success, false on failure
      */
     function DBDeleteLike(int $postid, int $userid, mysqli $db) {
-        $stmt = $db->prepare("delete from postliked where Post = ? and User = ?");
+        $stmt = $db->prepare("delete from postliked where PostID = ? and UserID = ?");
         $stmt->bind_param("ii", $postid, $userid);
         return $stmt->execute() & $stmt->close();
     }
@@ -191,7 +191,7 @@ class Post
     function DBUserHasLiked(int $userId, mysqli $db) {
         $dbUserId = $db->real_escape_string($userId);
         $dbPostId = $db->real_escape_string($this->PostId);
-        $sql = "select count(*) from postliked where post like $dbPostId and user like $dbUserId;";
+        $sql = "select count(*) from postliked where PostID like $dbPostId and UserID like $dbUserId;";
 
         if(!$res = $db->query($sql)) {
             return -1;

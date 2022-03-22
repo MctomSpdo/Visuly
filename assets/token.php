@@ -12,7 +12,7 @@
 function checkTokenWRedirect(String $token, $config, mysqli $db)
 {
     $dbToken = $db->real_escape_string($config->token->salt . $token);
-    $sql = "select * from token where Token like md5('$dbToken') and ValidUntil > current_date();";
+    $sql = "select * from TOKEN where token like md5('$dbToken') and validUntil > current_date();";
 
     //if database statement fails, redirect to the error page:
     if (!$res = $db->query($sql)) {
@@ -46,7 +46,7 @@ function checkTokenWRedirect(String $token, $config, mysqli $db)
 function checkToken(String $token, $config, mysqli $db)
 {
     $dbToken = $db->real_escape_string($config->token->salt . $token);
-    $sql = "select * from token where Token like md5('$dbToken') and ValidUntil > current_date();";
+    $sql = "select * from TOKEN where token like md5('$dbToken') and validUntil > current_date();";
 
     //if database statement fails, redirect to the error page:
     if (!$res = $db->query($sql)) {
@@ -72,7 +72,7 @@ function generateToken(mysqli $db, $config)
     while(true) {
         $token = generateRandomString($config->token->length);
         $dbToken = $db->real_escape_string($config->token->salt . $token);
-        $sql = "select TokenID from token where Token like md5('$dbToken');";
+        $sql = "select TokenID from token where token like md5('$dbToken');";
 
         if (!$res = $db->query($sql)) {
             return false;
@@ -111,7 +111,7 @@ function saveTokenDB(String $token, mysqli $db, int $userID, $config)
     $dbUserId = $db->real_escape_string($userID);
     $dbLifeSpan = $db->real_escape_string($config->token->lifespan);
 
-    $sql = "insert into token (Token, Owner, Created, ValidUntil)
+    $sql = "insert into token (Token, UserID, Created, ValidUntil)
         values (md5('$dbToken'), $dbUserId, now(), date_add(now(), INTERVAL $dbLifeSpan month))";
 
     if(!$db->query($sql)) {
@@ -133,7 +133,7 @@ function saveTokenDBEmail(String $token, mysqli $db, String $email, $config) {
     $dbEmail = $db->real_escape_string($email);
     $dbLifeSpan = $db->real_escape_string($config->token->lifespan);
 
-    $sql = "insert into token (Token, Owner, Created, ValidUntil) 
+    $sql = "insert into token (Token, UserID, Created, ValidUntil) 
     values (md5('$dbToken'), 
         (select UserID from user where email like '$dbEmail'), 
         now(), date_add(now(), INTERVAL $dbLifeSpan month));";

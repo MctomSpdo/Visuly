@@ -30,7 +30,7 @@ class User
         while (true) {
             $UUID = "U" . $this->generateString(14) . "-" . $this->generateString(14);
             $dbUUID = $db->real_escape_string($UUID);
-            $sql = "select UUID from user where UUID like '$dbUUID';";
+            $sql = "select uuid from user where uuid like '$dbUUID';";
 
             if (!$res = $db->query($sql)) {
                 return false;
@@ -75,7 +75,7 @@ class User
         }
 
         $sql = "insert into USER
-        (UUID, username, gender, profilePic, createdOn, email, password, deleted, permission)
+        (UUID, username, gender, profilePic, createdOn, email, password, deleted, PermissionID)
         values ('$dbUUID', '$dbUsername', '$dbGender', '$profilePic', now(), '$dbEmail', md5('$dbPassword'), 0, $defaultPermission);";
 
         if ($db->query($sql)) {
@@ -236,7 +236,7 @@ class User
     function DBGetFollows(mysqli $db)
     {
         $dbUserId = $db->real_escape_string($this->UserID);
-        $sql = "select count(*) from follow where owner like $dbUserId;";
+        $sql = "select count(*) from follow where UserID like $dbUserId;";
 
         if (!$res = $db->query($sql)) {
             return -1;
@@ -255,7 +255,7 @@ class User
     function DBGetPosts(mysqli $db)
     {
         $dbUserId = $db->real_escape_string($this->UserID);
-        $sql = "select count(*) from post where FromUser like $dbUserId;";
+        $sql = "select count(*) from post where UserID like $dbUserId;";
 
         if(!$res = $db->query($sql)) {
             return -1;
