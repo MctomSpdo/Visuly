@@ -273,20 +273,20 @@ class User
 
     private function loadFromResult($result)
     {
-        $this->UserID = $result[0];
-        $this->UUID = $result[1];
-        $this->username = $result[2];
-        $this->desc = $result[3];
-        $this->gender = $result[4];
-        $this->profilePic = $result[5];
-        $this->createdOn = $result[6];
-        $this->phoneNumber = $result[7];
-        $this->email = $result[8];
-        $this->password = $result[9];
-        $this->deleted = $result[10];
-        $this->lastLogin = $result[11];
-        $this->lastTriedLogin = $result[12];
-        $this->permission = $result[13];
+        $this->UserID = $result[1];
+        $this->UUID = $result[2];
+        $this->username = $result[3];
+        $this->desc = $result[4];
+        $this->gender = $result[5];
+        $this->profilePic = $result[6];
+        $this->createdOn = $result[7];
+        $this->phoneNumber = $result[8];
+        $this->email = $result[9];
+        $this->password = $result[10];
+        $this->deleted = $result[11];
+        $this->lastLogin = $result[12];
+        $this->lastTriedLogin = $result[13];
+        $this->permission = $result[14];
         $this->isBlocked = $result[15];
         $this->isAdmin = $result[16];
         $this->canPost = $result[17];

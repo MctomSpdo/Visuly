@@ -28,7 +28,7 @@ function parsePostToHTML(post) {
 
     return `<div class="post" id="${post.postId}">
             <div class="post-header">
-                <a href="./user.php?user=<?php echo $postUser->UUID?>" class="post-user-wrapper">
+                <a href="./user.php?user=${post.postedFromID}" class="post-user-wrapper">
                     <div class="post-user-image">
                         <img src="./files/img/users/${post.postedFromImage}" alt="User">
                     </div>

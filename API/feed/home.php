@@ -60,6 +60,7 @@ switch ($postArr) {
 
             $postRest->postedFrom = $userPost->username;
             $postRest->postedFromImage = $userPost->profilePic;
+            $postRest->postedFromID = $userPost->UUID;
 
             $postRest->comments = $posts->getCommentAmount($db);
 
