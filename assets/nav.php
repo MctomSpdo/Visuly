@@ -1,5 +1,13 @@
 <nav>
-    <a href="index.php" id="nav-active">
+    <a href="index.php" <?php
+        if(isset($navActive)) {
+            if($navActive == 'home') {
+                echo 'id="nav-active"';
+            }
+        } else {
+            echo 'id="nav-active"';
+        }
+    ?>>
         <div>
             <div class="nav-img">
                 <img src="files/img/home.svg" alt="Home">
@@ -9,7 +17,13 @@
             </div>
         </div>
     </a>
-    <a href="discover.php">
+    <a href="discover.php" <?php
+    if(isset($navActive)) {
+        if($navActive == 'discover') {
+            echo 'id="nav-active"';
+        }
+    }
+    ?>>
         <div>
             <div class="nav-img">
                 <img src="files/img/discover.svg" alt="Home">
@@ -19,7 +33,13 @@
             </div>
         </div>
     </a>
-    <a href="upload.php">
+    <a href="upload.php" <?php
+        if(isset($navActive)) {
+            if($navActive == 'upload') {
+                echo 'id="nav-active"';
+            }
+        }
+    ?>>
         <div>
             <div class="nav-img">
                 <img src="files/img/add.svg" alt="Home">

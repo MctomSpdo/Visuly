@@ -54,7 +54,7 @@ include "assets/header.php";
 ?>
 <main>
     <?php
-    include "assets/nav.html";
+    include "assets/nav.php";
     ?>
     <div id="content">
         <div id="user">

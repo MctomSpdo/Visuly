@@ -50,7 +50,7 @@ include "assets/header.php";
 ?>
 <main>
     <?php
-    include "assets/nav.html";
+    include "assets/nav.php";
     ?>
     <div id="content" class="post-3-wrapper"></div>
     <div></div>
