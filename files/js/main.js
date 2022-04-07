@@ -21,10 +21,7 @@ function loadHome(element) {
 
 //TODO: correct parsing (amout of likes, user has liked, postedFrom, postedFromPfp)
 function parsePostToHTML(post) {
-    let likesSpelled = "";
-    let commentsSpelled = "";
     let postlikeImage = ((post.hasLiked) ? "heart_filled" : "heart") + ".svg";
-
 
     return `<div class="post" id="${post.postId}">
             <div class="post-header">
@@ -54,7 +51,7 @@ function parsePostToHTML(post) {
                             <img src="./files/img/${postlikeImage}" alt="Likes" onclick="likeButtonPress(this);">
                         </div>
                         <div class="post-interaction-textwrapper">
-                            <p>${post.likes}</p>
+                            <p>${getLikesSpelled(post.likes)}</p>
                         </div>
                     </div>
                     <div class="post-comment">
@@ -62,7 +59,7 @@ function parsePostToHTML(post) {
                             <img src="./files/img/comment.svg" alt="Comment">
                         </div>
                         <div class="post-interaction-textwrapper">
-                            <p>${post.comments}</p>
+                            <p>${getCommentsSpelled(post.comments)}</p>
                         </div>
                     </div>
                     <div class="post-share" onclick="shareEventHandler(this);">
@@ -130,15 +127,7 @@ function likePost(post, like, element) {
         element.classList.toggle("liked");
 
         let likeElement = element.parentNode.parentNode.children[1].children[0];
-        let likes = data.likes;
-
-        if(likes == 0) {
-            likeElement.innerHTML = "no likes";
-        } else if (likes == 1) {
-            likeElement.innerHTML = "1 like";
-        } else {
-            likeElement.innerHTML = `${likes} likes`;
-        }
+        like.innerHTML = getLikesSpelled(data.likes);
     });
 }
 
@@ -172,4 +161,29 @@ function redirectPost(element) {
 function getPostLink(postId) {
     let location = document.URL.substr(0,document.URL.lastIndexOf('/'));
     return location + "/post.php?post=" + postId;
+}
+
+/**
+ * Gets the likes spelled out
+ * @param likes
+ * @returns {string}
+ */
+function getLikesSpelled(likes) {
+    if(likes == 0) {
+        return "no likes";
+    } else if (likes == 1) {
+        return "1 like";
+    } else {
+        return `${likes} likes`;
+    }
+}
+
+function getCommentsSpelled(comments) {
+    if(comments == 0) {
+        return "none";
+    } else if (comments == 1) {
+        return "1 comment";
+    } else {
+        return `${comments} comments`
+    }
 }

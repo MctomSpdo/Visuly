@@ -115,13 +115,17 @@ function upload() {
     }).then(function (data) { 
         console.log(data);
         if(data.postid === undefined || data.postid == null) {
-            alert("Something went wrong during your upload, try again later");
-            window.location.replace("./error.html");
+            if(data.error == 'File is too big') {
+                alert("Your File is too big for the platform to handle!");
+            } else {
+                alert("Something went wrong during your upload, try again later");
+                window.location.replace("./error.html");
+                console.log(data);
+            }
         } else {
             uploadBox.innerHTML = "Redirecting....";
             window.location.replace(`./post.php?post=${data.postid}`);
         }
-
     });
 }
 
