@@ -1,8 +1,17 @@
 let api_posts = "./API/feed/home.php";
 let api_like = "./API/post/like.php";
+let api_newest = "./API/feed/newest.php";
 
 function loadHome(element) {
-    fetch(api_posts, {
+    loadPosts(element, api_posts);
+}
+
+function loadNewest(element) {
+    loadPosts(element, api_newest);
+}
+
+function loadPosts(element, apiPath) {
+    fetch(apiPath, {
         credentials: 'same-origin',
     }).then(function (response) {
         return response.json();

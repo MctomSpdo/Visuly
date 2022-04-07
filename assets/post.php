@@ -238,6 +238,4 @@ class Post
         $this->isDeleted = $result[6];
         $this->extention = $result[7];
     }
-
-
 }

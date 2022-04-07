@@ -1,0 +1,1 @@
+loadNewest(document.getElementById('content'));

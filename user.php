@@ -4,6 +4,7 @@ $config = json_decode(file_get_contents($configPath));
 
 require_once './assets/token.php';
 require_once './assets/user.php';
+require_once './assets/post.php';
 
 //check user token:
 if (!isset($_COOKIE[$config->token->name])) {
@@ -46,9 +47,11 @@ if (isset($_GET['user'])) {
 
     <!-- icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="files/js/main.js" defer></script>
+    <script src="files/js/user.js" defer></script>
 </head>
 
-<body>
+<body id="<?php echo $userDisplay->UUID?>">
 <?php
 include "assets/header.php";
 ?>
@@ -119,7 +122,7 @@ include "assets/header.php";
                     </div>
                 </div>
             </div>
-            <div id="user-posts">
+            <div id="user-posts" class="post-3-wrapper">
 
             </div>
         </div>

@@ -265,10 +265,21 @@ class User
         if(!$res = $db->query($sql)) {
             return -1;
         }
-
         $result = $res->fetch_all()[0][0];
         $res->close();
         return (int)$result;
+    }
+
+    function DBGetPostIds(mysqli $db) {
+        $dbUserId = $db->real_escape_string($this->UserID);
+        $sql = "select uuid from post where UserID = '$dbUserId' and isDeleted = 0 order by postedOn desc";
+
+        if(!$res = $db->query($sql)) {
+            return -1;
+        }
+        $result = $res->fetch_all();
+        $res->close();
+        return $result;
     }
 
     private function loadFromResult($result)
