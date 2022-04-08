@@ -3,7 +3,7 @@ $configPath = 'files/config.json';
 $config = json_decode(file_get_contents($configPath));
 
 require_once './assets/user.php';
-require_once  './assets/token.php';
+require_once './assets/token.php';
 require_once './assets/post.php';
 
 //check user token:
@@ -12,7 +12,7 @@ if (!isset($_COOKIE[$config->token->name])) {
     exit();
 }
 
-if(!isset($_GET['post'])) {
+if (!isset($_GET['post'])) {
     header("Location: ./");
     exit;
 }
@@ -20,7 +20,7 @@ if(!isset($_GET['post'])) {
 //database connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
-if($db->connect_error) {
+if ($db->connect_error) {
     header("Location: ./error.php");
     exit;
 }
@@ -48,7 +48,7 @@ $postUser->DBLoadFromUserID($post->fromUser, $db);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $post->Title?> - Visuly</title>
+    <title><?php echo $post->Title ?> - Visuly</title>
 
     <link rel="stylesheet" href="./files/css/main.css">
 
@@ -67,25 +67,26 @@ include "assets/header.php";
     include "assets/nav.php";
     ?>
     <div id="content">
-        <div class="post" id="<?php echo $post->ImgPath?>">
+        <div class="post" id="<?php echo $post->ImgPath ?>">
             <div class="post-header">
-                <a href="./user.php?user=<?php echo $postUser->UUID?>" class="post-user-wrapper">
+                <a href="./user.php?user=<?php echo $postUser->UUID ?>" class="post-user-wrapper">
                     <div class="post-user-image">
-                        <img src=".<?php echo $config->userImageFolder . "/" . $postUser->profilePic?>" alt="User">
+                        <img src=".<?php echo $config->userImageFolder . "/" . $postUser->profilePic ?>" alt="User">
                     </div>
                     <div class="post-user-name">
-                        <p><?php echo $postUser->username?></p>
+                        <p><?php echo $postUser->username ?></p>
                     </div>
                     <div></div>
                 </a>
 
                 <div class="post-title-wrapper">
-                    <h3 onclick="redirectPost(this);"><?php echo $post->Title?></h3>
+                    <h3 onclick="redirectPost(this);"><?php echo $post->Title ?></h3>
                 </div>
             </div>
             <div class="post-img">
                 <div class="post-img-wrapper">
-                    <img src=".<?php echo $config->post->defaultDir . "/" . $post->getImagePath()?>" alt="<?php echo $post->Title?>">
+                    <img src=".<?php echo $config->post->defaultDir . "/" . $post->getImagePath() ?>"
+                         alt="<?php echo $post->Title ?>">
                 </div>
             </div>
             <div class="post-body">
@@ -93,16 +94,18 @@ include "assets/header.php";
                     <div class="post-like">
                         <div class="post-interaction-imgwrapper">
                             <?php $userHasLiked = $post->DBUserHasLiked($user->UserID, $db); ?>
-                            <img src="./files/img/<?php echo ($userHasLiked) ? "heart_filled" : "heart"?>.svg" alt="Likes" onclick="likeButtonPress(this);" <?php echo ($userHasLiked) ? 'class="liked"' : ""?>>
+                            <img src="./files/img/<?php echo ($userHasLiked) ? "heart_filled" : "heart" ?>.svg"
+                                 alt="Likes"
+                                 onclick="likeButtonPress(this);" <?php echo ($userHasLiked) ? 'class="liked"' : "" ?>>
                         </div>
                         <div class="post-interaction-textwrapper">
                             <p><?php
-                                $likes =  $post->getLikes($db);
-                                if($likes === false) {
+                                $likes = $post->getLikes($db);
+                                if ($likes === false) {
                                     echo "?";
                                 } else if ($likes == 0) {
                                     echo "no likes";
-                                } else if($likes == 1) {
+                                } else if ($likes == 1) {
                                     echo $likes . " like";
                                 } else {
                                     echo $likes . " likes";
@@ -117,7 +120,7 @@ include "assets/header.php";
                         <div class="post-interaction-textwrapper">
                             <p><?php
                                 $comments = $post->getCommentAmount($db);
-                                if($comments === false) {
+                                if ($comments === false) {
                                     echo "?";
                                 } else if ($comments == 0) {
                                     echo "no comments";
@@ -139,7 +142,43 @@ include "assets/header.php";
                     </div>
                 </div>
                 <div class="post-descr">
-                    <p><?php echo $post->Desc?></p>
+                    <p><?php echo $post->Desc ?></p>
+                </div>
+                <div class="post-comments">
+                    <h3>Comments</h3>
+                    <div>
+                        <div class="comment-wrapper">
+                            <div class="comment-image-wrapper">
+                                <div>
+                                    <img src="files/img/users/<?php echo $user->profilePic ?>" alt="user">
+                                </div>
+                            </div>
+
+                            <div id="comment-interaction-form-wrapper">
+                                <form>
+                                    <input type="text" placeholder="comment">
+                                </form>
+                            </div>
+                            <div></div>
+                        </div>
+                        <div></div>
+                    </div>
+                    <div>
+                        <div class="comment-wrapper">
+                            <div class="comment-image-wrapper">
+                                <div>
+                                    <img src="files/img/users/<?php echo $user->profilePic ?>" alt="user">
+                                </div>
+                            </div>
+
+                            <div>
+                                <p>USERNAME</p>
+                                <p>Comment</p>
+                            </div>
+                            <div></div>
+                        </div>
+                        <div></div>
+                    </div>
                 </div>
             </div>
             <div class="post-footer"></div>
