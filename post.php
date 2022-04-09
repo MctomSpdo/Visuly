@@ -142,7 +142,12 @@ include "assets/header.php";
                     </div>
                 </div>
                 <div class="post-descr">
-                    <p><?php echo $post->Desc ?></p>
+                    <?php
+                        //output linebreaks as new p tags
+                        $starr = preg_split("/\r\n|\n|\r/", $post->Desc);
+                        foreach ($starr as $string) {
+                            echo "<p>" . $string . "</p>";
+                        }?>
                 </div>
                 <div class="post-comments">
                     <h3>Comments</h3>
