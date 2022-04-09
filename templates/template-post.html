@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POST TEMPLATE - Visuly</title>
+
+    <link rel="stylesheet" href="../files/css/main.css">
+
+    <!-- icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="../files/js/main.js" defer></script>
+</head>
+
+<body>
+
+    <header>
+        <div id="header-logo">VISULY</div>
+        <div id="header-search">
+            <form action="search.php" autocomplete="off">
+                <input type="text" placeholder="Search" name="search" id="header-searchbar" maxlength="2048">
+                <button type="submit" id="header-search-submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <div id="header-user">
+            <div id="header-user-img">
+                <img src="files/img/users/test.png" alt="User" id="header-user-icon">
+            </div>
+        </div>
+
+        <div id="header-dropdown">
+            <a href="user.php">
+                <div>
+                    <div class="header-dropdown-image">
+                        <img src="files/img/users/user.svg" alt="user">
+                    </div>
+                    <div class="header-dropdown-text">
+                        <p>Profile</p>
+                    </div>
+                </div>
+            </a>
+            <a href="settings.php">
+                <div>
+                    <div class="header-dropdown-image">
+                        <img src="files/img/settings.svg" alt="settings">
+                    </div>
+                    <div class="header-dropdown-text">
+                        <p>Settings</p>
+                    </div>
+                </div>
+            </a>
+            <a href="logout.php">
+                <div>
+                    <div class="header-dropdown-image"></div>
+                    <div class="header-dropdown-text txt-red">
+                        <p>Log out</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- header script -->
+        <script>
+            let headerDropDownIsDisplayed = false;
+
+            document.getElementById("header-user-icon").addEventListener("click", () => {
+                document.getElementById("header-dropdown").style.display = (headerDropDownIsDisplayed) ? "none" : "block";
+                headerDropDownIsDisplayed = !headerDropDownIsDisplayed;
+            });
+        </script>
+    </header>
+    <main>
+        <nav>
+            <a href="index.php" id="nav-active">
+                <div>
+                    <div class="nav-img">
+                        <img src="../files/img/home.svg" alt="Home">
+                    </div>
+                    <div class="nav-txt">
+                        <p>Home</p>
+                    </div>
+                </div>
+            </a>
+            <a href="discover.php">
+                <div>
+                    <div class="nav-img">
+                        <img src="../files/img/discover.svg" alt="Home">
+                    </div>
+                    <div class="nav-txt">
+                        <p>Discover</p>
+                    </div>
+                </div>
+            </a>
+            <a href="upload.php">
+                <div>
+                    <div class="nav-img">
+                        <img src="../files/img/add.svg" alt="Home">
+                    </div>
+                    <div class="nav-txt">
+                        <p>Upload</p>
+                    </div>
+                </div>
+            </a>
+        </nav>
+        <div id="content">
+            <div class="post post-single" id="bvihDrbenObH3XIkSnOn4bDALiUYv5ECyr7dJkfw3epRcTYGTz3hhhv1wisj">
+                <div class="post-header">
+                    <a href="./user.php?user=UToGQrjmxXCLRZQ-QaBlh04RTqKLVd" class="post-user-wrapper">
+                        <div class="post-user-image">
+                            <img src="../files/img/users/user.png" alt="User">
+                        </div>
+                        <div class="post-user-name">
+                            <p>TEST_USER</p>
+                        </div>
+                        <div></div>
+                    </a>
+
+                    <div class="post-title-wrapper">
+                        <h3>TEMPLATE</h3>
+                    </div>
+                </div>
+                <div class="post-img">
+                    <div class="post-img-wrapper">
+                        <img src="../files/img/post/examplePost.png" alt="Programm in C">
+                    </div>
+                </div>
+                <div class="post-body">
+                    <div class="post-interaction-wrapper">
+                        <div class="post-like">
+                            <div class="post-interaction-imgwrapper">
+                                <img src="../files/img/heart_filled.svg" alt="Likes" onclick="likeButtonPress(this);"
+                                    class="liked">
+                            </div>
+                            <div class="post-interaction-textwrapper">
+                                <p>2 likes</p>
+                            </div>
+                        </div>
+                        <div class="post-comment">
+                            <div class="post-interaction-imgwrapper">
+                                <img src="../files/img/comment.svg" alt="Comment">
+                            </div>
+                            <div class="post-interaction-textwrapper">
+                                <p>2 comments</p>
+                            </div>
+                        </div>
+                        <div class="post-share" onclick="shareEventHandler(this);">
+                            <div class="post-interaction-imgwrapper">
+                                <img src="../files/img/share.svg" alt="Share">
+                            </div>
+                            <div class="post-interaction-textwrapper">
+                                <p>Share</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-descr">
+                        <p>This is a description</p>
+                    </div>
+                    <div class="post-comments">
+                        <h3>Comments</h3>
+                        <div class="comment-post-wrapper">
+                            <div class="comment-post-user-wrapper">
+                                <img src="../files/img/users/user.png" alt="USERNAME">
+                            </div>
+                            <div>
+                                <form class="comment-form">
+                                    <div>
+                                        <textarea placeholder="Comment" autocomplete="off"></textarea>
+                                    </div>
+                                    <div class="comment-form-button-wrapper">
+                                        <button>cancel</button>
+                                        <div class="comment-button-spacer"></div>
+                                        <button class="comment-button" id="comment-button">comment</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div></div>
+                        </div>
+                        <div class="comment-wrapper">
+                            <div class="comment">
+                                <div class="comment-user-wrapper">
+                                    <img src="../files/img/users/user.png" alt="USERNAME">
+                                </div>
+                                <div class="comment-content-wrapper">
+                                    <a>USERNAME</a>
+                                    <p>Comment</p>
+                                    <p>Multi line comment</p>
+                                </div>
+                                <div></div>
+                            </div>
+                            <div class="comment">
+                                <div class="comment-user-wrapper">
+                                    <img src="../files/img/users/user.png" alt="USERNAME">
+                                </div>
+                                <div class="comment-content-wrapper">
+                                    <a>USERNAME</a>
+                                    <p>Comment</p>
+                                    <p>Multi line comment</p>
+                                </div>
+                                <div></div>
+                            </div>
+                            <div class="comment">
+                                <div class="comment-user-wrapper">
+                                    <img src="../files/img/users/user.png" alt="USERNAME">
+                                </div>
+                                <div class="comment-content-wrapper">
+                                    <a>USERNAME</a>
+                                    <p>Comment</p>
+                                    <p>Multi line comment</p>
+                                </div>
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-footer"></div>
+            </div>
+        </div>
+        <div></div>
+    </main>
+</body>
+
+</html>
