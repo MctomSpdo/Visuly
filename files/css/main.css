@@ -410,7 +410,7 @@ nav > a > div {
 
 .comment-post-wrapper {
     display: grid;
-    grid-template-columns: 10% 80% 10%;
+    grid-template-columns: 10% 80% 10% 0%;
     padding-bottom: 2vh;
 }
 
@@ -418,6 +418,14 @@ nav > a > div {
     display: flex;
     justify-content: center;
     padding-top: 2vh;
+}
+
+#comment-overlay {
+    height: 100% !important;
+    width: 100%;
+    background-color: red;
+    opacity: 0.5;
+    position: relative;
 }
 
 .comment-post-user-wrapper img {
@@ -438,6 +446,8 @@ nav > a > div {
     font-family: Poppins;
     resize: none;
     padding-top: 1.4vh;
+    line-height: 20px;
+    min-height: 44px;
 }
 
 .comment-post-wrapper textarea:focus {
@@ -461,8 +471,8 @@ nav > a > div {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
 }
 
-.comment-form-button-wrapper button:hover {
-    background-color: var(--colorD);
+.button-hoverable:hover {
+    background-color: var(--colorD) !important;
     color: var(--defaultBg);
     cursor: pointer;
 }

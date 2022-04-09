@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="../files/js/main.js" defer></script>
+    <script src="../files/js/post.js" defer></script>
 </head>
 
 <body>
@@ -167,16 +168,18 @@
                             <div>
                                 <form class="comment-form">
                                     <div>
-                                        <textarea placeholder="Comment" autocomplete="off"></textarea>
+                                        <textarea placeholder="Comment" autocomplete="off" id="comment-textarea"></textarea>
                                     </div>
                                     <div class="comment-form-button-wrapper">
-                                        <button>cancel</button>
+                                        <button id="cancel-button">cancel</button>
                                         <div class="comment-button-spacer"></div>
                                         <button class="comment-button" id="comment-button">comment</button>
                                     </div>
                                 </form>
                             </div>
                             <div></div>
+                            <div id="comment-overlay"></div>
+                            </div>
                         </div>
                         <div class="comment-wrapper">
                             <div class="comment">
