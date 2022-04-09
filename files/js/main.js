@@ -33,7 +33,13 @@ function loadPosts(element, apiPath) {
 function parsePostToHTML(post) {
     let postlikeImage = ((post.hasLiked) ? "heart_filled" : "heart") + ".svg";
 
-    return `<div class="post" id="${post.postId}">
+    let postdescr = post.description;
+
+    if(postdescr.length > 100) {
+        postdescr = postdescr.substring(0, 98) + " ...";
+    }
+
+    return `<div class="post" id="${post.postId}" onclick="postPressed(this)">
             <div class="post-header">
                 <a href="./user.php?user=${post.postedFromID}" class="post-user-wrapper">
                     <div class="post-user-image">
@@ -82,13 +88,21 @@ function parsePostToHTML(post) {
                     </div>
                 </div>
                 <div class="post-descr">
-                    <p>${post.description}</p>
+                    <p>${postdescr}</p>
                 </div>
             </div>
             <div class="post-footer"></div>
         </div>`
 }
-
+/**************************************************** POST INTERACTION *******************************************************/
+/**
+ * Onclick listener for post
+ * @param element postelement
+ */
+function postPressed(element) {
+    let postId = element.id;
+    window.location.href = getPostLink(postId);
+}
 
 /**************************************************** LIKE POST *******************************************************/
 
