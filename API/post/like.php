@@ -21,6 +21,7 @@ if (!isset($_COOKIE[$config->token->name])) {
 }
 
 //db connection:
+$db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if($db->connect_error) {
     $resp = new stdClass();
