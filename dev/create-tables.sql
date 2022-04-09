@@ -99,6 +99,7 @@ create table COMMENT
     content   varchar(300) not null,
     UserID    int          not null,
     PostID    int          not null,
+    postedOn    datetime      not null,
     isDeleted tinyint      not null,
     foreign key (UserID) references USER (UserID),
     foreign key (PostID) references POST (PostID)

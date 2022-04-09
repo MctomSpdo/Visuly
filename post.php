@@ -125,9 +125,9 @@ include "assets/header.php";
                                 } else if ($comments == 0) {
                                     echo "no comments";
                                 } else if ($comments == 1) {
-                                    echo $comments . "comments";
+                                    echo $comments . " comment";
                                 } else {
-                                    echo $comments;
+                                    echo $comments . " comments";
                                 }
                                 ?></p>
                         </div>

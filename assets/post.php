@@ -238,4 +238,16 @@ class Post
         $this->isDeleted = $result[6];
         $this->extention = $result[7];
     }
+
+    /**
+     * @param $comment content of comment
+     * @param int $user user that posted the comment
+     * @param mysqli $db database
+     * @return bool true if successfully, false otherwise
+     */
+    function addComment(string $comment,int $user, mysqli $db): bool {
+        $stmt = $db->prepare("insert into comment (content, UserID, PostID, postedOn, isDeleted) value (?, ?, ?, now(), 0)");
+        $stmt->bind_param("sii", $comment, $user, $this->PostId);
+        return $stmt->execute() & $stmt->close();
+    }
 }

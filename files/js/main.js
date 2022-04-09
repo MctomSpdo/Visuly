@@ -1,6 +1,7 @@
 let api_posts = "./API/feed/home.php";
 let api_like = "./API/post/like.php";
 let api_newest = "./API/feed/newest.php";
+let api_comment = "./API/post/comment.php";
 
 function loadHome(element) {
     loadPosts(element, api_posts);
@@ -195,4 +196,23 @@ function getCommentsSpelled(comments) {
     } else {
         return `${comments} comments`
     }
+}
+
+/********************************************* Comment post ******************************/
+
+function sendComment(post, comment) {
+    let formData = new FormData();
+
+    formData.append('post', post)
+    formData.append('comment', comment);
+
+    fetch(api_comment, {
+        method: 'post',
+        credentials: 'same-origin',
+        body: formData
+    }).then (function (response) {
+        return response.text();
+    }).then (function (data) {
+        console.log(data);
+    });
 }
