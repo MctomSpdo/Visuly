@@ -56,6 +56,7 @@ $postUser->DBLoadFromUserID($post->fromUser, $db);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="./files/js/main.js" defer></script>
+    <script src="files/js/post.js" defer></script>
 </head>
 
 <body>
@@ -143,53 +144,72 @@ include "assets/header.php";
                 </div>
                 <div class="post-descr">
                     <?php
-                        //output linebreaks as new p tags
-                        $starr = preg_split("/\r\n|\n|\r/", $post->Desc);
-                        foreach ($starr as $string) {
-                            echo "<p>" . $string . "</p>";
-                        }?>
+                    //output linebreaks as new p tags
+                    $starr = preg_split("/\r\n|\n|\r/", $post->Desc);
+                    foreach ($starr as $string) {
+                        echo "<p>" . $string . "</p>";
+                    } ?>
                 </div>
                 <div class="post-comments">
                     <h3>Comments</h3>
-                    <div>
-                        <div class="comment-wrapper">
-                            <div class="comment-image-wrapper">
+                    <div class="comment-post-wrapper">
+                        <div class="comment-post-user-wrapper">
+                            <img src="files/img/users/<?php echo $user->profilePic ?>" alt="USERNAME">
+                        </div>
+                        <div>
+                            <form class="comment-form">
                                 <div>
-                                    <img src="files/img/users/<?php echo $user->profilePic ?>" alt="user">
+                                    <textarea placeholder="Comment" autocomplete="off" id="comment-textarea"></textarea>
                                 </div>
-                            </div>
-
-                            <div id="comment-interaction-form-wrapper">
-                                <form>
-                                    <input type="text" placeholder="comment">
-                                </form>
-                            </div>
-                            <div></div>
+                                <div class="comment-form-button-wrapper">
+                                    <button id="cancel-button">cancel</button>
+                                    <div class="comment-button-spacer"></div>
+                                    <button class="comment-button" id="comment-button">comment</button>
+                                </div>
+                            </form>
                         </div>
                         <div></div>
-                    </div>
-                    <div>
-                        <div class="comment-wrapper">
-                            <div class="comment-image-wrapper">
-                                <div>
-                                    <img src="files/img/users/<?php echo $user->profilePic ?>" alt="user">
-                                </div>
-                            </div>
-
-                            <div>
-                                <p>USERNAME</p>
-                                <p>Comment</p>
-                            </div>
-                            <div></div>
-                        </div>
-                        <div></div>
+                        <div id="comment-overlay"></div>
                     </div>
                 </div>
+                <div class="comment-wrapper">
+                    <?php
+                    $comments = $post->getComments(0, $db);
+
+                    foreach ($comments as $comment) {
+                        $commentUserName = $comment[0];
+                        $commentProfilePicture = $comment[2];
+                        $commentUserUuid = $comment[3];
+                        $commentContent = "";
+
+                        $contentArr = preg_split("/\r\n|\n|\r/", $comment[1]);
+                        foreach ($contentArr as $string) {
+                            $commentContent .= "<p>" . $string . "</p>";
+                        }
+
+                        echo '<div class="comment">
+                            <div class="comment-user-wrapper">
+                                <img src="files/img/users/' .$commentProfilePicture . '" alt="' . $commentUserName . '">
+                            </div>
+                            <div class="comment-content-wrapper">
+                                <a href="user.php?user=' . $commentUserUuid . '">' . $commentUserName . '</a>
+                                ' . $commentContent . '
+                            </div>
+                            <div></div>
+                        </div>';
+                    }
+
+
+                    ?>
+                </div>
             </div>
-            <div class="post-footer"></div>
         </div>
+    </div>
+    <div class="post-footer"></div>
+    </div>
     </div>
     <div></div>
 </main>
 </body>
 </html>
+<?php $db->close(); ?>

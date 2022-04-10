@@ -250,4 +250,19 @@ class Post
         $stmt->bind_param("sii", $comment, $user, $this->PostId);
         return $stmt->execute() & $stmt->close();
     }
+
+    function getComments(int $offset, mysqli $db) {
+        $stmt = $db->prepare("select u.username, c.content, u.profilePic, u.uuid from comment c inner join user u using(UserID) where c.postId = ? and c.isDeleted = 0 and u.deleted = 0 order by c.postedOn desc limit 50 offset ?");
+        $stmt->bind_param("ii", $this->PostId, $offset);
+        if(!$stmt->execute()) {
+            return false;
+        }
+        $res = $stmt->get_result();
+        $result = $res->fetch_all();
+        $res->close();
+        if(!$stmt->close()) {
+            return false;
+        }
+        return $result;
+    }
 }
