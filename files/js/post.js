@@ -2,13 +2,15 @@ let commentTextArea = document.getElementById("comment-textarea");
 let commentButton = document.getElementById("comment-button");
 let cancelButton = document.getElementById("cancel-button");
 let commentArea = document.getElementsByClassName("comment-content-wrapper")[0];
+let commentWrapper = document.getElementsByClassName("comment-wrapper")[0];
 let api_comment = "./API/post/comment.php";
+let api_get_comment = "./API/post/get-comment.php";
 
 //textarea: 
 
 commentTextArea.addEventListener("keyup", () => {
     commentTextArea.style.height = calcHeight(commentTextArea.value) + "px";
-    if(commentTextArea.value.length > 0) {
+    if (commentTextArea.value.length > 0) {
         commentButton.style.backgroundColor = "var(--colorB)";
         commentButton.classList.add("button-hoverable");
     } else {
@@ -27,7 +29,7 @@ function calcHeight(value) {
 
 commentButton.addEventListener("click", (event) => {
     event.preventDefault();
-    if(commentTextArea.value.length > 0) {
+    if (commentTextArea.value.length > 0) {
         let comment = commentTextArea.value;
         console.log(comment);
 
@@ -37,7 +39,7 @@ commentButton.addEventListener("click", (event) => {
         let element = getParents(commentTextArea, 7);
         sendComment(element.id, comment);
     }
-}); 
+});
 
 cancelButton.addEventListener("click", (event) => {
     event.preventDefault();
@@ -50,8 +52,8 @@ function setDisabledState(value) {
     commentButton.disabled = value;
     cancelButton.disabled = value;
     commentTextArea.disabled = value;
-    
-    if(value) {
+
+    if (value) {
         commentButton.classList.remove("button-hoverable");
     } else {
         commentButton.classList.add("button-hoverable");
@@ -60,7 +62,7 @@ function setDisabledState(value) {
 
 function getParents(element, iterations) {
     let parentElement = element;
-    for(let i = 0; i < iterations; i++) {
+    for (let i = 0; i < iterations; i++) {
         parentElement = parentElement.parentNode;
     }
     return parentElement;
@@ -76,12 +78,55 @@ function sendComment(post, comment) {
         method: 'post',
         credentials: 'same-origin',
         body: formData
-    }).then (function (response) {
+    }).then(function (response) {
         return response.json();
-    }).then (function (data) {
+    }).then(function (data) {
         commentTextArea.value = "";
-        setDisabledState(false);
+        setDisabledState(true);
         commentButton.classList.remove("button-hoverable");
-        console.log(data);
+        commentButton.style.backgroundColor = "";
+        loadComments(post, 0, commentWrapper);
     });
+}
+
+function loadComments(post, offset, element) {
+    let formData = new FormData();
+
+    formData.append('post', post);
+    formData.append('offset', offset);
+
+    fetch(api_get_comment, {
+        method: 'post',
+        credentials: 'same-origin',
+        body: formData
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data)
+        element.innerHTML = "";
+        data.forEach((item, index) => {
+            element.innerHTML += generateComment(item);
+            console.log(generateComment(item));
+        });
+    });
+}
+
+function generateComment(comment) {
+    let textArr = comment.content.split(/\r?\n/);
+    let commentText = "";
+
+    textArr.forEach((item, index) => {
+       commentText += "<p>" + item + "</p>";
+    });
+
+    return `<div class="comment">
+                <div class="comment-user-wrapper">
+                    <img src="files/img/users/${comment.userImage}" alt="${comment.user}">
+                </div>
+                <div class="comment-content-wrapper">
+                    <a href="./user.php?user=${comment.userId}">${comment.user}</a>
+                    ${commentText}
+                </div>
+                <div></div>
+            </div>`
 }

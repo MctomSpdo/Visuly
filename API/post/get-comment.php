@@ -1,5 +1,4 @@
 <?php
-
 $configPath = '../../files/config.json';
 $config = json_decode(file_get_contents($configPath));
 
@@ -7,23 +6,22 @@ require_once '../../assets/user.php';
 require_once '../../assets/token.php';
 require_once '../../assets/post.php';
 
-//check request:
-if(!(isset($_POST['post']) && isset($_POST['comment']))) {
+//check request
+if(!(isset($_POST['post'])) && isset($_POST['offset'])) {
     $resp = new stdClass();
     $resp->error = "Invalid Request";
     exit(json_encode($resp));
 }
 
 $postId = $_POST['post'];
-$comment = $_POST['comment'];
+$offset = $_POST['offset'];
 
-if(strlen($comment) == 0 || strlen($comment) > 300) {
+if(strlen($postId) == 0)  {
     $resp = new stdClass();
-    $resp->error = "Comment text invalid";
+    $resp->error = "invalid Request";
     exit(json_encode($resp));
 }
 
-//check login:
 if (!isset($_COOKIE[$config->token->name])) {
     $resp = new stdClass();
     $resp->error = "No Permission";
@@ -40,7 +38,6 @@ if($db->connect_error) {
     exit(json_encode($resp));
 }
 
-//check token in DB:
 $userId = checkTokenWRedirect($token, $config, $db);
 $user = new User();
 $user->DBLoadFromUserID($userId, $db);
@@ -56,24 +53,21 @@ if(!$post->DBLoadFromPath($db)) {
     exit(json_encode($resp));
 }
 
-//check if user can post comment:
-if(!$user->canComment) {
-    $resp = new stdClass();
-    $resp->error = "No permission to comment";
-    $db->close();
-    exit(json_encode($resp));
+$res = $post->getComments($offset, $db);
+
+$result = array();
+
+foreach ($res as $comment) {
+    $newcomment = new stdClass();
+    $newcomment->content = $comment[1];
+    $newcomment->user = $comment[0];
+    $newcomment->userImage = $comment[2];
+    $newcomment->userId = $comment[3];
+    array_push($result, $newcomment);
 }
 
-//save comment to db:
-$resp = new stdClass();
-
-if($post->addComment($comment, $user->UserID, $db)) {
-    $resp->comment = true;
-} else {
-    $resp->error = "Internal Server Error (002)";
-}
-
-echo json_encode($resp);
+echo json_encode($result);
 
 $db->close();
+
 ?>
