@@ -148,7 +148,7 @@ function drop(ev) {
 }
 
 /**
- * Drag over event handler for fileinput
+ * Drag over event handler for file-input
  * @param {Event} ev Event
  */
 function dragOverHandler(ev) {
@@ -189,7 +189,7 @@ function loadFile(file) {
 /**
  * checks if a given File is an Image
  * @param {File} file File to check 
- * @returns true if image, false othewise
+ * @returns true if image, false otherwise
  */
 function fileIsImage(file) {
     const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png'];

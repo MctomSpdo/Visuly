@@ -28,7 +28,7 @@ function loadPosts(element, apiPath) {
     });
 }
 
-//TODO: correct parsing (amout of likes, user has liked, postedFrom, postedFromPfp)
+//TODO: correct parsing (amount of likes, user has liked, postedFrom, postedFromPfp)
 function parsePostToHTML(post) {
     let postlikeImage = ((post.hasLiked) ? "heart_filled" : "heart") + ".svg";
 

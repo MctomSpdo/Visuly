@@ -2,7 +2,7 @@
 
 Medientechnik SommerSemester Projekt 2022
 
-[Github Repo](https://github.com/MctomSpdo/Medt_SSProject2022)
+[GitHub Repo](https://github.com/MctomSpdo/Medt_SSProject2022)
 
 ## Setting up VIUSLY: 
 

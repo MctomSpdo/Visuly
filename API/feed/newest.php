@@ -27,7 +27,7 @@ $userId = checkTokenWRedirect($token, $config, $db);
 $user = new User();
 $user->DBLoadFromUserID($userId, $db);
 
-$postArr = Post::loadNewetPosts($db);
+$postArr = Post::loadNewestPosts($db);
 
 
 $resp = "no posts yet";
@@ -48,7 +48,7 @@ switch ($postArr) {
             $userPost = new User();
             $userPost->DBLoadFromUserID($posts->fromUser, $db);
 
-            //respose item:
+            //response item:
             $postRest = new stdClass();
             $postRest->title = $posts->Title;
             $postRest->description = $posts->Desc;

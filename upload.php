@@ -62,7 +62,7 @@ $user->DBLoadFromUserID($userId, $db);
                     <div id="file-upload">
                         <div id="upload-file-img-wrapper">
                             <div>
-                                <img src="./files/img/upload.svg" id="upload-icon">
+                                <img src="./files/img/upload.svg" id="upload-icon" alt="Upload Icon">
                             </div>
 
                         </div>
@@ -74,7 +74,7 @@ $user->DBLoadFromUserID($userId, $db);
                         </label>
                     </div>
                     <div id="file-display">
-                        <img id="img-prev" alt="Uploaded Image">
+                        <img src="" id="img-prev" alt="Uploaded Image">
                     </div>
                 </div>
                 <div id="upload-inputs">

@@ -253,7 +253,7 @@ function createUser() {
 /************************************************ USERNAME EXISTS ************************************************/
 
 /**
- * Looks up if an username already exists in the database
+ * Looks up if a username already exists in the database
  * @param {String} username 
  */
 function userLookUp(username) {
@@ -304,9 +304,9 @@ function hasLowerCase(str) {
 }
 
 /**
- * checks if a String has a uppercase letter inside
+ * checks if a String has an uppercase letter inside
  * @param {String} str String to check
- * @returns {Boolean} true, if there is a uppercase letter, false othewise
+ * @returns {Boolean} true, if there is an uppercase letter, false otherwise
  */
 function hasUpperCase(str) {
     return str.toLowerCase() !== str;

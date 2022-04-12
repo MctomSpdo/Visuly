@@ -24,7 +24,7 @@ html,
 body {
     padding: 0;
     margin: 0;
-    font-family: Poppins;
+    font-family: Poppins, Arial, serif;
     color: var(--color);
     background-color: var(--defaultBg);
     overflow-x: hidden;
@@ -53,7 +53,7 @@ header {
 }
 
 #header-logo {
-    font-family: architect;
+    font-family: architect, Calibri, Arial, serif;
     font-size: 3.5vh;
 }
 
@@ -410,7 +410,7 @@ nav > a > div {
 
 .comment-post-wrapper {
     display: grid;
-    grid-template-columns: 10% 80% 10% 0%;
+    grid-template-columns: 10% 80% 10% 0;
     padding-bottom: 2vh;
 }
 
@@ -443,7 +443,7 @@ nav > a > div {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
     border-radius: 0.5vh;
     box-sizing: border-box;
-    font-family: Poppins;
+    font-family: Poppins, serif;
     resize: none;
     padding-top: 1.4vh;
     line-height: 20px;
@@ -451,7 +451,6 @@ nav > a > div {
 }
 
 .comment-post-wrapper textarea:focus {
-    border: none;
     outline: none;
     border: rgba(0, 0, 0, 0.4) solid 1px;
 }
@@ -681,7 +680,7 @@ INPUTS
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
     border-radius: 0.5vh;
     box-sizing: border-box;
-    font-family: Poppins;
+    font-family: Poppins, serif;
 }
 
 #upload-inputs > div textarea {
@@ -691,7 +690,6 @@ INPUTS
 }
 
 #upload-inputs > div input:focus, #upload-inputs > div textarea:focus {
-    border: none;
     outline: none;
     border: rgba(0, 0, 0, 0.4) solid 1px;
 }

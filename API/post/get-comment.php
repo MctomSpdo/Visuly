@@ -58,12 +58,12 @@ $res = $post->getComments($offset, $db);
 $result = array();
 
 foreach ($res as $comment) {
-    $newcomment = new stdClass();
-    $newcomment->content = $comment[1];
-    $newcomment->user = $comment[0];
-    $newcomment->userImage = $comment[2];
-    $newcomment->userId = $comment[3];
-    array_push($result, $newcomment);
+    $newComment = new stdClass();
+    $newComment->content = $comment[1];
+    $newComment->user = $comment[0];
+    $newComment->userImage = $comment[2];
+    $newComment->userId = $comment[3];
+    array_push($result, $newComment);
 }
 
 echo json_encode($result);

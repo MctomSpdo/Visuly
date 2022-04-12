@@ -7,7 +7,7 @@
  * @param String $token token to be checked
  * @param $config * parsed JSON
  * @param mysqli $db database connection (MySQL)
- * @return String usernumber
+ * @return String userNumber
  */
 function checkTokenWRedirect(String $token, $config, mysqli $db)
 {
@@ -166,8 +166,8 @@ function deleteTokenCookies($config) {
 
 /**
  * Generates a new Token
- * @param mysqli $db Databse
- * @param $config * Config as JOSN
+ * @param mysqli $db Database
+ * @param $config * Config as JSON
  * @param int $userID owner of token
  * @return false|string false if error, Token otherwise
  */

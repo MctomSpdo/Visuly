@@ -206,7 +206,7 @@ class Post
      * @param mysqli $db database connection
      * @return array|int array with posts, -1 if error, null if no posts
      */
-    static function loadNewetPosts(mysqli $db) {
+    static function loadNewestPosts(mysqli $db) {
         $sql = "select * from post order by now() - PostedOn limit 50;";
 
         if(!$res = $db->query($sql)) {
