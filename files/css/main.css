@@ -477,6 +477,12 @@ nav > a > div {
     cursor: pointer;
 }
 
+.cancel-hoverable:hover {
+    cursor: pointer;
+    background-color: var(--colorD) !important;
+    color: var(--defaultBg);
+}
+
 #comment-button {
     /*background-color: var(--colorB); done via JS*/
 }

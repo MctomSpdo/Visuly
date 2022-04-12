@@ -13,9 +13,11 @@ commentTextArea.addEventListener("keyup", () => {
     if (commentTextArea.value.length > 0) {
         commentButton.style.backgroundColor = "var(--colorB)";
         commentButton.classList.add("button-hoverable");
+        cancelButton.classList.add("cancel-hoverable");
     } else {
         commentButton.style.backgroundColor = "";
         commentButton.classList.remove("button-hoverable");
+        cancelButton.classList.remove("cancel-hoverable");
     }
 })
 
@@ -31,7 +33,6 @@ commentButton.addEventListener("click", (event) => {
     event.preventDefault();
     if (commentTextArea.value.length > 0) {
         let comment = commentTextArea.value;
-        console.log(comment);
 
         //disable elements: 
         setDisabledState(true);
@@ -55,8 +56,7 @@ function setDisabledState(value) {
 
     if (value) {
         commentButton.classList.remove("button-hoverable");
-    } else {
-        commentButton.classList.add("button-hoverable");
+        cancelButton.classList.remove("cancel-hoverable");
     }
 }
 
@@ -82,9 +82,12 @@ function sendComment(post, comment) {
         return response.json();
     }).then(function (data) {
         commentTextArea.value = "";
-        setDisabledState(true);
-        commentButton.classList.remove("button-hoverable");
+        setDisabledState(false);
+        commentButton.classList.add("button-hoverable");
         commentButton.style.backgroundColor = "";
+        if(data.error !== undefined) {
+            alert("sorry, something went wrong during commenting: " + data.error);
+        }
         loadComments(post, 0, commentWrapper);
     });
 }
@@ -106,7 +109,6 @@ function loadComments(post, offset, element) {
         element.innerHTML = "";
         data.forEach((item, index) => {
             element.innerHTML += generateComment(item);
-            console.log(generateComment(item));
         });
     });
 }
