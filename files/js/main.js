@@ -28,7 +28,6 @@ function loadPosts(element, apiPath) {
     });
 }
 
-//TODO: correct parsing (amount of likes, user has liked, postedFrom, postedFromPfp)
 function parsePostToHTML(post) {
     let postlikeImage = ((post.hasLiked) ? "heart_filled" : "heart") + ".svg";
 
@@ -136,7 +135,6 @@ function likePost(post, like, element) {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-
         if(data.success === false) {
             alert("Could not like");
             return;
@@ -150,7 +148,7 @@ function likePost(post, like, element) {
         element.classList.toggle("liked");
 
         let likeElement = element.parentNode.parentNode.children[1].children[0];
-        like.innerHTML = getLikesSpelled(data.likes);
+        likeElement.innerHTML = getLikesSpelled(data.likes);
     });
 }
 
