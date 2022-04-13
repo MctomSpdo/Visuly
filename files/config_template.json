@@ -19,5 +19,6 @@
   "userImageFolder": "/files/img/users",
   "userDefaultImage": "user.png",
   "userDefaultPermission": "2",
-  "passwordSalt": ""
+  "passwordSalt": "",
+  "respLength" : 50
 }
