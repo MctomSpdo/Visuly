@@ -3,10 +3,10 @@ let API_TOP_POSTS = './API/feed/top-posts.php';
 
 loadNewest(document.getElementById('content'));
 
-function loadPopular() {
+function loadPopular(offset) {
     let data = new FormData();
 
-    data.append('offset', 0);
+    data.append('offset', offset);
 
     fetch(API_TOP_POSTS, {
         method: 'post',

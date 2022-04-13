@@ -17,3 +17,5 @@ deleteTokenCookies($config);
 
 //redirect to login page:
 header("Location: ./login.php");
+
+include "assets/error.php";
