@@ -1,0 +1,187 @@
+= Visuly Config
+Mctom Spdo
+1.0.0, {docdate}: MEDT
+:icons: font
+:sectnums:
+:toc: left
+:stylesheet: ../css/dark.css
+ifndef::imagesdir[:imagesdir: images]
+
+Visuly uses a JSON file to be configured.
+The JSON has to be stored in
+
+    ./files/config.json
+    # Config template:
+    ./files/config_template.json
+
+In this file will be the steps to configure the System.
+
+== Database
+
+This section is referring to the database section of the config file.
+
+Visuly uses a mysql database for its backend.
+The database can be easily configured in configfile.
+
+|===
+|field | description
+
+|host
+|The host (IP or Hostname) for the database
+
+|database
+|the name of the database that Visuly should use
+
+|username
+|the username for the database
+
+|password
+|the password for the database
+|===
+
+== Token
+
+Visuly uses a token to store the login in the browser, and there are a couple of configurable options here too.
+
+=== name
+
+The name of the cookie for storing the token in the browser
+
+supported values:
+
+* a - z
+* A - Z
+* 0 - 9
+
+=== salt
+
+The salt used in the hashing of the token. +
+This can be empty, but that would be a security risk
+
+=== length
+
+    default value: 30
+
+The character length of the token
+
+supported values:
+
+* numeric values
+
+=== lifespan
+
+    default value: 24 (2 years)
+
+The duration in months the token will be valid
+
+supported values:
+
+* numeric values
+
+== Post
+
+=== defaultDir
+
+    default value: "/files/img/post"
+
+The default directory for storing the image +
+the path has to beginn with a "/"!
+
+=== imgType
+
+    default value: "jpg"
+
+The type of the image the programm should store
+
+supported values:
+
+* jpg
+* png
+* gif
+
+=== nameLength:
+
+    default value: 60
+
+The length of the postId. This should not exceed the length configured in the database.
+
+supported values:
+
+* 0 - 60
+
+=== maxSize:
+
+    default value: 10.000.000
+
+The maximum Size supported for uploaded Images
+
+supported values:
+
+* 1 - *
+
+=== imgHeight
+
+    default value: 1080
+
+The height (in pixel) of the Image the stored (and compressed) image should be stored.
+
+supported values:
+
+* 0 - 10.000
+
+=== imgQuality
+
+    default value: 80
+
+The compression Quality
+
+supported values:
+
+* -1 (this will default to 75)
+* 0 - 100
+
+0 being the worst quality
+100 being the best
+
+== Other
+
+=== userImageFolder
+
+    default value: "/files/img/users"
+
+the default directory for the profile pictures for users. +
+The path has to beginn with a "/"!
+
+=== userDefaultImage
+
+    default value: user.png
+
+The default image for new users. +
+This image has to be in the userImageFolder.
+
+=== userDefaultPermission
+
+    default value: 2
+
+The default permission for all users. +
+this is the Primary key of the permission table.
+
+supported values:
+
+* 1 - *
+
+=== passwordSalt
+
+The salt that the password uses.
+
+IMPORTANT: leaving this empty is a great security risk!
+
+=== respLength
+
+    default value: 50
+
+The length of the API responses +
+
+For example:
+
+If you request the newest post, the amount of posts will be limited by respLength. (if there are enough posts)
