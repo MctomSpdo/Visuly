@@ -62,7 +62,7 @@ function parsePostToHTML(post) {
                 <div class="post-interaction-wrapper">
                     <div class="post-like">
                         <div class="post-interaction-imgwrapper">
-                            <img src="./files/img/${postlikeImage}" alt="Likes" onclick="likeButtonPress(this);">
+                            <img src="./files/img/${postlikeImage}" alt="Likes" onclick="likeButtonPress(this); event.stopPropagation();">
                         </div>
                         <div class="post-interaction-textwrapper">
                             <p>${getLikesSpelled(post.likes)}</p>
@@ -76,7 +76,7 @@ function parsePostToHTML(post) {
                             <p>${getCommentsSpelled(post.comments)}</p>
                         </div>
                     </div>
-                    <div class="post-share" onclick="shareEventHandler(this);">
+                    <div class="post-share" onclick="shareEventHandler(this); event.stopPropagation();">
                         <div class="post-interaction-imgwrapper">
                             <img src="./files/img/share.svg" alt="Share">
                         </div>
