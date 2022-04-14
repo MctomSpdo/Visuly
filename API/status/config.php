@@ -82,6 +82,19 @@ if(!isset($config->post)) {
     if(!isset($config->post->maxSize) || !is_numeric($config->post->maxSize)) {
         error("Config invalid: section post.maxSize does not exist or is not numeric");
     }
+    if(!isset($config->post->imgType) || $config->post->imgType == "") {
+        error("Config invalid: section post.imgType does not exist or is empty");
+    }
+    if(!isset($config->post->imgHeight) || !is_numeric($config->post->imgHeight)) {
+        error("Config invalid: section post.imgHeight does not exist or is not numeric");
+    } else if($config->post->imgHeight < 1 || $config->post->imgHeight > 10000) {
+        error("Config invalid: section post.imgHeight has to be in range 1 - 10000");
+    }
+    if(!isset($config->post->imgQuality) || !is_numeric($config->post->imgQuality)) {
+        error("Config invalid: section post.imgQuality does not exist or is not numeric");
+    } else if ($config->post->imgQuality < -1 || $config->post->imgQuality > 100) {
+        error("Config invalid: section post.imgQuality has to be in range -1 to 100");
+    }
 }
 
 //check other values:
