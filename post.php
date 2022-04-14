@@ -38,6 +38,9 @@ $postUser = new User();
 
 $post->ImgPath = $_GET['post'];
 $postFound = $post->DBLoadFromID($db);
+if(!$postFound) {
+    header("Location: ./error.php");
+}
 $postUser->DBLoadFromUserID($post->fromUser, $db);
 ?>
 
