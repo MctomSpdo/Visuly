@@ -79,7 +79,11 @@ function check() {
     } else if(desc != "" && desc.length > 2000) {
         error("Description can't be over 2000 Characters long!");
         return true;
+    } else if(title == "") {
+        error("The post must have a title!");
+        return true;
     }
+    error("");
     return false;
 }
 
@@ -87,9 +91,6 @@ function check() {
  * Call this function to upload everything, and redirect
  */
 function upload() {
-    //disable button:
-    submitButton.disabled = true;
-
     //check user inputs:
     if(check()) {
         return;
@@ -97,6 +98,8 @@ function upload() {
         error("Select an Image first");
         return;
     }
+    //disable button:
+    submitButton.disabled = true;
 
     let formData = new FormData();
 
@@ -114,7 +117,7 @@ function upload() {
         return response.json();
     }).then(function (data) { 
         console.log(data);
-        if(data.postid === undefined || data.postid == null) {
+        if(data.postid === undefined || data.postid === null) {
             if(data.error == 'File is too big') {
                 alert("Your File is too big for the platform to handle!");
             } else {

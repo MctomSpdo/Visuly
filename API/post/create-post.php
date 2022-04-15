@@ -147,7 +147,6 @@ if($old_image === false) {
 $newImage = resize_image_to_height($config->post->imgHeight, $old_image, $width, $height);
 
 //save image file:
-var_dump($target_file);
 save_image($newImage, $target_file, $config->post->imgType, $config->post->imgQuality);
 
 //save in system (db):
