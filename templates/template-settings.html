@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings|Template - Visuly</title>
+
+    <link rel="stylesheet" href="../files/css/main.css">
+
+    <!-- icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <header>
+        <div id="header-logo">VISULY</div>
+        <div id="header-search">
+            <form action="search.php" autocomplete="off">
+                <input type="text" placeholder="Search" name="search" id="header-searchbar" maxlength="2048">
+                <button type="submit" id="header-search-submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <div id="header-user">
+            <div id="header-user-img">
+                <img src="../files/img/users/user.svg" alt="User" id="header-user-icon">
+            </div>
+        </div>
+
+        <div id="header-dropdown">
+            <a href="myuser.php">
+                <div>
+                    <div class="header-dropdown-image">
+                        <img src="../files/img/users/user.svg" alt="user">
+                    </div>
+                    <div class="header-dropdown-text">
+                        <p>Profile</p>
+                    </div>
+                </div>
+            </a>
+            <a href="settings.php">
+                <div>
+                    <div class="header-dropdown-image">
+                        <img src="../files/img/settings.svg" alt="settings">
+                    </div>
+                    <div class="header-dropdown-text">
+                        <p>Settings</p>
+                    </div>
+                </div>
+            </a>
+            <a href="logout.php">
+                <div>
+                    <div class="header-dropdown-image"></div>
+                    <div class="header-dropdown-text txt-red">
+                        <p>Log out</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- header script -->
+        <script>
+            let headerDropDownIsDisplayed = false;
+
+            document.getElementById("header-user-icon").addEventListener("click", () => {
+                if (headerDropDownIsDisplayed) {
+                    document.getElementById("header-dropdown").style.display = "none";
+                } else {
+                    document.getElementById("header-dropdown").style.display = "block";
+                }
+
+                headerDropDownIsDisplayed = !headerDropDownIsDisplayed;
+            });
+        </script>
+    </header>
+
+    <main id="settings-main">
+        <nav id="setting-nav">
+            <a id="nav-active">
+                <div>
+                    <div class="nav-img">
+                        <img src="../files/img/users/user.png" alt="Home">
+                    </div>
+                    <div class="nav-txt">
+                        <p>Edit User</p>
+                    </div>
+                </div>
+            </a>
+            <a>
+                <div>
+                    <div class="nav-img">
+                        <img src="../files/img/key.svg" alt="Home">
+                    </div>
+                    <div class="nav-txt">
+                        <p>Change Password</p>
+                    </div>
+                </div>
+            </a>
+        </nav>
+
+        <div id="content">
+            <div id="content-hidden">
+                <div id="edit-user">
+
+                </div>
+
+                <div id="change-password">
+                    <h1>Change Password</h1>
+
+                    <form class="setting-form-80">
+                        <label for="current-password">Current Password</label>
+                        <br>
+                        <input type="password" placeholder="Current Password" name="current-password">
+                        <br>
+                        <label for="new-password">New Password</label>
+                        <br>
+                        <input type="password" placeholder="New Password" name="new-password">
+                        <br>
+                        <label for="retype-password">Retype Password</label>
+                        <br>
+                        <input type="password" placeholder="Retype new Password" name="retype-password">
+                        
+                        <div class="settings-form-buttons">
+                            <button type="submit">Save</button>
+                            <button>Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="current-setting-wrapper">
+                <h1>Change Password</h1>
+
+                    <form class="setting-form-80">
+                        <label for="current-password">Current Password</label>
+                        <br>
+                        <input type="password" placeholder="Current Password" name="current-password">
+                        <br>
+                        <label for="new-password">New Password</label>
+                        <br>
+                        <input type="password" placeholder="New Password" name="new-password">
+                        <br>
+                        <label for="retype-password">Retype Password</label>
+                        <br>
+                        <input type="password" placeholder="Retype new Password" name="retype-password">
+                        
+                        <div class="settings-form-buttons">
+                            <button type="submit">Save</button>
+                            <button>Cancel</button>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>

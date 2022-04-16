@@ -720,3 +720,77 @@ INPUTS
 #upload-error {
     color: #ff0000;
 }
+
+/************************************************ SETTINGS ************************************************/
+
+
+#settings-main {
+    grid-template-columns: 22% 60% 18%;
+}
+
+#content-hidden {
+    display: none;
+    height: 0;
+}
+
+.setting-form-80 {
+    width: 80%;
+}
+
+/** Input elements **/
+
+#current-setting-wrapper input[type=text], #current-setting-wrapper input[type=email], #current-setting-wrapper input[type=password] {
+    width: 80%;
+    height: 4vh;
+    margin: 1vh 0;
+    padding-left: 2%;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+    border-radius: 0.5vh;
+    box-sizing: border-box;
+}
+
+#current-setting-wrapper input:focus {
+    outline: none;
+    border: rgba(0, 0, 0, 0.4) solid 1px;
+}
+
+/** Buttons **/
+.settings-form-buttons {
+    padding: 2vh 0;
+}
+
+.settings-form-buttons > * {
+    margin: 0 0.3vh;
+}
+
+.settings-form-buttons > *:first-child {
+    margin: 0 0.3vh 0 0;
+}
+
+.settings-form-buttons > *:last-child {
+    margin: 0 0 0 0.3vh;
+}
+
+.settings-form-buttons button {
+    padding: 1vh 2vw 1vh 2vw;
+    border-radius: 0.5vh;
+    outline: none;
+    border: none;
+    transition: background-color linear 0.2s;
+    font-size: 1.1em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+}
+
+.settings-form-buttons button[type="submit"] {
+    background-color: var(--colorA)
+}
+
+.settings-form-buttons button:hover {
+    cursor: pointer;
+    background-color: var(--colorD);
+    color: var(--defaultBg);
+}
+
+/** Reset password */
+
