@@ -792,5 +792,50 @@ INPUTS
     color: var(--defaultBg);
 }
 
-/** Reset password */
+/** Edit User */
 
+#settings-profile-wrapper {
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+#settings-user-profilepic {
+    position: relative;
+}
+
+#settings-userpfp-wrapper {
+    width: 60%;
+    height: 100%;
+    margin: 0 auto;
+    margin-top: 3vh;
+    position: absolute;
+}
+
+#settings-userpfp-wrapper img {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 100%;
+    width: 100%;
+    height: auto;
+}
+
+#settings-editoverlay {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 3vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+#settings-editoverlay img {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 100%;
+}
+
+#settings-userpfp-wrapper:hover  + #settings-editoverlay {
+    display: block;
+}
