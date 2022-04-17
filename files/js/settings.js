@@ -1,3 +1,5 @@
+let api_newPassword = "./API/user/change-password.php";
+
 //data
 let username = document.getElementById("data-username").innerHTML;
 let email = document.getElementById("data-email").innerHTML;
@@ -226,6 +228,14 @@ function checkPasswordValues() {
         pwError("Password has to have at least 1 number letter");
         return false;
     }
+    if(inputCurrentPw.value == password) {
+        pwError("New Password can't be the same as the old one");
+        return false;
+    }
+    if(password.length < 8) {
+        pwError("Password has to be at least 8 characters long");
+        return false;
+    }
     pwError("");
     return true;
 }
@@ -243,8 +253,30 @@ function pwError(error) {
  * Sends the request to change the passwords to the server
  */
 function pwSendToServer() {
-    console.log("sending pw request to Server!");
-    //TODO: send to API after API is done
+    userForm.disabled = true;
+    if(!checkPasswordValues()) {
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append("currentPassword", inputCurrentPw.value);
+    formData.append("newPassword", inputNewPw.value);
+
+    fetch(api_newPassword, {
+        method: 'post',
+        credentials: 'same-origin',
+        body: formData
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.success !== undefined && data.success == true) {
+            contentArea.innerHTML = "<h1>Password updated!</h1>";
+        } else if(data.error !== undefined) {
+            pwError(data.error);
+        }  else {
+            pwError("Unknown error while sending Request!");
+        }
+    });
 }
 
 /************************************************ UTIL ************************************************/
