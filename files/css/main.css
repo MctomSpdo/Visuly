@@ -28,6 +28,7 @@ body {
     color: var(--color);
     background-color: var(--defaultBg);
     overflow-x: hidden;
+    height: 100vh !important;
 }
 
 main {
@@ -737,6 +738,10 @@ INPUTS
     width: 80%;
 }
 
+#setting-nav a:hover {
+    cursor: pointer;
+}
+
 /** Input elements **/
 
 #current-setting-wrapper input[type=text], #current-setting-wrapper input[type=email], #current-setting-wrapper input[type=password] {
@@ -838,4 +843,10 @@ INPUTS
 
 #settings-userpfp-wrapper:hover  + #settings-editoverlay {
     display: block;
+}
+
+/** Change Password */
+
+#password-error {
+    display: none;
 }

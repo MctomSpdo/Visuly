@@ -40,6 +40,7 @@ $user->DBLoadFromUserID($userId, $db);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="files/js/main.js" defer></script>
+    <script src="files/js/settings.js" defer></script>
 </head>
 
 <body>
@@ -47,10 +48,39 @@ $user->DBLoadFromUserID($userId, $db);
 include "assets/header.php";
 ?>
 <main>
-    <?php
-    include "assets/nav.php";
-    ?>
-    <div id="content" class="post-3-wrapper"></div>
+    <nav id="setting-nav">
+        <a id="nav-active" onclick="loadEditUser(this);">
+            <div>
+                <div class="nav-img">
+                    <img src="files/img/users/user.png" alt="Home">
+                </div>
+                <div class="nav-txt">
+                    <p>Edit User</p>
+                </div>
+            </div>
+        </a>
+        <a onclick="loadPassword(this)">
+            <div>
+                <div class="nav-img">
+                    <img src="files/img/key.svg" alt="Home">
+                </div>
+                <div class="nav-txt">
+                    <p>Change Password</p>
+                </div>
+            </div>
+        </a>
+    </nav>
+    <div id="content">
+        <div id="content-hidden">
+            <p id="data-username"><?php echo $user->username?></p>
+            <p id="data-email"><?php echo $user->email?></p>
+            <p id="data-phoneNumber"><?php echo $user->phoneNumber?></p>
+        </div>
+
+        <div id="current-setting-wrapper">
+            <!-- this will be loaded from JS (see settings.js) -->
+        </div>
+    </div>
     <div>
 
     </div>

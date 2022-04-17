@@ -11,6 +11,8 @@
 
     <!-- icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="../files/js/settings.js" defer></script>
 </head>
 
 <body>
@@ -32,7 +34,7 @@
             <a href="myuser.php">
                 <div>
                     <div class="header-dropdown-image">
-                        <img src="../files/img/users/user.svg" alt="user">
+                        <img src="../files/img/users/user.png" alt="user">
                     </div>
                     <div class="header-dropdown-text">
                         <p>Profile</p>
@@ -77,7 +79,7 @@
 
     <main id="settings-main">
         <nav id="setting-nav">
-            <a id="nav-active">
+            <a id="nav-active" onclick="loadEditUser(this);">
                 <div>
                     <div class="nav-img">
                         <img src="../files/img/users/user.png" alt="Home">
@@ -87,7 +89,7 @@
                     </div>
                 </div>
             </a>
-            <a>
+            <a onclick="loadPassword(this)">
                 <div>
                     <div class="nav-img">
                         <img src="../files/img/key.svg" alt="Home">
@@ -101,68 +103,15 @@
 
         <div id="content">
             <div id="content-hidden">
-                <div id="edit-user">
+                <p id="data-username">mctomspdo</p>
+                <p id="data-email">test@visuly.com</p>
+                <p id="data-phoneNumber">0132456789</p>
 
-                </div>
 
-                <div id="change-password">
-                    <h1>Change Password</h1>
-
-                    <form class="setting-form-80">
-                        <label for="current-password">Current Password</label>
-                        <br>
-                        <input type="password" placeholder="Current Password" name="current-password">
-                        <br>
-                        <label for="new-password">New Password</label>
-                        <br>
-                        <input type="password" placeholder="New Password" name="new-password">
-                        <br>
-                        <label for="retype-password">Retype Password</label>
-                        <br>
-                        <input type="password" placeholder="Retype new Password" name="retype-password">
-
-                        <div class="settings-form-buttons">
-                            <button type="submit">Save</button>
-                            <button>Cancel</button>
-                        </div>
-                    </form>
-                </div>
             </div>
 
             <div id="current-setting-wrapper">
-                <h1>Edit User</h1>
-
-                <form id="settings-profile-wrapper">
-                    <div id="settings-user-profilepic">
-                        <div id="settings-userpfp-wrapper">
-                            <img src="/files/img/users/test.png" alt="User image">
-                        </div>
-                        <div id="settings-editoverlay">
-                            <img src="/files/img/edit.svg" alt="edit">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="username">Username</label>
-                        <br>
-                        <input type="text" name="username">
-                        <br>
-
-                        <label for="email">Email</label>
-                        <br>
-                        <input type="text" name="email">
-                        <br>
-
-                        <label for="phonenumber">Phone number</label>
-                        <br>
-                        <input type="text" name="phonenumber">
-
-                        <div class="settings-form-buttons">
-                            <button type="submit">Save</button>
-                            <button>Cancel</button>
-                        </div>
-                    </div>
-                </form>
+                <!-- this will be loaded from JS (see settings.js) -->
             </div>
     </main>
 
