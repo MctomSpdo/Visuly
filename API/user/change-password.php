@@ -53,6 +53,7 @@ $db = new mysqli($config->database->host, $config->database->username, $config->
 
 if($db->connect_error) {
     header("Location: ./error.php");
+    exit();
 }
 
 $token = $_COOKIE[$config->token->name];
