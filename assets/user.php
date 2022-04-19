@@ -260,7 +260,7 @@ class User
     function DBGetPosts(mysqli $db)
     {
         $dbUserId = $db->real_escape_string($this->UserID);
-        $sql = "select count(*) from post where UserID like $dbUserId;";
+        $sql = "select count(*) from post where UserID like $dbUserId and isDeleted = 0";
 
         if(!$res = $db->query($sql)) {
             return -1;
