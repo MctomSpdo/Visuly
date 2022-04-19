@@ -207,7 +207,7 @@ class Post
      * @return array|int array with posts, -1 if error, null if no posts
      */
     static function loadNewestPosts(mysqli $db) {
-        $sql = "select * from post order by now() - PostedOn limit 50;";
+        $sql = "select * from post where isDeleted = 0 order by now() - PostedOn limit 50";
 
         if(!$res = $db->query($sql)) {
             return -1;
