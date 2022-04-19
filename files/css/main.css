@@ -792,7 +792,7 @@ INPUTS
     background-color: var(--colorA)
 }
 
-.settings-form-buttons button:hover {
+.settings-form-buttons button:enabled:hover {
     cursor: pointer;
     background-color: var(--colorD);
     color: var(--defaultBg);
