@@ -57,6 +57,7 @@ header {
     font-family: architect, Calibri, Arial, serif;
     font-size: 3.5vh;
     color: var(--color);
+    text-decoration: none;
 }
 
 #header-user-img {
