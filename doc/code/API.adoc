@@ -1,0 +1,115 @@
+= Visuly API
+Mctom Spdo
+1.0.0, {docdate}: MEDT
+:icons: font
+:sectnums:
+:toc: left
+:stylesheet: ../css/dark.css
+ifndef::imagesdir[:imagesdir: images]
+
+The Visuly API is structured in multiple departments:
+
+* feed
+* post
+* status
+* user
+
+== User
+
+The user part of the API gives information about one or multiple users in the System.
+
+=== logout
+
+[cols="1, 2"]
+|===
+
+| API Path
+|./API/user/logout.php
+
+| Request
+| GET
+
+| needs database
+| false
+
+|===
+
+Deletes the cookie for the login.
+
+==== Input
+
+* login Cookie
+
+==== Output
+
+==== Default output
+
+1. The server will unset the cookie from the client.
+2. Response with a following json, no matter what
+
+[source, json]
+----
+{
+  "response" : true
+}
+----
+
+=== username-exists
+
+[cols="1, 2"]
+|===
+
+| API Path
+|./API/user/username-exists.php
+
+| Request
+| POST
+
+| needs database
+| true
+
+|===
+
+==== Input
+
+* Login cookie
+* Takes a JSON in the body of the post header:
+
+[source, json]
+----
+{
+  "username" : "<USERNAME>"
+}
+----
+
+==== Output
+
+===== Default output
+If everything goes correctly, the Server will respond with the following json:
+
+[source, json]
+----
+{
+  "exists" : "<.>"
+}
+----
+<.> Response value
+
+The response value is either true or false.
+
+the response is true, if the username does exist, false otherwise
+
+===== Errors
+
+If the input is unexpected, the Server will respond with the following message:
+
+[source, json]
+----
+{
+  "error" : "Invalid Request"
+}
+----
+
+if the Database connection fails, the Server will respond with the default database connection error, the same goes for the a failed request to the datbase.
+
+The Server could also respond with the *default php error*.
