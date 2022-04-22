@@ -18,6 +18,51 @@ The Visuly API is structured in multiple departments:
 
 The user part of the API gives information about one or multiple users in the System.
 
+=== Email used
+[cols="1, 2"]
+|===
+
+| API Path
+|./API/user/email-used.php
+
+| Request
+| POST
+
+| needs database
+| true
+|===
+
+==== Input
+
+* Takes a JSON in the body of the post header:
+
+[source, json]
+----
+{
+  "email" : "<EMAIL>"
+}
+----
+
+==== Output
+
+===== Default output
+
+The default output is the following json:
+
+[source, json]
+----
+{
+  "exists" : "<.>"
+}
+----
+<.> boolean: true if used, false otherwise
+
+===== Errors
+
+If the Database is not available or the request fails, the Server will respond with:
+
+    Internal Server error (<ERRORCODE>)
+
 === logout
 
 [cols="1, 2"]
@@ -42,7 +87,7 @@ Deletes the cookie for the login.
 
 ==== Output
 
-==== Default output
+===== Default output
 
 1. The server will unset the cookie from the client.
 2. Response with a following json, no matter what
@@ -72,7 +117,6 @@ Deletes the cookie for the login.
 
 ==== Input
 
-* Login cookie
 * Takes a JSON in the body of the post header:
 
 [source, json]
