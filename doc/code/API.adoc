@@ -1,6 +1,6 @@
 = Visuly API
 Mctom Spdo
-1.0.0, {docdate}: MEDT
+0.0.1, {docdate}: MEDT
 :icons: font
 :sectnums:
 :toc: left
