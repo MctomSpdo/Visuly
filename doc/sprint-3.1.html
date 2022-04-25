@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.17">
+<meta name="author" content="Mctom Spdo">
+<title>Sprint 3.1 Changelog</title>
+<style>
+/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans);
+@import url(https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css); /* Default asciidoc style framework - important */
+
+/* CUSTOMISATIONS */
+/* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
+:root{
+--maincolor:#282c34;
+--primarycolor:#f39c12;
+--secondarycolor:#03a9f4;
+--tertiarycolor:#4db6ac;
+--sidebarbackground:#21252b;
+--linkcolor:#f44336;
+--linkcoloralternate:#ff9800;
+--white:#FFFFFF;
+}
+
+/* custom added styles */
+.listingblock > .content > pre{
+  background: var(--sidebarbackground);
+  color: var(--white);
+}
+
+/* Text styles */
+body{font-family: "Noto Sans",sans-serif;background-color: var(--maincolor);color:var(--white);}
+
+h1{color:var(--primarycolor) !important;font-family:"Noto Sans",sans-serif;}
+h2,h3,h4,h5,h6{color:var(--secondarycolor) !important;font-family:"Noto Sans",sans-serif;}
+.title{color:var(--white) !important;font-family:"Noto Sans",sans-serif;font-style: normal; font-weight: normal;}
+p{font-family: "Noto Sans",sans-serif ! important}
+#toc.toc2 a:link{color:var(--linkcolor);}
+blockquote{color:var(--tertiarycolor) !important}
+.quoteblock{color:var(--white)}
+code{color:var(--linkcoloralternate);background-color: var(--sidebarbackground) !important}
+
+
+/* Table styles */
+th{background-color: var(--maincolor);color:var(--white) !important;}
+td{background-color: var(--maincolor);color: var(--linkcoloralternate) !important}
+
+
+#toc.toc2{background-color:var(--sidebarbackground);}
+#toctitle{color:var(--white);}
+
+/* Responsiveness fixes */
+video {
+  max-width: 100%;
+}
+
+@media all and (max-width: 600px) {
+  table {
+    width: 55vw!important;
+    font-size: 3vw;
+  }
+}
+
+.exampleblock > .content {
+  background-color: var(--maincolor);
+}
+
+a {
+  color: var(--secondarycolor);
+}
+
+.admonitionblock td.icon .icon-tip::before {
+  text-shadow: none;
+  color: var(--white);
+}
+.admonitionblock td.icon .icon-note::before {
+  color: var(--tertiarycolor);
+}
+.admonitionblock td.icon .icon-important::before {
+  color: var(--linkcolor);
+}
+/*.admonitionblock td.icon .icon-caution::before {
+  color: var(--linkcoloralternate);
+}*/
+.admonitionblock td.icon .icon-warning::before {
+  color: var(--primarycolor);
+}
+
+#preamble > .sectionbody > .paragraph:first-of-type p {
+  color: var(--white);
+}
+
+.quoteblock blockquote::before {
+  color: var(--primarycolor);
+}
+.quoteblock .attribution cite, .verseblock .attribution cite {
+  color: var(--white);
+}
+.verseblock pre {
+  color: var(--white);
+}
+.quoteblock blockquote, .quoteblock blockquote p {
+  color: var(--white);
+}
+
+.sidebarblock {
+  background: var(--sidebarbackground);
+}
+.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint {
+  background: var(--sidebarbackground);
+  color: var(--white);
+}
+
+#header .details {
+  color: var(--white);
+}
+#header .details span.email a {
+  color: var(--linkcoloralternate);
+}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Sprint 3.1 Changelog</h1>
+<div class="details">
+<span id="author" class="author">Mctom Spdo</span><br>
+<span id="revnumber">version 1.0.0,</span>
+<span id="revdate">2022-04-25</span>
+<br><span id="revremark">MEDT</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_api">API</a>
+<ul class="sectlevel2">
+<li><a href="#_feed_options_added">Feed options added:</a></li>
+<li><a href="#_post_changes">Post changes:</a></li>
+<li><a href="#_status_new">Status (<strong>NEW</strong>)</a></li>
+<li><a href="#_user">User</a></li>
+</ul>
+</li>
+<li><a href="#_frontend">Frontend</a>
+<ul class="sectlevel2">
+<li><a href="#_post">Post</a></li>
+<li><a href="#_feed">Feed</a></li>
+<li><a href="#_user_2">User</a></li>
+<li><a href="#_settings">Settings</a></li>
+<li><a href="#_header">Header</a></li>
+</ul>
+</li>
+<li><a href="#_bugfixes">Bugfixes</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Changes since the last Sprint:</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_api">API</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_feed_options_added">Feed options added:</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>home post list (API/feed/home)</p>
+</li>
+<li>
+<p>newest post list (API/feed/newest)</p>
+</li>
+<li>
+<p>top posts (API/feed/top-posts)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_post_changes">Post changes:</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Post now supports commenting (API/post/comment)</p>
+</li>
+<li>
+<p>Comments can now be loaded (API/post/get-comment)</p>
+</li>
+<li>
+<p>The post now compresses images that were uploaded to a given size in the config file (API/post/create-post)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_status_new">Status (<strong>NEW</strong>)</h3>
+<div class="paragraph">
+<p>This new section makes debugging of the service easier</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the config can now be checked (APU/status/config)</p>
+</li>
+<li>
+<p>the database connection can now be checked (API/status/database)</p>
+</li>
+<li>
+<p>the basic php installation can be checked (API/status/ping)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_user">User</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>posts from the user can now be loaded (<strong>NEW</strong>) (API/user/get-post)</p>
+</li>
+<li>
+<p>the password can now be changed (<strong>NEW</strong>) (API/user/change-password)</p>
+</li>
+<li>
+<p>the user can now be edited (<strong>BETA</strong>) (API/user/edit)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_frontend">Frontend</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_post">Post</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>posts descriptions support now multiple lines (<strong>NEW</strong>)</p>
+</li>
+<li>
+<p>post description previews are now limited to 100 characters (<strong>NEW</strong>)</p>
+</li>
+<li>
+<p>post comments will now be displayed correctly (instead of the template) (<strong>NEW</strong>)</p>
+</li>
+<li>
+<p>post comments can now be written and saved (<strong>NEW</strong>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_feed">Feed</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>the home feed is now available (<strong>BETA</strong>)</p>
+</li>
+<li>
+<p>the discover feed is partly avaliable (<strong>NEW</strong>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_user_2">User</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Newest posts from the user will now load from the server (<strong>NEW</strong>)</p>
+</li>
+<li>
+<p>Fixed issues with user profile images not loading (<strong>BUGFIX</strong>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_settings">Settings</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The password can now be changed (<strong>NEW</strong>)</p>
+</li>
+<li>
+<p>The user edit view is now available (NOT FUNCTIONAL yet) (<strong>BETA</strong>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_header">Header</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The Visuly logo on the top now redirects to the home site (<strong>NEW</strong>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bugfixes">Bugfixes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Bugfixes were only made in new features</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 1.0.0<br>
+Last updated 2022-04-25 12:20:03 +0200
+</div>
+</div>
+</body>
+</html>

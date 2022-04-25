@@ -1,0 +1,69 @@
+= Sprint 3.1 Changelog
+Mctom Spdo
+1.0.0, {docdate}: MEDT
+:icons: font
+:toc: left
+:stylesheet: ./css/dark.css
+ifndef::imagesdir[:imagesdir: images]
+
+Changes since the last Sprint:
+
+== API
+
+=== Feed options added:
+
+* home post list (API/feed/home)
+* newest post list (API/feed/newest)
+* top posts (API/feed/top-posts)
+
+=== Post changes:
+
+* Post now supports commenting (API/post/comment)
+* Comments can now be loaded (API/post/get-comment)
+* The post now compresses images that were uploaded to a given size in the config file (API/post/create-post)
+
+=== Status (*NEW*)
+
+This new section makes debugging of the service easier
+
+* the config can now be checked (APU/status/config)
+* the database connection can now be checked (API/status/database)
+* the basic php installation can be checked (API/status/ping)
+
+=== User
+
+* posts from the user can now be loaded (*NEW*) (API/user/get-post)
+* the password can now be changed (*NEW*) (API/user/change-password)
+* the user can now be edited (*BETA*) (API/user/edit)
+
+== Frontend
+
+=== Post
+
+* posts descriptions support now multiple lines (*NEW*)
+* post description previews are now limited to 100 characters (*NEW*)
+* post comments will now be displayed correctly (instead of the template) (*NEW*)
+* post comments can now be written and saved (*NEW*)
+
+=== Feed
+
+* the home feed is now available (*BETA*)
+* the discover feed is partly avaliable (*NEW*)
+
+=== User
+
+* Newest posts from the user will now load from the server (*NEW*)
+* Fixed issues with user profile images not loading (*BUGFIX*)
+
+=== Settings
+
+* The password can now be changed (*NEW*)
+* The user edit view is now available (NOT FUNCTIONAL yet) (*BETA*)
+
+=== Header
+
+* The Visuly logo on the top now redirects to the home site (*NEW*)
+
+== Bugfixes
+
+Bugfixes were only made in new features
