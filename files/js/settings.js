@@ -1,4 +1,5 @@
 let api_newPassword = "./API/user/change-password.php";
+let api_edit = "./API/user/edit.php"
 
 //data
 let username = document.getElementById("data-username").innerHTML;
@@ -99,7 +100,7 @@ function loadEditUser(element) {
     userForm.addEventListener("submit", (event) => {
         event.preventDefault();
         console.log("submitting to Server");
-        //TODO: send to server (API not done yet)
+        sendToServer();
     });
 
 
@@ -114,6 +115,37 @@ function loadEditUser(element) {
     phoneNumberInput.value = phoneNumber;
 }
 
+function sendToServer() {
+    userForm.disabled = true;
+    let formData = new FormData();
+    formData.append("username", usernameInput.value);
+    formData.append("email", emailInput.value);
+    formData.append("phonenumber", phoneNumberInput.value);
+
+    fetch(api_edit, {
+        method: 'post',
+        credentials: 'same-origin',
+        body: formData
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.success !== undefined && data.success == true) {
+            phoneNumber = phoneNumberInput.value;
+            email = emailInput.value;
+            username = usernameInput.value;
+            userForm.disabled = false;
+            contentArea.innerHTML = "<h1>Information updated!</h1>";
+        } else if(data.error !== undefined) {
+            error(data.error);
+        }  else {
+            error("Unknown error while sending Request!");
+        }
+    });
+}
+
+function error(text) {
+    alert("Error" + text);
+}
 
 /************************************************ PASSWORD ************************************************/
 
