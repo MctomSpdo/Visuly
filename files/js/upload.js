@@ -49,7 +49,14 @@ inputFile.addEventListener("change", () => {
 uploadForm.addEventListener('submit', (event) => {
     event.preventDefault();
     upload();
-})
+});
+
+//allow pasting an image from the clipboards
+window.addEventListener('paste', e => {
+    let file = e.clipboardData.files[0];
+    console.log(file);
+    loadFile(file);
+});
 
 function dragEnter() {
     inputFileBox.classList.add(inputBoxHoverClass);
