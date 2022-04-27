@@ -34,7 +34,7 @@ $pstmt = $db->prepare("select p.uuid, p.title, p.description, p.postedOn, concat
        (select replace(replace(count(*), 0, 'false'), 1, 'true')
         from postliked pl2
         where p.PostID = pl2.PostID
-          and u.UserID = pl2.UserID)                                  as hasliked,
+          and ? = pl2.UserID)                                  as hasliked,
        (select count(*) from comment ct where p.PostID = ct.PostID)   as comments
 from post p
          inner join user u using (UserID)
@@ -43,7 +43,7 @@ where p.isDeleted = 0
 order by postedOn
         desc
 limit ? offset ?");
-$pstmt->bind_param("sii", $_GET['user'], $config->respLength, $offset);
+$pstmt->bind_param("isii", $user->UserID, $_GET['user'], $config->respLength, $offset);
 $pstmt->execute();
 $dbReq = $pstmt->get_result();
 $posts = $dbReq->fetch_all();
@@ -64,7 +64,7 @@ foreach ($posts as $post) {
     $postRes->postedFrom = $post[5];
     $postRes->postedFromID = $post[6];
     $postRes->postedFromImage = $post[7];
-    $postRes->hasLiked = $post[9];
+    $postRes->hasLiked = filter_var($post[9], FILTER_VALIDATE_BOOLEAN);
     $postRes->comments = $post[10];
     array_push($resp->posts, $postRes);
 }
