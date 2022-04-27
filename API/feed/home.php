@@ -27,7 +27,12 @@ $userId = checkTokenWRedirect($token, $config, $db);
 $user = new User();
 $user->DBLoadFromUserID($userId, $db);
 
-$postArr = Post::loadNewestPosts($db);
+$offset = 0;
+if(isset($_GET['offset'])) {
+    $offset = $_GET['offset'];
+}
+
+$postArr = Post::loadNewestPosts($db, $offset);
 
 
 $resp = "no posts yet";

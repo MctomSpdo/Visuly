@@ -24,19 +24,20 @@ class Post
      * @param mysqli $db database
      * @return false|string false if error, amount in String otherwise
      */
-    function getLikes(mysqli $db) {
-        if($this->PostId == null) {
+    function getLikes(mysqli $db)
+    {
+        if ($this->PostId == null) {
             return false;
         }
 
         $dbPostId = $db->real_escape_string($this->PostId);
         $sql = "select count(*) from postliked where PostID = $dbPostId;";
 
-        if(!$res = $db->query($sql)) {
+        if (!$res = $db->query($sql)) {
             return false;
         }
         $result = $res->fetch_all()[0];
-        if(sizeof($result) == 0) {
+        if (sizeof($result) == 0) {
             return false;
         }
         $res->close();
@@ -48,20 +49,21 @@ class Post
      * @param mysqli $db database
      * @return false|string false if error, String with the number otherwise
      */
-    function getCommentAmount(mysqli $db) {
-        if($this->PostId == null) {
+    function getCommentAmount(mysqli $db)
+    {
+        if ($this->PostId == null) {
             return false;
         }
 
         $dbPostId = $db->real_escape_string($this->PostId);
         $sql = "select count(*) from comment where PostID = $dbPostId and isDeleted = 0;";
 
-        if(!$res = $db->query($sql)) {
+        if (!$res = $db->query($sql)) {
             return false;
         }
 
         $result = $res->fetch_all()[0];
-        if(sizeof($result) == 0) {
+        if (sizeof($result) == 0) {
             return false;
         }
         $res->close();
@@ -77,7 +79,8 @@ class Post
      * @param mysqli $db database connection
      * @return bool true if successfull, false otherwise
      */
-    function createPost(String $uuid, String $title, String $desc, String $fromUser, String $extention, mysqli $db) {
+    function createPost(string $uuid, string $title, string $desc, string $fromUser, string $extention, mysqli $db)
+    {
         $dbUuid = $db->real_escape_string($uuid);
         $dbTitle = $db->real_escape_string($title);
         $dbDesc = $db->real_escape_string($desc);
@@ -86,13 +89,14 @@ class Post
 
         $sql = "insert into post (uuid, Title, Description, PostedOn, UserID, IsDeleted, extention) values ('$dbUuid', '$dbTitle', '$dbDesc', now(), '$dbFromUser', 0, '$dbExtention')";
 
-        if($db->query($sql)) {
+        if ($db->query($sql)) {
             return true;
         }
         return false;
     }
 
-    function DBLoadFromPath(mysqli $db) {
+    function DBLoadFromPath(mysqli $db)
+    {
         if ($this->ImgPath == null) {
             return false;
         }
@@ -105,7 +109,7 @@ class Post
         }
         $result = $res->fetch_all();
 
-        if(sizeof($result) == 0) {
+        if (sizeof($result) == 0) {
             return false;
         }
         $result = $result[0];
@@ -120,8 +124,9 @@ class Post
      * @param mysqli $db database
      * @return bool false on failure, true otherwise
      */
-    function DBLoadFromID(mysqli $db) {
-        if($this->ImgPath == null) {
+    function DBLoadFromID(mysqli $db)
+    {
+        if ($this->ImgPath == null) {
             return false;
         }
 
@@ -132,7 +137,7 @@ class Post
             return false;
         }
         $result = $res->fetch_all();
-        if(sizeof($result) == 0) {
+        if (sizeof($result) == 0) {
             return false;
         }
         $result = $result[0];
@@ -149,18 +154,19 @@ class Post
      * @param mysqli $db database
      * @return bool Returns true on success, false on failure
      */
-    function DBSaveLike(int $postid, int $userid, mysqli $db) {
+    function DBSaveLike(int $postid, int $userid, mysqli $db)
+    {
         //see if the user has like the post already:
         $dbPostId = $db->real_escape_string($postid);
         $dbUserId = $db->real_escape_string($userid);
         $sql = "select count(*) from postliked where UserID = $dbUserId and PostID = $dbPostId";
 
-        if(!$res = $db->query($sql)) {
+        if (!$res = $db->query($sql)) {
             return false;
         }
         $result = $res->fetch_all()[0];
         $res->close();
-        if($result[0] > 0) {
+        if ($result[0] > 0) {
             return true;
         }
 
@@ -176,7 +182,8 @@ class Post
      * @param mysqli $db database
      * @return bool Returns true on success, false on failure
      */
-    function DBDeleteLike(int $postid, int $userid, mysqli $db) {
+    function DBDeleteLike(int $postid, int $userid, mysqli $db)
+    {
         $stmt = $db->prepare("delete from postliked where PostID = ? and UserID = ?");
         $stmt->bind_param("ii", $postid, $userid);
         return $stmt->execute() & $stmt->close();
@@ -188,12 +195,13 @@ class Post
      * @param mysqli $db database
      * @return bool|int Returns true or false and -1 on error
      */
-    function DBUserHasLiked(int $userId, mysqli $db) {
+    function DBUserHasLiked(int $userId, mysqli $db)
+    {
         $dbUserId = $db->real_escape_string($userId);
         $dbPostId = $db->real_escape_string($this->PostId);
         $sql = "select count(*) from postliked where PostID like $dbPostId and UserID like $dbUserId;";
 
-        if(!$res = $db->query($sql)) {
+        if (!$res = $db->query($sql)) {
             return -1;
         }
         $result = $res->fetch_all()[0];
@@ -206,12 +214,13 @@ class Post
      * @param mysqli $db database connection
      * @return array|int array with posts, -1 if error, null if no posts
      */
-    static function loadNewestPosts(mysqli $db) {
-        $sql = "select * from post where isDeleted = 0 order by now() - PostedOn limit 50";
+    static function loadNewestPosts(mysqli $db, int $offset = 0)
+    {
+        $pstmt = $db->prepare("select * from post where isDeleted = 0 order by now() - PostedOn limit 50 offset ?");
+        $pstmt->bind_param("i", $offset);
 
-        if(!$res = $db->query($sql)) {
-            return -1;
-        }
+        $pstmt->execute();
+        $res = $pstmt->get_result();
 
         $result = $res->fetch_all();
         $res->close();
@@ -224,6 +233,7 @@ class Post
             $arr[] = $resPost;
         }
 
+        $pstmt->close();
         return $arr;
     }
 
@@ -245,22 +255,24 @@ class Post
      * @param mysqli $db database
      * @return bool true if successfully, false otherwise
      */
-    function addComment(string $comment,int $user, mysqli $db): bool {
+    function addComment(string $comment, int $user, mysqli $db): bool
+    {
         $stmt = $db->prepare("insert into comment (content, UserID, PostID, postedOn, isDeleted) value (?, ?, ?, now(), 0)");
         $stmt->bind_param("sii", $comment, $user, $this->PostId);
         return $stmt->execute() & $stmt->close();
     }
 
-    function getComments(int $offset, mysqli $db) {
+    function getComments(int $offset, mysqli $db)
+    {
         $stmt = $db->prepare("select u.username, c.content, u.profilePic, u.uuid from comment c inner join user u using(UserID) where c.postId = ? and c.isDeleted = 0 and u.deleted = 0 order by c.postedOn desc limit 50 offset ?");
         $stmt->bind_param("ii", $this->PostId, $offset);
-        if(!$stmt->execute()) {
+        if (!$stmt->execute()) {
             return false;
         }
         $res = $stmt->get_result();
         $result = $res->fetch_all();
         $res->close();
-        if(!$stmt->close()) {
+        if (!$stmt->close()) {
             return false;
         }
         return $result;
