@@ -193,9 +193,13 @@ class User
         if (!$res = $db->query($sql)) {
             return false;
         }
-        $result = $res->fetch_all()[0];
+        $result = $res->fetch_all();
 
-        $this->loadFromResult($result);
+        if(sizeof($result) < 1) {
+            return false;
+        }
+
+        $this->loadFromResult($result[0]);
         $res->close();
         return true;
     }

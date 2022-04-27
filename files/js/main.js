@@ -3,15 +3,15 @@ let api_like = "./API/post/like.php";
 let api_newest = "./API/feed/newest.php";
 
 function loadHome(element) {
-    loadPosts(element, api_posts);
+    loadPosts(element, api_posts, 0);
 }
 
 function loadNewest(element) {
-    loadPosts(element, api_newest);
+    loadPosts(element, api_newest, 0);
 }
 
 function loadPosts(element, apiPath) {
-    fetch(apiPath, {
+    fetch(apiPath , {
         credentials: 'same-origin',
     }).then(function (response) {
         return response.json();
@@ -19,7 +19,7 @@ function loadPosts(element, apiPath) {
         console.log(data);
 
         if(data.posts == "no posts yet") {
-            element.innerHTML = "there are no posts yet";
+            return;
         }
 
         data.posts.forEach((postElement) => {

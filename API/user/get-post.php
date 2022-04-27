@@ -26,38 +26,47 @@ $userId = checkTokenWRedirect($token, $config, $db);
 $user = new User();
 $user->DBLoadFromUserID($userId, $db);
 
-//requestUser:
-$reqUser = new User();
-$reqUser->UUID = $_GET['user'];
-$reqUser->DBLoadFromUUID($db);
+$offset = 0;
 
 //get posts:
-$posts = $reqUser->DBGetPostIds($db);
+$pstmt = $db->prepare("select p.uuid, p.title, p.description, p.postedOn, concat(p.uuid, '.', p.extention) as path, u.username, u.uuid, u.profilePic,
+       (select count(*) from postliked pl where p.PostID = pl.PostID) as likes,
+       (select replace(replace(count(*), 0, 'false'), 1, 'true')
+        from postliked pl2
+        where p.PostID = pl2.PostID
+          and u.UserID = pl2.UserID)                                  as hasliked,
+       (select count(*) from comment ct where p.PostID = ct.PostID)   as comments
+from post p
+         inner join user u using (UserID)
+where p.isDeleted = 0
+  and p.UserID = (select UserID from user where uuid = ? and deleted = 0)
+order by postedOn
+        desc
+limit ? offset ?");
+$pstmt->bind_param("sii", $_GET['user'], $config->respLength, $offset);
+$pstmt->execute();
+$dbReq = $pstmt->get_result();
+$posts = $dbReq->fetch_all();
+$pstmt->close();
 
 $resp = new stdClass();
 $resp->posts = array();
 
-foreach ($posts as $postUuid) {
-    $postUuid = $postUuid[0];
-    $post = new Post();
-    $post->ImgPath = $postUuid;
-    $post->DBLoadFromPath($db);
-
-    $postRest = new stdClass();
-    $postRest->title = $post->Title;
-    $postRest->description = $post->Desc;
-    $postRest->postId = $post->ImgPath;
-    $postRest->path = $post->getImagePath();
-
-    $postRest->hasLiked = $post->DBUserHasLiked($user->UserID, $db);
-    $postRest->likes = $post->getLikes($db);
-    $postRest->comments = $post->getCommentAmount($db);
-
-    $postRest->postedFrom = $reqUser->username;
-    $postRest->postedFromImage = $reqUser->profilePic;
-    $postRest->postedFromID = $reqUser->UUID;
-
-    array_push($resp->posts, $postRest);
+//TODO: finish
+foreach ($posts as $post) {
+    $postRes = new stdClass();
+    $postRes->postId = $post[0];
+    $postRes->title = $post[1];
+    $postRes->description = $post[2];
+    $postRes->postedOn = $post[3];
+    $postRes->path = $post[4];
+    $postRes->likes = $post[8];
+    $postRes->postedFrom = $post[5];
+    $postRes->postedFromID = $post[6];
+    $postRes->postedFromImage = $post[7];
+    $postRes->hasLiked = $post[9];
+    $postRes->comments = $post[10];
+    array_push($resp->posts, $postRes);
 }
 
 echo json_encode($resp);
