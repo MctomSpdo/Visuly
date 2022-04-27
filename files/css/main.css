@@ -713,6 +713,7 @@ INPUTS
     font-size: 1.1em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
     background-color: var(--colorA);
+    margin-bottom: 5vh
 }
 
 #upload-inputs button:hover {
