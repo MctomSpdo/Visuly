@@ -718,6 +718,7 @@ INPUTS
 #upload-inputs button:hover {
     background-color: var(--colorD);
     color: var(--defaultBg);
+    cursor: pointer;
 }
 
 #upload-error {
