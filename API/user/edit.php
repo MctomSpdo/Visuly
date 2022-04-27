@@ -9,7 +9,7 @@ require_once '../../assets/user.php';
 require_once '../../assets/post.php';
 
 //check request:
-if(!(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['phonenumber']))) {
+if(!(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['phonenumber']) && isset($_POST['description']))) {
     $resp = new stdClass();
     $resp->error = "Invalid Request";
     exit(json_encode($resp));
@@ -19,6 +19,13 @@ if(!(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['phonen
 $username = $_POST['username'];
 $phoneNumber  = $_POST['phonenumber'];
 $email = $_POST['email'];
+$desc = $_POST['description'];
+
+if(strlen($desc) < 4 || strlen($desc) > 300) {
+    $resp = new stdClass();
+    $resp->error = "Invalid Description";
+    exit(json_encode($resp));
+}
 
 if(strlen($username) < 4 || strlen($username) > 30) {
     $resp = new stdClass();
@@ -59,7 +66,7 @@ $userId = checkTokenWRedirect($token, $config, $db);
 $user = new User();
 $user->DBLoadFromUserID($userId, $db);
 
-$pstmt = $db->prepare("update user set username = ?, phoneNumber = ?, email = ? where UserID = ?");
+$pstmt = $db->prepare("update user set username = ?, phoneNumber = ?, email = ?, description = ? where UserID = ?");
 
 if($pstmt == false) {
     $resp = new stdClass();
@@ -67,7 +74,7 @@ if($pstmt == false) {
     exit(json_encode($resp));
 }
 
-$pstmt->bind_param("sisi", $username, $phoneNumber, $email, $user->UserID);
+$pstmt->bind_param("sissi", $username, $phoneNumber, $email,$desc, $user->UserID);
 if(!$pstmt->execute()) {
     $resp = new stdClass();
     $resp->error = "Internal Server Error(E002)";

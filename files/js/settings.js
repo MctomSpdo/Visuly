@@ -5,6 +5,7 @@ let api_edit = "./API/user/edit.php"
 let username = document.getElementById("data-username").innerHTML;
 let email = document.getElementById("data-email").innerHTML;
 let phoneNumber = document.getElementById("data-phoneNumber").innerHTML;
+let desc = document.getElementById("data-desc").innerHTML;
 
 //elements:
 let userForm;
@@ -12,6 +13,7 @@ let contentArea = document.getElementById("current-setting-wrapper");
 let usernameInput;
 let emailInput;
 let phoneNumberInput;
+let descInput;
 
 //buttons:
 let saveButton;
@@ -29,7 +31,7 @@ function init() {
  * @returns {boolean} true if same, false otherwise
  */
 function checkUserUpdate() {
-    return usernameInput.value != username || emailInput.value != email || phoneNumberInput.value != phoneNumber;
+    return usernameInput.value != username || emailInput.value != email || phoneNumberInput.value != phoneNumber || descInput.value != desc;
 }
 
 /**
@@ -70,6 +72,11 @@ function loadEditUser(element) {
                         <br>
                         <input type="text" name="username" id="input-username">
                         <br>
+                        
+                        <label for="desc">Description</label>
+                        <br>
+                        <input type="text" name="desc" id="input-desc">
+                        <br>
 
                         <label for="email">Email</label>
                         <br>
@@ -92,6 +99,7 @@ function loadEditUser(element) {
     usernameInput = document.getElementById("input-username");
     emailInput = document.getElementById("input-email");
     phoneNumberInput = document.getElementById("input-phone");
+    descInput = document.getElementById("input-desc");
 
     saveButton = document.getElementById("save-button");
     cancelButton = document.getElementById("cancel-button");
@@ -103,7 +111,6 @@ function loadEditUser(element) {
         sendToServer();
     });
 
-
     //add eventListeners to all input fields
     Array.from(userForm.elements).forEach((item) => {
         item.addEventListener("keyup", checkUserSubmit);
@@ -113,6 +120,7 @@ function loadEditUser(element) {
     usernameInput.value = username;
     emailInput.value = email;
     phoneNumberInput.value = phoneNumber;
+    descInput.value = desc;
 }
 
 function sendToServer() {
@@ -121,6 +129,7 @@ function sendToServer() {
     formData.append("username", usernameInput.value);
     formData.append("email", emailInput.value);
     formData.append("phonenumber", phoneNumberInput.value);
+    formData.append("description", descInput.value);
 
     fetch(api_edit, {
         method: 'post',
