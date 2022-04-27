@@ -8,7 +8,7 @@ let api_get_comment = "./API/post/get-comment.php";
 
 //textarea: 
 
-commentTextArea.addEventListener("keyup", () => {
+commentTextArea.addEventListener("keyup", (e) => {
     commentTextArea.style.height = calcHeight(commentTextArea.value) + "px";
     if (commentTextArea.value.length > 0) {
         commentButton.style.backgroundColor = "var(--colorB)";
@@ -18,6 +18,10 @@ commentTextArea.addEventListener("keyup", () => {
         commentButton.style.backgroundColor = "";
         commentButton.classList.remove("button-hoverable");
         cancelButton.classList.remove("cancel-hoverable");
+    }
+
+    if(e.keyCode == 13 && e.ctrlKey) {
+        checkSendComment();
     }
 })
 
@@ -32,15 +36,19 @@ function calcHeight(value) {
 commentButton.addEventListener("click", (event) => {
     event.preventDefault();
     if (commentTextArea.value.length > 0) {
-        let comment = commentTextArea.value;
-
-        //disable elements: 
-        setDisabledState(true);
-        //get post ID:
-        let element = getParents(commentTextArea, 7);
-        sendComment(element.id, comment);
+        checkSendComment();
     }
 });
+
+function checkSendComment() {
+    let comment = commentTextArea.value;
+
+    //disable elements:
+    setDisabledState(true);
+    //get post ID:
+    let element = getParents(commentTextArea, 7);
+    sendComment(element.id, comment);
+}
 
 cancelButton.addEventListener("click", (event) => {
     event.preventDefault();
