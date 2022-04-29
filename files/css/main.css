@@ -854,3 +854,33 @@ INPUTS
 #password-error {
     display: none;
 }
+
+/************************************************ REPSPONSIVE ************************************************/
+
+/* tablet view */
+@media (min-width: 600px) and (max-width: 1000px) {
+    main {
+        grid-template-columns: 18% 80% 10%;
+    }
+
+    nav > a > div {
+        grid-template-columns: 20% 80%;
+    }
+
+    .post-3-wrapper {
+        grid-template-columns: 90%;
+    }
+
+    /*user page */
+    #user-header {
+        height: 20vh;
+    }
+
+    #user-advancedInfo > div:nth-child(3) {
+        display: none;
+    }
+
+    #user-info-body {
+        margin-right: 2vw;
+    }
+}
