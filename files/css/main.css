@@ -349,7 +349,7 @@ nav > a > div {
     padding-right: 1.5%;
 }
 
-.post-img-wrapper img{
+.post-img-wrapper img {
     width: 100%;
     height: auto;
 }
@@ -379,7 +379,7 @@ nav > a > div {
     align-items: center;
 }
 
-.post-interaction-imgwrapper img{
+.post-interaction-imgwrapper img {
     width: 100%;
     height: auto;
     font-size: 0;
@@ -530,6 +530,7 @@ nav > a > div {
     color: var(--colorD);
     cursor: pointer;
 }
+
 /************************************************ USER ************************************************/
 
 #user {
@@ -543,7 +544,7 @@ nav > a > div {
     height: 30vh;
 }
 
-#user-header-pfp  {
+#user-header-pfp {
     display: flex;
     align-items: baseline;
     width: 40vh;
@@ -605,7 +606,7 @@ UPLOAD FILE
 }
 
 .upload-filehover {
-    background-color: var(--colorD) !important;/* Important so that it gets displayed */
+    background-color: var(--colorD) !important; /* Important so that it gets displayed */
     color: var(--defaultBg);
 }
 
@@ -845,7 +846,7 @@ INPUTS
     border-radius: 100%;
 }
 
-#settings-userpfp-wrapper:hover  + #settings-editoverlay {
+#settings-userpfp-wrapper:hover + #settings-editoverlay {
     display: block;
 }
 
@@ -882,5 +883,119 @@ INPUTS
 
     #user-info-body {
         margin-right: 2vw;
+    }
+}
+
+@media (max-width: 600px) {
+    main {
+        display: block;
+        width: 100vw !important;
+        box-sizing: border-box;
+    }
+
+    .post-3-wrapper {
+        display: block;
+        width: 94vw !important;
+        padding: 0 3vw;
+    }
+
+    /* HEADER */
+    header {
+        grid-template-columns: 30% 50% 20%;
+    }
+
+    #header-search form {
+        width: 100%;
+    }
+
+    #header-search input[type="text"] {
+        padding-left: 5%;
+    }
+
+    #header-search-submit {
+        width: 20% !important;
+    }
+
+    #content {
+        margin-bottom: 9vh; /* because of the nav */
+    }
+
+    /* NAV */
+    nav {
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        position: fixed;
+        width: 100vw;
+        background-color: var(--defaultBg);
+        bottom: 0;
+        z-index: 9999999999;
+    }
+
+    nav > a > div {
+        grid-template-columns: 100% 0;
+        padding: 0;
+    }
+
+    nav > a > div > div:nth-child(2) {
+        display: none;
+    }
+
+    nav > a > div > div:nth-child(1) {
+        width: 15%;
+        margin: 0 auto;
+    }
+
+    #nav-active {
+        background-color: var(--colorA);
+    }
+
+    /* POST */
+    .post-user-wrapper {
+        grid-template-columns: 10% 70% 20%;
+    }
+
+    .comment-post-wrapper, .comment {
+        grid-template-columns: 20% 78% 2% 0;
+    }
+
+    .comment-form-button-wrapper button {
+        padding: 1vh 2vw;
+    }
+
+    #content > .post {
+        width: 93%;
+        margin: 2vh auto;
+    }
+
+    /* user page */
+    #user-header {
+        margin-right: 4vw;
+    }
+
+    #user-header-pfp {
+        width: 25vh;
+    }
+
+    #user-advancedInfo > div:nth-child(4) {
+        grid-area: 1 / 2;
+    }
+
+    /* settings */
+    #content > #current-setting-wrapper {
+        width: 93%;
+        margin: 0 auto;
+    }
+
+    .setting-form-80 {
+        width: 100%;
+    }
+
+    #current-setting-wrapper input {
+        width: 100% !important;
+    }
+
+    /* Upload */
+    #upload-inputs, #upload-file {
+        width: 90%;
     }
 }

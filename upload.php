@@ -50,7 +50,7 @@ $user->DBLoadFromUserID($userId, $db);
     <?php
     $navActive = 'upload';
     include "assets/nav.php" ?>
-    <div>
+    <div id="content">
         <div id="upload-header">
             <h2>Create a post</h2>
         </div>

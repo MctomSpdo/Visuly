@@ -214,3 +214,9 @@ body, html {
     width: 80%;
     margin: 0 auto;
 }
+
+@media (max-width: 600px) {
+    #login-box {
+        width: 90%;
+    }
+}
