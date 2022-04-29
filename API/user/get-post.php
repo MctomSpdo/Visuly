@@ -52,7 +52,6 @@ $pstmt->close();
 $resp = new stdClass();
 $resp->posts = array();
 
-//TODO: finish
 foreach ($posts as $post) {
     $postRes = new stdClass();
     $postRes->postId = $post[0];
