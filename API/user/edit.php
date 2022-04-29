@@ -21,7 +21,7 @@ $phoneNumber  = $_POST['phonenumber'];
 $email = $_POST['email'];
 $desc = $_POST['description'];
 
-if(strlen($desc) < 4 || strlen($desc) > 300) {
+if(strlen($desc) > 300) {
     $resp = new stdClass();
     $resp->error = "Invalid Description";
     exit(json_encode($resp));
@@ -39,7 +39,7 @@ if(preg_match($emailReg, $email) == 0) {
     exit(json_encode($resp));
 }
 
-if(strlen($phoneNumber) < 4 || strlen($phoneNumber) > 15) {
+if(strlen($phoneNumber) > 15) {
     $resp = new stdClass();
     $resp->error = "Invalid phone number";
     exit(json_encode($resp));
