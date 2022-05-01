@@ -87,7 +87,7 @@ if($_FILES['profilepic']['size'] > $config->user->maxImgSize) {
 
 //check if file is imag:
 $check = getimagesize($_FILES['profilepic']['tmp_name']);
-if(check == false) {
+if($check == false) {
     $resp = new stdClass();
     $resp->error = "File is not an Image";
     exit(json_encode($resp));
