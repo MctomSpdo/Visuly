@@ -114,5 +114,49 @@ $userId = checkTokenWRedirect($token, $config, $db);
 $user = new User();
 $user->DBLoadFromUserID($userId, $db);
 
+//new filename:
+$extention = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+$target_dir = "../.." . $config->user->imageFolder . "/";
+
+$target_file = null;
+
+do {
+    $target_fileName = generateRandomString($config->user->imgNameLength);
+    $target_file = $target_dir . $target_fileName . "." . $config->user->imgType;
+} while (file_exists($target_fileName));
+
+//size and compress image:
+$imageLocation = $_FILES['image']['tmp_name'];
+list($width, $height, $type) = getimagesize($imageLocation);
+$old_image = load_image($imageLocation, $type);
+
+if($old_image === null) {
+    $resp = new stdClass();
+    $resp->error = "Invalid File type";
+    $db->close();
+    exit(json_encode($resp));
+}
+if($old_image === false) {
+    $resp = new stdClass();
+    $resp->error = "Image codec not supported or invalid!";
+    $db->close();
+    exit(json_encode($resp));
+}
+
+$newImage = resize_image_to_height($config->user->imgHeight, $old_image, $width, $height);
+
+//save image file:
+save_image($newImage, $target_file, $config->user->imgType, $config->user->imgQuality);
+
+//save in system (db)
+$pstmt = $db->prepare("update user set profilePic = ? where UserID = ?");
+$pstmt->bind_param("si", $target_file, $user->UserID);
+
+$resp = new stdClass();
+$resp->success = true;
+echo json_encode($resp);
+
+$pstmt->close();
+$db->close();
 ?>
 
