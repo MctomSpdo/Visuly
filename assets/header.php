@@ -15,7 +15,7 @@
     </div>
     <div id="header-user">
         <div id="header-user-img">
-            <img src="files/img/users/<?php echo $img?>" alt="User" id="header-user-icon">
+            <img src="files/img/users/<?php echo $img?>" alt="User" id="header-user-icon" width="30" height="30">
         </div>
     </div>
 

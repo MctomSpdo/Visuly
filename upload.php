@@ -34,6 +34,9 @@ $user->DBLoadFromUserID($userId, $db);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="visuly, social Media, upload">
+    <meta name="description" content="Create a new post on Visuly">
+    <meta name="author" content="MctomSpdo">
     <title>Upload - Visuly</title>
 
     <link rel="stylesheet" href="./files/css/main.css">
@@ -62,7 +65,7 @@ $user->DBLoadFromUserID($userId, $db);
                     <div id="file-upload">
                         <div id="upload-file-img-wrapper">
                             <div>
-                                <img src="./files/img/upload.svg" id="upload-icon" alt="Upload Icon">
+                                <img src="./files/img/upload.svg" id="upload-icon" alt="Upload Icon" width="50" height="50">
                             </div>
 
                         </div>
