@@ -33,6 +33,11 @@ $user->DBLoadFromUserID($userId, $db);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="keywords" content="visuly, social Media, images, memes">
+    <meta name="description" content="Visuly start page">
+    <meta name="author" content="MctomSpdo">
+
     <title>Home - Visuly</title>
 
     <link rel="stylesheet" href="./files/css/main.css">
