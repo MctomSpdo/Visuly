@@ -42,7 +42,9 @@
         </a>
         <a href="logout.php">
             <div>
-                <div class="header-dropdown-image"></div>
+                <div class="header-dropdown-image">
+                    <img src="files/img/logout.svg" alt="logout">
+                </div>
                 <div class="header-dropdown-text txt-red">
                     <p>Log out</p>
                 </div>
