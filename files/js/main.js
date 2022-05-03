@@ -69,7 +69,7 @@ function parsePostToHTML(post) {
                         </div>
                     </div>
                     <div class="post-comment">
-                        <div class="post-interaction-imgwrapper">
+                        <div class="post-interaction-imgwrapper invert-image-dark">
                             <img src="./files/img/comment.svg" alt="Comment">
                         </div>
                         <div class="post-interaction-textwrapper">
@@ -77,7 +77,7 @@ function parsePostToHTML(post) {
                         </div>
                     </div>
                     <div class="post-share" onclick="shareEventHandler(this); event.stopPropagation();">
-                        <div class="post-interaction-imgwrapper">
+                        <div class="post-interaction-imgwrapper invert-image-dark">
                             <img src="./files/img/share.svg" alt="Share">
                         </div>
                         <div class="post-interaction-textwrapper">

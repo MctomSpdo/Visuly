@@ -118,7 +118,7 @@ include "assets/header.php";
                         </div>
                     </div>
                     <div class="post-comment">
-                        <div class="post-interaction-imgwrapper">
+                        <div class="post-interaction-imgwrapper invert-image-dark">
                             <img src="./files/img/comment.svg" alt="Comment">
                         </div>
                         <div class="post-interaction-textwrapper">
@@ -137,7 +137,7 @@ include "assets/header.php";
                         </div>
                     </div>
                     <div class="post-share" onclick="shareEventHandler(this);">
-                        <div class="post-interaction-imgwrapper">
+                        <div class="post-interaction-imgwrapper invert-image-dark">
                             <img src="./files/img/share.svg" alt="Share">
                         </div>
                         <div class="post-interaction-textwrapper">

@@ -1,4 +1,4 @@
-<nav>
+<nav class="invert-image-dark">
     <a href="index.php" <?php
         if(isset($navActive)) {
             if($navActive == 'home') {

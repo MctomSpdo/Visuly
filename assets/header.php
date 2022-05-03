@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div id="header-dropdown">
+    <div id="header-dropdown" class="invert-image-dark">
         <a href="user.php">
             <div>
                 <div class="header-dropdown-image">

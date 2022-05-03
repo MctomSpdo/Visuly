@@ -8,6 +8,9 @@
     --searchPlaceholder: rgb(214, 214, 214);
     --defaultBg: #fff;
     --likeColor: #A41C1C;
+    --secondBg: #fff;
+    transition: background 0.5s ease, color 0.5s ease;
+    color-scheme: light;
 }
 
 @font-face {
@@ -279,6 +282,7 @@ nav > a > div {
     padding: 1%;
     margin: 2vh 0;
     border-radius: 0.5vh;
+    background-color: var(--secondBg);
 }
 
 .post:hover {
@@ -997,5 +1001,58 @@ INPUTS
     /* Upload */
     #upload-inputs, #upload-file {
         width: 90%;
+    }
+}
+
+/************************************************ DARK MODE ************************************************/
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color: rgb(255, 255, 255);
+        --colorA: #44483f;
+        --colorB: #85c0b7;
+        --colorC: #52796f;
+        --colorD: #354f52;
+        --colorE: #2f3e46;
+        --searchPlaceholder: rgb(214, 214, 214);
+        --defaultBg: #232526;
+        --likeColor: #A41C1C;
+        --secondBg: #3c3f41;
+        color-scheme: dark;
+    }
+
+    .invert-image-dark img {
+        -webkit-filter: invert(100%);
+        filter: invert(100%);
+    }
+
+    #header-dropdown {
+        background-color: var(--secondBg);
+    }
+
+    #nav-active {
+        color: #9ba7a9;
+    }
+
+    #cancel-button {
+        background-color: var(--colorD);
+        color: var(--color);
+    }
+
+    #cancel-button:hover {
+        background-color: var(--secondBg);
+    }
+
+    #save-button {
+        color: var(--color);
+        background-color: var(--colorD);
+    }
+
+    #save-button:hover {
+        background-color: var(--secondBg);
+    }
+
+    #comment-button {
+        background-color: var(--colorB);
     }
 }

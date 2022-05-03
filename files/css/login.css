@@ -220,3 +220,23 @@ body, html {
         width: 90%;
     }
 }
+
+@media(prefers-color-scheme: dark) {
+    :root {
+        --color: rgb(255, 255, 255);
+        --colorA: #44483f;
+        --colorB: #3c3f41;
+        --colorC: #52796f;
+        --colorD: #354f52;
+        --colorE: #2f3e46;
+        --searchPlaceholder: rgb(214, 214, 214);
+        --defaultBg: #232526;
+        --likeColor: #A41C1C;
+        --secondBg: #616a6b;
+        color-scheme: dark;
+    }
+
+    #login-box {
+        background-color: var(--secondBg);
+    }
+}
