@@ -51,6 +51,10 @@ $postUser->DBLoadFromUserID($post->fromUser, $db);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="visuly, social Media, images, memes, post">
+    <meta name="description" content="post: <?php echo $post->Title?>">
+    <meta name="author" content="MctomSpdo">
+
     <title><?php echo $post->Title ?> - Visuly</title>
 
     <link rel="stylesheet" href="./files/css/main.css">

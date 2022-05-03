@@ -59,7 +59,7 @@ header {
 #header-logo {
     font-family: architect, Calibri, Arial, serif;
     font-size: 3.5vh;
-    color: var(--color);
+    color: var(--defaultBg);
     text-decoration: none;
 }
 
@@ -199,6 +199,11 @@ header {
     background-color: rgba(255, 255, 255, 0.3);
     border-top-right-radius: 5vh;
     border-bottom-right-radius: 5vh;
+    font-size: 0;
+}
+
+#header-search button > i {
+    font-size: small;
 }
 
 #header-search button:hover,

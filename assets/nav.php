@@ -10,7 +10,7 @@
     ?>>
         <div>
             <div class="nav-img">
-                <img src="files/img/home.svg" alt="Home">
+                <img src="files/img/home.svg" alt="Home" width="100" height="100">
             </div>
             <div class="nav-txt">
                 <p>Home</p>
@@ -26,7 +26,7 @@
     ?>>
         <div>
             <div class="nav-img">
-                <img src="files/img/discover.svg" alt="Home">
+                <img src="files/img/discover.svg" alt="Home" width="100" height="100">
             </div>
             <div class="nav-txt">
                 <p>Discover</p>
@@ -42,7 +42,7 @@
     ?>>
         <div>
             <div class="nav-img">
-                <img src="files/img/add.svg" alt="Home">
+                <img src="files/img/add.svg" alt="Home" width="100" height="100">
             </div>
             <div class="nav-txt">
                 <p>Upload</p>

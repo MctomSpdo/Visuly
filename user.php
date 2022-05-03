@@ -41,6 +41,9 @@ if (isset($_GET['user'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="visuly, social Media, images, memes, user">
+    <meta name="description" content="User: <?php echo $userDisplay->username?>">
+    <meta name="author" content="MctomSpdo">
     <title><?php echo $userDisplay->username ?> - Visuly</title>
 
     <link rel="stylesheet" href="./files/css/main.css">
