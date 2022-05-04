@@ -19,6 +19,14 @@
     "imgHeight" : 1080,
     "imgQuality": 75
   },
+  "user" : {
+    "maxImgSize": 10000000,
+    "imgHeight" : 256,
+    "imgQuality": 60,
+    "imageFolder" : "/files/img/users",
+    "imgNameLength" : 60,
+    "imgType" : "jpg"
+  },
   "userImageFolder": "/files/img/users",
   "userDefaultImage": "user.png",
   "userDefaultPermission": "2",
