@@ -79,6 +79,7 @@ include "assets/header.php";
             <p id="data-email"><?php echo $user->email?></p>
             <p id="data-phoneNumber"><?php echo $user->phoneNumber?></p>
             <p id="data-desc"><?php echo $user->desc?></p>
+            <p id="data-userImg"><?php echo $user->profilePic?></p>
         </div>
 
         <div id="current-setting-wrapper">

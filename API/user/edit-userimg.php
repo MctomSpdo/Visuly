@@ -115,7 +115,7 @@ $user = new User();
 $user->DBLoadFromUserID($userId, $db);
 
 //new filename:
-$extention = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+$extention = pathinfo($_FILES['profilepic']['name'], PATHINFO_EXTENSION);
 $target_dir = "../.." . $config->user->imageFolder . "/";
 
 $target_file = null;
@@ -126,7 +126,7 @@ do {
 } while (file_exists($target_fileName));
 
 //size and compress image:
-$imageLocation = $_FILES['image']['tmp_name'];
+$imageLocation = $_FILES['profilepic']['tmp_name'];
 list($width, $height, $type) = getimagesize($imageLocation);
 $old_image = load_image($imageLocation, $type);
 
@@ -149,8 +149,17 @@ $newImage = resize_image_to_height($config->user->imgHeight, $old_image, $width,
 save_image($newImage, $target_file, $config->user->imgType, $config->user->imgQuality);
 
 //save in system (db)
+$dbFileName = $target_fileName . "." . $config->user->imgType;
 $pstmt = $db->prepare("update user set profilePic = ? where UserID = ?");
-$pstmt->bind_param("si", $target_file, $user->UserID);
+$pstmt->bind_param("si", $dbFileName, $user->UserID);
+if(!$pstmt->execute()) {
+    $resp = new stdClass();
+    $resp->error = "Internal Server error (E002)";
+
+    $pstmt->close();
+    $db->close();
+    exit(json_encode($resp));
+}
 
 $resp = new stdClass();
 $resp->success = true;

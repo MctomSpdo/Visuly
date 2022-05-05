@@ -864,7 +864,7 @@ INPUTS
 
 /** Change Password */
 
-#password-error {
+#password-error, #edit-user-error {
     display: none;
 }
 

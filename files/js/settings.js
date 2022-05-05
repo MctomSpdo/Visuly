@@ -1,5 +1,6 @@
 let api_newPassword = "./API/user/change-password.php";
 let api_edit = "./API/user/edit.php"
+let api_userImage = "./API/user/edit-userimg.php"
 
 //data
 let username = document.getElementById("data-username").innerHTML;
@@ -14,6 +15,8 @@ let usernameInput;
 let emailInput;
 let phoneNumberInput;
 let descInput;
+let fileIput;
+let errorDisplay;
 
 //buttons:
 let saveButton;
@@ -63,7 +66,7 @@ function loadEditUser(element) {
                             <label for="user-img-upload" id="user-img-upload-label">
                                 <div>
                                     <p>Upload File</p>
-                                    <img src="files/img/users/test.png" alt="User image">
+                                    <img src="files/img/users/${document.getElementById("data-userImg").innerHTML}" alt="User image" id="user-img-upload-image">
                                 </div>
                             </label>
                         </div>
@@ -88,6 +91,8 @@ function loadEditUser(element) {
                         <label for="phonenumber">Phone number</label>
                         <br>
                         <input type="text" name="phonenumber" id="input-phone">
+                        
+                        <p id="edit-user-error" class="txt-red"></p>
 
                         <div class="settings-form-buttons">
                             <button type="submit" disabled id="save-button">Save</button>
@@ -102,6 +107,8 @@ function loadEditUser(element) {
     emailInput = document.getElementById("input-email");
     phoneNumberInput = document.getElementById("input-phone");
     descInput = document.getElementById("input-desc");
+    fileIput = document.getElementById("user-img-upload");
+    errorDisplay = document.getElementById("edit-user-error");
 
     saveButton = document.getElementById("save-button");
     cancelButton = document.getElementById("cancel-button");
@@ -111,6 +118,39 @@ function loadEditUser(element) {
         event.preventDefault();
         console.log("submitting to Server");
         sendToServer();
+    });
+
+    //add eventListener to image for image change:
+    fileIput.addEventListener("change", () => {
+        let file = fileIput.files[0];
+        console.log(file);
+        let fd = new FormData();
+        fd.append('file', file);
+
+        let img = document.getElementById("user-img-upload-image");
+        //save src in case the image is invalid;
+        let before = img.src;
+
+
+        let reader = new FileReader();
+        reader.onload = (function (aImg) {
+            return function (e) {
+                aImg.src = e.target.result;
+            };
+        })(img);
+        reader.readAsDataURL(file);
+
+        img.file = file;
+
+        setTimeout(() => {
+            //check if image is square:
+            if(img.height != img.width) {
+                error("Image has to be square");
+                img.src = before;
+            } else {
+                saveButton.disabled = false;
+            }
+        }, 200);
     });
 
     //add eventListeners to all input fields
@@ -126,6 +166,9 @@ function loadEditUser(element) {
 }
 
 function sendToServer() {
+    let dataSent = false;
+    let imageSent = false;
+
     userForm.disabled = true;
     let formData = new FormData();
     formData.append("username", usernameInput.value);
@@ -145,17 +188,52 @@ function sendToServer() {
             email = emailInput.value;
             username = usernameInput.value;
             userForm.disabled = false;
-            contentArea.innerHTML = "<h1>Information updated!</h1>";
+
         } else if (data.error !== undefined) {
             error(data.error);
         } else {
             error("Unknown error while sending Request!");
         }
+        dataSent = true;
+        if (dataSent && imageSent) {
+            editShowCompletion();
+        }
+    });
+
+    //upload user image:
+    let image = fileIput.files[0];
+
+    formData = new FormData();
+    formData.append("profilepic", image);
+
+    fetch(api_userImage, {
+        method: 'post',
+        credentials: 'same-origin',
+        body: formData
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.success == true) {
+            imageSent = true;
+            if(dataSent && imageSent) {
+                editShowCompletion();
+            }
+        } else {
+            error("Something went wrong :/");
+        }
     });
 }
 
+/**
+ * Code to execute when both the image upload and the new data has been uploaded
+ */
+function editShowCompletion() {
+    contentArea.innerHTML = "<h1>Information updated!</h1>";
+}
+
 function error(text) {
-    alert("Error" + text);
+    errorDisplay.innerHTML = text;
+    errorDisplay.style.display = "block";
 }
 
 /************************************************ PASSWORD ************************************************/
@@ -163,8 +241,6 @@ function error(text) {
 let inputCurrentPw;
 let inputNewPw;
 let reenterNewPw;
-
-let passwordError;
 
 /**
  * loads the submenu for changing the password.
@@ -210,7 +286,7 @@ function loadPassword(element) {
     saveButton = document.getElementById("save-button");
     cancelButton = document.getElementById("cancel-button");
     userForm = document.getElementById("settings-password-wrapper");
-    passwordError = document.getElementById("password-error");
+    errorDisplay = document.getElementById("password-error");
 
     //add eventListeners to all input fields
     Array.from(userForm.elements).forEach((item) => {
@@ -288,8 +364,8 @@ function checkPasswordValues() {
  * @param error message
  */
 function pwError(error) {
-    passwordError.style.display = (error == "") ? "none" : "block"
-    passwordError.innerHTML = error;
+    errorDisplay.style.display = (error == "") ? "none" : "block"
+    errorDisplay.innerHTML = error;
 }
 
 /**

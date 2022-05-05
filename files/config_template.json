@@ -24,7 +24,7 @@
     "imgHeight" : 256,
     "imgQuality": 60,
     "imageFolder" : "/files/img/users",
-    "imgNameLength" : 60,
+    "imgNameLength" : 30,
     "imgType" : "jpg"
   },
   "userImageFolder": "/files/img/users",
