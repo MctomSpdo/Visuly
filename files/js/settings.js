@@ -46,7 +46,7 @@ function checkUserSubmit() {
  * @param element onClick element
  */
 function loadEditUser(element) {
-    if(element !== null) {
+    if (element !== null) {
         //change what element is selected in nav:
         Array.from(document.getElementById("setting-nav").children).forEach((item) => {
             item.id = "";
@@ -56,14 +56,16 @@ function loadEditUser(element) {
 
     //load new content:
     contentArea.innerHTML = `<h1>Edit User</h1>
-
                 <form id="settings-profile-wrapper">
                     <div id="settings-user-profilepic">
                         <div id="settings-userpfp-wrapper">
-                            <img src="files/img/users/test.png" alt="User image">
-                        </div>
-                        <div id="settings-editoverlay">
-                            <img src="files/img/edit.svg" alt="edit">
+                            <input type="file" accept="image/png, image/jpeg, image/gif" id="user-img-upload">
+                            <label for="user-img-upload" id="user-img-upload-label">
+                                <div>
+                                    <p>Upload File</p>
+                                    <img src="files/img/users/test.png" alt="User image">
+                                </div>
+                            </label>
                         </div>
                     </div>
 
@@ -138,15 +140,15 @@ function sendToServer() {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-        if(data.success !== undefined && data.success == true) {
+        if (data.success !== undefined && data.success == true) {
             phoneNumber = phoneNumberInput.value;
             email = emailInput.value;
             username = usernameInput.value;
             userForm.disabled = false;
             contentArea.innerHTML = "<h1>Information updated!</h1>";
-        } else if(data.error !== undefined) {
+        } else if (data.error !== undefined) {
             error(data.error);
-        }  else {
+        } else {
             error("Unknown error while sending Request!");
         }
     });
@@ -249,31 +251,31 @@ function checkPasswordSubmit() {
 function checkPasswordValues() {
     let password = inputNewPw.value;
 
-    if(password == "") {
+    if (password == "") {
         return true;
     }
 
-    if(reenterNewPw.value != password) {
+    if (reenterNewPw.value != password) {
         pwError("Retyped password is not the same as new password!");
         return false;
     }
-    if(!hasLowerCase(password)) {
+    if (!hasLowerCase(password)) {
         pwError("Password has to have at least 1 lowercase letter");
         return false;
     }
-    if(!hasUpperCase(password)) {
+    if (!hasUpperCase(password)) {
         pwError("Password has to have at least 1 uppercase letter");
         return false;
     }
-    if(!containsNumber(password)) {
+    if (!containsNumber(password)) {
         pwError("Password has to have at least 1 number letter");
         return false;
     }
-    if(inputCurrentPw.value == password) {
+    if (inputCurrentPw.value == password) {
         pwError("New Password can't be the same as the old one");
         return false;
     }
-    if(password.length < 8) {
+    if (password.length < 8) {
         pwError("Password has to be at least 8 characters long");
         return false;
     }
@@ -295,7 +297,7 @@ function pwError(error) {
  */
 function pwSendToServer() {
     userForm.disabled = true;
-    if(!checkPasswordValues()) {
+    if (!checkPasswordValues()) {
         return;
     }
 
@@ -310,11 +312,11 @@ function pwSendToServer() {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-        if(data.success !== undefined && data.success == true) {
+        if (data.success !== undefined && data.success == true) {
             contentArea.innerHTML = "<h1>Password updated!</h1>";
-        } else if(data.error !== undefined) {
+        } else if (data.error !== undefined) {
             pwError(data.error);
-        }  else {
+        } else {
             pwError("Unknown error while sending Request!");
         }
     });
