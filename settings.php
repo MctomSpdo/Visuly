@@ -51,7 +51,7 @@ $user->DBLoadFromUserID($userId, $db);
 include "assets/header.php";
 ?>
 <main>
-    <nav id="setting-nav">
+    <nav id="setting-nav" class="invert-image-dark">
         <a id="nav-active" onclick="loadEditUser(this);">
             <div>
                 <div class="nav-img">
