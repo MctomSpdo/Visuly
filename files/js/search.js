@@ -5,6 +5,7 @@ let searchValue = document.getElementById("search-words").innerHTML;
 let searchbar = document.getElementById("header-searchbar");
 
 let userSearch = document.getElementById("search-user-content");
+let postSearch = document.getElementById("search-post-content");
 
 let dataReceived = false;
 
@@ -27,11 +28,13 @@ function search(keyword) {
         dataReceived = true;
 
         displayUserResult(data);
+        displayPostResult(data);
     });
 
     setTimeout(() => {
         if(!dataReceived) {
             userSearch.innerHTML = loader;
+            postSearch.innerText = loader;
         }
     }, 100)
 }
@@ -58,4 +61,16 @@ function userToHTML(data) {
                 </div>
                 <p>${data.username}</p>
             </div>`
+}
+
+function displayPostResult(data) {
+    console.log(data);
+    let html = "";
+    for(let i = 0; i < data.post.length; i++) {
+        html += parsePostToHTML(data.post[i]);
+    }
+    if(html === "") {
+        html = '<p>No Results found</p>';
+    }
+    postSearch.innerHTML = html;
 }

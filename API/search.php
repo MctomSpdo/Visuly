@@ -80,27 +80,32 @@ $response->user = resToJson($userSearchPstmt->get_result());
 $userSearchPstmt->close();
 
 //search posts:
-$postSearchPstmt = $db->prepare("select p.uuid,
+$postSearchPstmt = $db->prepare("select p.uuid as postId,
        concat(p.uuid, '.', p.extention)                    as path,
        p.title,
        p.description,
        p.postedOn                                          as date,
-       u.uuid                                              as userID,
-       u.username                                          as user,
-       u.profilePic                                        as userimage,
+       u.uuid                                              as postedFromID,
+       u.username                                          as postedFrom,
+       u.profilePic                                        as postedFromImage,
        ((select round((length(lower(p.title)) - length(replace(lower(p.title), lower(?), ''))) /
                       length(?))) * 2 +
         (select round((length(lower(p.description)) - length(replace(lower(p.description), lower(?), ''))) /
                       length(?))) +
-        (IF(lower(?) = lower(p.uuid), 1000, 0))) as relevance
+        (IF(lower(?) = lower(p.uuid), 1000, 0))) as relevance,
+       (select count(*) from postliked liked where liked.PostID = p.PostID) as likes,
+       (select count(*) from comment com where com.PostID = p.PostID)       as comments,
+       replace(replace((select count(*) from postliked liked2 where liked2.UserID = ? and liked2.PostID = p.PostID), 1,
+                       'true'), 0, 'false')                                 as hasLiked
 from post p
          inner join user u using (UserID)
 where lower(p.title) like lower(concat('%', ?, '%'))
    or lower(p.description) like lower(concat('%', ?, '%'))
    or lower(p.uuid) = lower(?)
+    and deleted = 0
 order by relevance desc
 limit ?");
-$postSearchPstmt->bind_param("ssssssssi", $needle, $needle, $needle, $needle, $needle, $needle, $needle, $needle, $config->respLength);
+$postSearchPstmt->bind_param("ssssssissi", $needle, $needle, $needle, $needle, $needle, $needle, $user->UserID, $needle, $needle, $config->respLength);
 
 if (!$postSearchPstmt->execute()) {
     $postSearchPstmt->close();

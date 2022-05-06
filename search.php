@@ -77,7 +77,15 @@ if(isset($_GET['search'])) {
                         <h2>Users</h2>
 
                         <div id="search-user-content">
-                            <div class="loader"></div>
+
+                        </div>
+                    </div>
+
+                    <div id="search-post-result">
+                        <h2>Posts</h2>
+
+                        <div id="search-post-content" class="post-3-wrapper">
+
                         </div>
                     </div>
                 </div>
