@@ -203,6 +203,14 @@ function sendToServer() {
     //upload user image:
     let image = fileIput.files[0];
 
+    if(image === null) {
+        imageSent = true;
+        if(dataSent) {
+            editShowCompletion();
+        }
+        return;
+    }
+
     formData = new FormData();
     formData.append("profilepic", image);
 
@@ -218,6 +226,8 @@ function sendToServer() {
             if(dataSent && imageSent) {
                 editShowCompletion();
             }
+        } else if (data.error !== undefined) {
+            error(data.error);
         } else {
             error("Something went wrong :/");
         }

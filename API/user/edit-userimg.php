@@ -128,6 +128,14 @@ do {
 //size and compress image:
 $imageLocation = $_FILES['profilepic']['tmp_name'];
 list($width, $height, $type) = getimagesize($imageLocation);
+
+if($width != $height) {
+    $resp = new stdClass();
+    $resp->error="Image has to be square";
+    $db->close();
+    exit(json_encode($resp));
+}
+
 $old_image = load_image($imageLocation, $type);
 
 if($old_image === null) {
