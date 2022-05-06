@@ -105,7 +105,7 @@ where lower(p.title) like lower(concat('%', ?, '%'))
     and deleted = 0
 order by relevance desc
 limit ?");
-$postSearchPstmt->bind_param("ssssssissi", $needle, $needle, $needle, $needle, $needle, $needle, $user->UserID, $needle, $needle, $config->respLength);
+$postSearchPstmt->bind_param("sssssisssi", $needle, $needle, $needle, $needle, $needle, $user->UserID, $needle, $needle, $needle, $config->respLength);
 
 if (!$postSearchPstmt->execute()) {
     $postSearchPstmt->close();

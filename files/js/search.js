@@ -34,7 +34,7 @@ function search(keyword) {
     setTimeout(() => {
         if(!dataReceived) {
             userSearch.innerHTML = loader;
-            postSearch.innerText = loader;
+            postSearch.innerHTML = loader;
         }
     }, 100)
 }
