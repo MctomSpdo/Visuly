@@ -45,6 +45,24 @@ main {
     color: #ff0000;
 }
 
+.loader {
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid #ffff;
+    border-radius: 100vh;
+    width: 10vh;
+    height: 10vh;
+    animation: spin 1s cubic-bezier(0.7, 0.1, 0.1, 0.7) infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 /************************************************ HEADER ************************************************/
 
 header {
@@ -868,6 +886,51 @@ INPUTS
     display: none;
 }
 
+/************************************************ SETTINGS ************************************************/
+
+#search-rootbox {
+    width: 100%;
+}
+
+/*
+ USER SEARCH
+ */
+
+.search-userresult {
+    width: 100%;
+    background-color: var(--secondBg);
+    border-radius: 0.5vh;
+    padding: 2vh 1vh 0 1vh;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+}
+
+.search-userresult:hover {
+    cursor: pointer;
+}
+
+.search-userresult > div {
+    width: 100%;
+}
+
+.search-userresult > div > img {
+    width: 100%;
+    height: auto;
+    border-radius: 100%;
+}
+
+.search-userresult p {
+    text-align: center;
+    font-size: 1.2rem;
+    overflow-wrap: break-word;
+}
+
+#search-user-content {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-gap: 1vw;
+}
+
 /************************************************ REPSPONSIVE ************************************************/
 
 /* tablet view */
@@ -895,6 +958,12 @@ INPUTS
 
     #user-info-body {
         margin-right: 2vw;
+    }
+
+    /* search: */
+    #search-user-content {
+        grid-template-columns: 33% 33% 33%;
+        grid-gap: 1.2vw;
     }
 }
 
@@ -1009,6 +1078,13 @@ INPUTS
     /* Upload */
     #upload-inputs, #upload-file {
         width: 90%;
+    }
+
+    /* search: */
+    #search-user-content {
+        grid-template-columns: 50% 50%;
+        grid-gap: 2vw;
+        margin: 0 2vw;
     }
 }
 
