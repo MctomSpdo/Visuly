@@ -64,12 +64,17 @@ $response = new stdClass();
 $response->searchTerm = $needle;
 
 //search users:
-$userSearchPstmt = $db->prepare("select uuid, username, description, profilePic from user
+$userSearchPstmt = $db->prepare("select uuid, username, description, profilePic,
+       (select round((length(username) - length(replace(lower(username), lower(?), ''))) / length(?))) * 2 +
+       (select round((length(description) - length(replace(lower(description), lower(?), ''))) / length(?))) as revelance
+from user
 where lower(username) like lower(concat('%', ?, '%'))
-or lower(description) like lower(concat('%', ?, '%'))
-or uuid = ?
+   or lower(description) like lower(concat('%', ?, '%'))
+   or uuid = ?
+and deleted = 0
+order by revelance desc
 limit ?");
-$userSearchPstmt->bind_param("sssi", $needle, $needle, $needle, $config->respLength);
+$userSearchPstmt->bind_param("sssssssi", $needle, $needle, $needle, $needle, $needle, $needle, $needle, $config->respLength);
 
 if (!$userSearchPstmt->execute()) {
     $userSearchPstmt->close();
