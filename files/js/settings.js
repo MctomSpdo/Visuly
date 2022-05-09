@@ -120,6 +120,14 @@ function loadEditUser(element) {
         sendToServer();
     });
 
+    cancelButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        usernameInput.value = username;
+        descInput.value = desc;
+        emailInput.value = email;
+        phoneNumberInput.value = phoneNumber;
+    })
+
     //add eventListener to image for image change:
     fileIput.addEventListener("change", () => {
         let file = fileIput.files[0];
