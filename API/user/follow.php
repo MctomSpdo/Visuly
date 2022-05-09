@@ -73,15 +73,15 @@ $pstmt->close();
 
 //if user wants to follow:
 if($follow == "true") {
-    $pstmt = $db->prepare("insert into follow(UserID, Follows) value ((select UserID from user where uuid = ?), ?)");
-    if(!$pstmt->bind_param("si", $followUser, $user->UserID) || !$pstmt->execute()) {
+    $pstmt = $db->prepare("insert into follow(UserID, Follows) value (?, (select UserID from user where uuid = ?))");
+    if(!$pstmt->bind_param("is", $user->UserID, $followUser) || !$pstmt->execute()) {
         $pstmt->close();
         $db->close();
         exit(getError("Internal Server Error (E002)"));
     }
 } else if ($follow == "false") {//if user wants to unfollow
-    $pstmt = $db->prepare("delete from follow where UserID = (select UserID from user where uuid = ?) and Follows = ?");
-    if(!$pstmt->bind_param("si", $followUser, $user->UserID) || !$pstmt->execute()) {
+    $pstmt = $db->prepare("delete from follow where UserID = ? and Follows = (select UserID from user where uuid = ?)");
+    if(!$pstmt->bind_param("is", $user->UserID, $followUser) || !$pstmt->execute()) {
         $pstmt->close();
         $db->close();
         exit(getError("Internal Server Error (E002)"));

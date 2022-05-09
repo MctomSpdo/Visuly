@@ -72,6 +72,16 @@ include "assets/header.php";
                 <div id="user-header-info">
                     <div id="user-info-username">
                         <h1><?php echo $userDisplay->username ?></h1>
+                        <div id="user-interaction-wrapper">
+                            <?php
+                                if($userDisplay->UUID == $user->UUID) {
+                                    echo '<button id="user-edit">Edit</button>';
+                                } else {
+                                    echo '<button id="user-follow">' . ($user->DBFollowsUser($db, $userDisplay->UUID) ? 'Unfollow' : 'Follow') . '</button>';
+                                }
+                            ?>
+
+                        </div>
                     </div>
                     <div id="user-info-body">
                         <p><?php
@@ -105,7 +115,7 @@ include "assets/header.php";
                             <div>
                                 <p><?php
                                     $follows = $userDisplay->DBGetFollows($db);
-                                    switch ($followers) {
+                                    switch ($follows) {
                                         case -1:
                                             header("Location: ./error.php");
                                             break;

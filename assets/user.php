@@ -286,6 +286,19 @@ class User
         return $result;
     }
 
+    function DBFollowsUser(mysqli $db, string $uuid):bool {
+        $pstmt = $db->prepare("select count(*) from follow where UserID = ? and Follows = (select UserID from user where uuid = ?);");
+        $pstmt->bind_param("is",  $this->UserID, $uuid);
+        if(!$pstmt->execute()) {
+            return false;
+        };
+
+        $res = $pstmt->get_result();
+        $result = $res->fetch_all();
+        $pstmt->close();
+        return $result[0][0] == 1;
+    }
+
     private function loadFromResult($result)
     {
         $this->UserID = $result[1];
