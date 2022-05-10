@@ -323,6 +323,25 @@ class User
         return $result;
     }
 
+    static function DBGetFollowsList(mysqli $db, string $uuid) {
+        $pstmt = $db->prepare("select u.username, u.profilePic, u.uuid from follow f
+                            inner join user u on f.Follows = u.UserID
+                        where f.UserID = (select user.UserID from user where uuid = ?)");
+        $pstmt->bind_param("s", $uuid);
+        if(!$pstmt->execute()) {
+            return false;
+        };
+
+        $res = $pstmt->get_result();
+        if(!$res) {
+            return false;
+        }
+        $result = self::resToArr($res);
+        $res->close();
+        $pstmt->close();
+        return $result;
+    }
+
     private function loadFromResult($result)
     {
         $this->UserID = $result[1];
