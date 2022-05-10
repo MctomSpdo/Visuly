@@ -112,7 +112,7 @@ include "assets/header.php";
 
                                     } ?></p>
                             </a>
-                            <div>
+                            <a href="./follows.php?user=<?php echo $userDisplay->UUID?>">
                                 <p><?php
                                     $follows = $userDisplay->DBGetFollows($db);
                                     switch ($follows) {
@@ -127,7 +127,7 @@ include "assets/header.php";
                                             break;
                                     }
                                     ?></p>
-                            </div>
+                            </a>
                             <div>
                                 <p><?php echo $userDisplay->DBJoinDateFormat("%M %Y", $db) ?></p>
                             </div>
