@@ -126,7 +126,7 @@ create table FOLLOW
     UserID    int not null,
     Follows  int not null,
     foreign key (UserID) references USER(UserID),
-    foreign key (Follows) references USER(UserId)
+    foreign key (Follows) references USER(UserID)
 );
 
 /* Token */

@@ -609,6 +609,11 @@ nav > a > div {
     justify-content: space-between;
 }
 
+#user-advancedInfo a {
+    color: var(--color);
+    text-decoration: none;
+}
+
 #user-interaction-wrapper {
     display: flex;
     justify-content: right;
@@ -955,6 +960,40 @@ INPUTS
     grid-gap: 1vw;
 }
 
+/************************************************ User list display  ************************************************/
+
+.user-list-display {
+    width: 80%;
+    margin: 1vh auto;
+}
+
+.list-userelement {
+    background-color: var(--secondBg);
+    display: grid;
+    grid-template-columns: 20% 80%;
+    margin: 2vh 0;
+    padding: 1vh 0;
+    border-radius: 0.5vh;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    width: 70%;
+}
+
+.list-userelement > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list-userelement > div:nth-child(2) {
+    justify-content: left;
+}
+
+.list-userelement > div img {
+    width: 70%;
+    height: auto;
+    border-radius: 100%;
+}
+
 /************************************************ REPSPONSIVE ************************************************/
 
 /* tablet view */
@@ -976,7 +1015,7 @@ INPUTS
         height: 20vh;
     }
 
-    #user-advancedInfo > div:nth-child(3) {
+    #user-advancedInfo > div:nth-child(3), #user-advancedInfo > a:nth-child(3){
         display: none;
     }
 
@@ -1081,7 +1120,7 @@ INPUTS
         width: 25vh;
     }
 
-    #user-advancedInfo > div:nth-child(4) {
+    #user-advancedInfo > div:nth-child(4), #user-advancedInfo > a:nth-child(4) {
         grid-area: 1 / 2;
     }
 

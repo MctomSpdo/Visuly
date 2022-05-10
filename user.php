@@ -94,7 +94,7 @@ include "assets/header.php";
                             <div>
                                 <p><?php echo $userDisplay->DBGetPosts($db)?> Posts</p>
                             </div>
-                            <div>
+                            <a href="./follower.php?user=<?php echo $userDisplay->UUID?>">
                                 <p><?php
                                     $followers = $userDisplay->DBGetFollowers($db);
                                     switch ($followers) {
@@ -108,10 +108,10 @@ include "assets/header.php";
                                             echo "1 Follower";
                                             break;
                                         default:
-                                            echo $followers . "Followers";
+                                            echo $followers . " Followers";
 
                                     } ?></p>
-                            </div>
+                            </a>
                             <div>
                                 <p><?php
                                     $follows = $userDisplay->DBGetFollows($db);

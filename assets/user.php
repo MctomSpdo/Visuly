@@ -299,6 +299,30 @@ class User
         return $result[0][0] == 1;
     }
 
+    /**
+     * @param mysqli $db database
+     * @param string $uuid uuid of the user
+     * @return array|false false if error, else parsed result
+     */
+    static function DBGetFollowerList(mysqli $db, string $uuid) {
+        $pstmt = $db->prepare("select u.username, u.profilePic, u.uuid from follow
+            inner join user u using(UserID)
+            where follows = (select UserID from user where uuid = ? and deleted = 0);");
+        $pstmt->bind_param("s", $uuid);
+        if(!$pstmt->execute()) {
+            return false;
+        };
+
+        $res = $pstmt->get_result();
+        if(!$res) {
+            return false;
+        }
+        $result = self::resToArr($res);
+        $res->close();
+        $pstmt->close();
+        return $result;
+    }
+
     private function loadFromResult($result)
     {
         $this->UserID = $result[1];
@@ -331,5 +355,22 @@ class User
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    /**
+     * Converts a result to an Array, where each field has the name of the column as array index
+     * https://stackoverflow.com/questions/38437306/return-json-from-mysql-with-column-name
+     * @param mysqli_result $result
+     * @return array
+     */
+    private static function resToArr(mysqli_result $result): array
+    {
+        $jsonData = array();
+        if (mysqli_num_rows($result) > 0) {
+            while ($array = mysqli_fetch_assoc($result)) {
+                $jsonData[] = $array;
+            }
+        }
+        return $jsonData;
     }
 }
