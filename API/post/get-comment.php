@@ -7,7 +7,7 @@ require_once '../../assets/token.php';
 require_once '../../assets/post.php';
 
 //check request
-if(!(isset($_POST['post'])) && isset($_POST['offset'])) {
+if(!(isset($_POST['post']) && isset($_POST['offset']))) {
     $resp = new stdClass();
     $resp->error = "Invalid Request";
     exit(json_encode($resp));

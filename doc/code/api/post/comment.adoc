@@ -1,0 +1,96 @@
+= Visuly API / post / comment
+Mctom Spdo
+0.0.1, {docdate}: MEDT
+:icons: font
+:sectnums:
+:toc: left
+:stylesheet: ../../../css/dark.css
+
+== Getting started
+
+This is for commenting on a post.
+
+== General use
+
+[cols="1, 2"]
+|===
+| API Path
+| /API/post/comment.php
+
+| Request
+| POST
+
+| requires login
+| true
+
+| needs database
+| true
+
+| needs config
+| true
+
+| output
+| JSON
+|===
+
+== Input
+
+Takes 2 POST inputs:
+
+[cols="1, 2"]
+|===
+| post
+| uuid for the post
+
+| comment
+| comment to post on
+|===
+
+== Output
+
+=== Default
+
+If everything worked, the server will reply with:
+
+[source, json]
+----
+{
+  "comment": true
+}
+----
+
+=== Error
+
+==== User permission
+
+This response will be sent, when the user does not have any permission to comment.
+
+[source, json]
+----
+{
+  "error": "No permission to comment"
+}
+----
+
+==== Post does not exist
+
+This response will be sent if the post does not exist
+
+[source, json]
+----
+{
+  "error": "Post does not exist"
+}
+----
+
+==== Else
+
+All other errors will be sent in the following format:
+
+[source, json]
+----
+{
+  "error": <.>
+}
+----
+ErrorMessage

@@ -1,0 +1,102 @@
+= Visuly API / post / like
+Mctom Spdo
+1.0.0, {docdate}: MEDT
+:icons: font
+:sectnums:
+:toc: left
+:stylesheet: ../../../css/dark.css
+
+== Getting started
+
+This section allows you to like and dislike a certain post.
+
+== General use
+
+[cols="1, 2"]
+|===
+
+| API Path
+| /API/post/like.php
+
+| Request
+| POST
+
+| requires login
+| true
+
+| needs database
+| true
+
+| needs config
+| true
+
+| output
+| JSON
+
+|===
+
+== Input
+
+Takes 1 POST parameter
+
+[cols="1, 2"]
+|===
+| post
+| postid
+
+| like
+| to like or unlike a post
+|===
+
+=== postid
+
+Id of the post that should be like or unliked
+
+=== like
+
+to either like or unlike a post
+
+values:
+
+* 'like'
+* 'unlike'
+
+== Output
+
+=== Default
+
+The server will respond with the following JSON, if everything worked correctly
+
+[source, json]
+----
+{
+  "success": true,
+  "likes": 1234<.>
+}
+----
+<.> Number of likes after the user liked the post
+
+=== Error
+
+==== Invalid like parameter
+
+If the like parameter is invalid, the server will respond with the following JSON:
+
+[source, json]
+----
+{
+  "error": "Invalid Request",
+  "cause": "like: "<.>
+}
+----
+<.> 'like:  + the value sent to the server
+
+==== Others:
+
+[source,json]
+----
+{
+    "error" : <.>
+}
+----
+<.> Error message

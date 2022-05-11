@@ -1,0 +1,80 @@
+= Visuly API / post / get-comment
+Mctom Spdo
+0.0.1, {docdate}: MEDT
+:icons: font
+:sectnums:
+:toc: left
+:stylesheet: ../../../css/dark.css
+
+== Getting started
+
+This is to get the comment from a given post. The comments will be limited by 50, but the request can be made with an offsets
+
+== General use
+
+[cols="1, 2"]
+|===
+
+| API Path
+| /API/post/get-comment.php
+
+| Request
+| POST
+
+| requires login
+| true
+
+| needs database
+| true
+
+| needs config
+| true
+
+| output
+| JSON
+
+|===
+
+== Input
+
+Takes 2 POST parameter
+
+[cols="1, 2"]
+|===
+| post
+| ID of the post
+
+| offset
+| offset for the comments
+|===
+
+== Output
+
+=== Default
+
+The server will respond with a json. +
+Example for this json:
+
+[source, json]
+----
+[ <.>
+  {
+    "content": "testComment",
+    "user": "testUser",
+    "userId": "UXMIs77rrHOQk6r-AEYeREl0idWqJy",
+    "userImage": "user.png"
+  }
+]
+----
+<.> Array for comments
+
+=== Error
+
+If the Server runs into an error, it will respond with the following:
+
+[source,json]
+----
+{
+    "error" : <.>
+}
+----

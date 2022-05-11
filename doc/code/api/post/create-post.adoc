@@ -1,0 +1,90 @@
+= Visuly API / post / create-post
+Mctom Spdo
+0.0.1, {docdate}: MEDT
+:icons: font
+:sectnums:
+:toc: left
+:stylesheet: ../../../css/dark.css
+
+== Getting started
+
+This allows to create a post on the platform.
+
+== General use
+
+[cols="1, 2"]
+|===
+
+| API Path
+| /API/post/create-post.php
+
+| Request
+| POST
+
+| requires login
+| true
+
+| needs database
+| true
+
+| needs config
+| true
+
+| output
+| JSON
+
+|===
+
+== Input
+
+Takes 1 URL encoded parameter:
+
+[cols="1, 2"]
+|===
+| title
+| Title of the post
+
+| desc
+| Description of the post
+
+| image
+| Post image
+|===
+
+=== Image
+
+The Image is a file upload, and has to be of the following formats:
+
+* jpg
+* png
+* gif
+
+It also has to be less than *10 MB* of the link:../../config.html#_maxsize[file size configured in the config]
+
+== Output
+
+=== Default
+
+If everything works, the server will respond with the following JSON:
+
+[source, json]
+----
+{
+  "postid": <.>
+}
+----
+<.> uuid of the uploaded post
+
+=== Error
+
+If an error occurs, the server will respond with the following JSON:
+
+If the image is larger than *40 MB*, the Server will refuse the upload.
+
+[source, json]
+----
+{
+  "error": <.>
+}
+----
+<.> Error message
