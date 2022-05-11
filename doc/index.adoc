@@ -10,9 +10,11 @@ ifndef::imagesdir[:imagesdir: images]
 
 == Index
 
-https://mctomspdo.github.io/Medt_SSProject2022/doc/planning.html[Planning] (German)
-
-https://mctomspdo.github.io/Medt_SSProject2022/doc/db.html[Database]
+* link:planning.html[Planning] (German)
+* link:db.html[database]
+* link:code/index.html[code]
+** link:code/config.html[config file]
+** link:code/API.html[API]
 
 == Technologies used
 

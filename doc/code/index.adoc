@@ -1,0 +1,9 @@
+= Visuly Code
+Mctom Spdo
+1.0.0, {docdate}: MEDT
+:icons: font
+:toc: left
+:stylesheet: ../css/dark.css
+
+* link:API.html[API]
+* link:config.html[configuration]
