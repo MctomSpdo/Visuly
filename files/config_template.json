@@ -25,7 +25,10 @@
     "imgQuality": 60,
     "imageFolder" : "/files/img/users",
     "imgNameLength" : 30,
-    "imgType" : "jpg"
+    "imgType" : "jpg",
+    "defaultPermission": "2",
+    "adminPermission": "1",
+    "defaultImage": "user.png"
   },
   "userImageFolder": "/files/img/users",
   "userDefaultImage": "user.png",

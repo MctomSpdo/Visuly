@@ -130,7 +130,7 @@ a {
 <div class="details">
 <span id="author" class="author">Mctom Spdo</span><br>
 <span id="revnumber">version 1.0.0,</span>
-<span id="revdate">2022-04-14</span>
+<span id="revdate">2022-05-11</span>
 <br><span id="revremark">MEDT</span>
 </div>
 <div id="toc" class="toc2">
@@ -155,13 +155,26 @@ a {
 <li><a href="#_imgquality">3.6. imgQuality</a></li>
 </ul>
 </li>
-<li><a href="#_other">4. Other</a>
+<li><a href="#_user">4. User</a>
 <ul class="sectlevel2">
-<li><a href="#_userimagefolder">4.1. userImageFolder</a></li>
-<li><a href="#_userdefaultimage">4.2. userDefaultImage</a></li>
-<li><a href="#_userdefaultpermission">4.3. userDefaultPermission</a></li>
-<li><a href="#_passwordsalt">4.4. passwordSalt</a></li>
-<li><a href="#_resplength">4.5. respLength</a></li>
+<li><a href="#_maximgsize">4.1. maxImgSize</a></li>
+<li><a href="#_imgheight_2">4.2. imgHeight</a></li>
+<li><a href="#_imgquality_2">4.3. imgQuality</a></li>
+<li><a href="#_imagefolder">4.4. imageFolder</a></li>
+<li><a href="#_imgnamelength">4.5. imgNameLength</a></li>
+<li><a href="#_imgtype_2">4.6. imgType</a></li>
+<li><a href="#_defaultpermission">4.7. defaultPermission</a></li>
+<li><a href="#_adminpermission">4.8. adminPermission</a></li>
+<li><a href="#_defaultimage">4.9. defaultImage</a></li>
+</ul>
+</li>
+<li><a href="#_other">5. Other</a>
+<ul class="sectlevel2">
+<li><a href="#_userimagefolder">5.1. userImageFolder</a></li>
+<li><a href="#_userdefaultimage">5.2. userDefaultImage</a></li>
+<li><a href="#_userdefaultpermission">5.3. userDefaultPermission</a></li>
+<li><a href="#_passwordsalt">5.4. passwordSalt</a></li>
+<li><a href="#_resplength">5.5. respLength</a></li>
 </ul>
 </li>
 </ul>
@@ -443,10 +456,217 @@ the path has to beginn with a "/"!</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_other">4. Other</h2>
+<h2 id="_user">4. User</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_userimagefolder">4.1. userImageFolder</h3>
+<h3 id="_maximgsize">4.1. maxImgSize</h3>
+<div class="literalblock">
+<div class="content">
+<pre>default value: 10000000</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The maximum image size that the user is allowed to upload for a user image in Bytes.</p>
+</div>
+<div class="paragraph">
+<p>supported values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>0 - *</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_imgheight_2">4.2. imgHeight</h3>
+<div class="literalblock">
+<div class="content">
+<pre>default value: 256</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The height of the image for the user after upload. The image will be stored in this height.<br>
+Since the Image is square, the width of the image will be the same.</p>
+</div>
+<div class="paragraph">
+<p>supported values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1 - *</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_imgquality_2">4.3. imgQuality</h3>
+<div class="literalblock">
+<div class="content">
+<pre>default value: 80</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The image quality for the user. This is the compression rate that the project will use.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>supported values:</p>
+</li>
+<li>
+<p>-1 (this will default to 75)</p>
+</li>
+<li>
+<p>0 - 100</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_imagefolder">4.4. imageFolder</h3>
+<div class="literalblock">
+<div class="content">
+<pre>default value: "/files/img/users"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is the directory (absolute from the root of the webserver) where userimage will be stored.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_imgnamelength">4.5. imgNameLength</h3>
+<div class="literalblock">
+<div class="content">
+<pre>default value: 20</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is the default length of the name for the userimage. The name will be randomly generated, and this will be the total length of this randomly generated String.<br>
+The database value must support the length of this value!</p>
+</div>
+<div class="paragraph">
+<p>supported values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1 - *</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_imgtype_2">4.6. imgType</h3>
+<div class="literalblock">
+<div class="content">
+<pre>default value: "jpg"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is the image compression algorithm used in the upload.</p>
+</div>
+<div class="paragraph">
+<p>supported values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>jpg</p>
+</li>
+<li>
+<p>png</p>
+</li>
+<li>
+<p>gif</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_defaultpermission">4.7. defaultPermission</h3>
+<div class="literalblock">
+<div class="content">
+<pre>default value: "2"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is the default permission for the user. This is the permission level, that a normal user has. This is the primary key on the permission table in the database</p>
+</div>
+<div class="paragraph">
+<p>supported values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1 - *</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adminpermission">4.8. adminPermission</h3>
+<div class="literalblock">
+<div class="content">
+<pre>default value: "1"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is the admin permission for the user. THis is the permission level that admins have. This is the primar key on the permission table in the database.</p>
+</div>
+<div class="paragraph">
+<p>supported values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1 - *</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_defaultimage">4.9. defaultImage</h3>
+<div class="literalblock">
+<div class="content">
+<pre>default value: user.png</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The default image used for a new user, when there is no profile picture in use</p>
+</div>
+<div class="paragraph">
+<p>supported values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>*</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_other">5. Other</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_userimagefolder">5.1. userImageFolder</h3>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Deprecated
+</td>
+</tr>
+</table>
+</div>
 <div class="literalblock">
 <div class="content">
 <pre>default value: "/files/img/users"</pre>
@@ -458,11 +678,23 @@ The path has to beginn with a "/"!</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_userdefaultimage">4.2. userDefaultImage</h3>
+<h3 id="_userdefaultimage">5.2. userDefaultImage</h3>
 <div class="literalblock">
 <div class="content">
 <pre>default value: user.png</pre>
 </div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Deprecated
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>The default image for new users.<br>
@@ -470,11 +702,23 @@ This image has to be in the userImageFolder.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_userdefaultpermission">4.3. userDefaultPermission</h3>
+<h3 id="_userdefaultpermission">5.3. userDefaultPermission</h3>
 <div class="literalblock">
 <div class="content">
 <pre>default value: 2</pre>
 </div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Deprecated
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>The default permission for all users.<br>
@@ -492,7 +736,7 @@ this is the Primary key of the permission table.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_passwordsalt">4.4. passwordSalt</h3>
+<h3 id="_passwordsalt">5.4. passwordSalt</h3>
 <div class="paragraph">
 <p>The salt that the password uses.</p>
 </div>
@@ -510,7 +754,7 @@ leaving this empty is a great security risk!
 </div>
 </div>
 <div class="sect2">
-<h3 id="_resplength">4.5. respLength</h3>
+<h3 id="_resplength">5.5. respLength</h3>
 <div class="literalblock">
 <div class="content">
 <pre>default value: 50</pre>
@@ -532,7 +776,7 @@ leaving this empty is a great security risk!
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br>
-Last updated 2022-04-14 12:00:49 +0200
+Last updated 2022-05-11 12:05:32 +0200
 </div>
 </div>
 </body>

@@ -143,9 +143,104 @@ supported values:
 0 being the worst quality
 100 being the best
 
+== User
+
+=== maxImgSize
+
+    default value: 10000000
+
+The maximum image size that the user is allowed to upload for a user image in Bytes.
+
+supported values:
+
+* 0 - *
+
+=== imgHeight
+
+    default value: 256
+
+The height of the image for the user after upload. The image will be stored in this height. +
+Since the Image is square, the width of the image will be the same.
+
+supported values:
+
+* 1 - *
+
+=== imgQuality
+
+    default value: 80
+
+The image quality for the user. This is the compression rate that the project will use.
+
+* supported values:
+
+* -1 (this will default to 75)
+* 0 - 100
+
+=== imageFolder
+
+    default value: "/files/img/users"
+
+This is the directory (absolute from the root of the webserver) where userimage will be stored.
+
+=== imgNameLength
+
+    default value: 20
+
+This is the default length of the name for the userimage. The name will be randomly generated, and this will be the total length of this randomly generated String. +
+The database value must support the length of this value!
+
+supported values:
+
+* 1 - *
+
+=== imgType
+
+    default value: "jpg"
+
+This is the image compression algorithm used in the upload.
+
+supported values:
+
+* jpg
+* png
+* gif
+
+=== defaultPermission
+
+    default value: "2"
+
+This is the default permission for the user. This is the permission level, that a normal user has. This is the primary key on the permission table in the database
+
+supported values:
+
+* 1 - *
+
+=== adminPermission
+
+    default value: "1"
+
+This is the admin permission for the user. THis is the permission level that admins have. This is the primar key on the permission table in the database.
+
+supported values:
+
+* 1 - *
+
+=== defaultImage
+
+    default value: user.png
+
+The default image used for a new user, when there is no profile picture in use
+
+supported values:
+
+* *
+
 == Other
 
 === userImageFolder
+
+IMPORTANT: Deprecated
 
     default value: "/files/img/users"
 
@@ -156,12 +251,16 @@ The path has to beginn with a "/"!
 
     default value: user.png
 
+IMPORTANT: Deprecated
+
 The default image for new users. +
 This image has to be in the userImageFolder.
 
 === userDefaultPermission
 
     default value: 2
+
+IMPORTANT: Deprecated
 
 The default permission for all users. +
 this is the Primary key of the permission table.
