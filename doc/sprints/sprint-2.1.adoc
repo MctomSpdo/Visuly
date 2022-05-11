@@ -1,12 +1,9 @@
 = Sprint 2.1
 Mctom Spdo
 1.0.0, {docdate}: MEDT
-:sourcedir: ../src/main/java
 :icons: font
-:sectnums:
 :toc: left
-:stylesheet: ./css/dark.css
-ifndef::imagesdir[:imagesdir: images]
+:stylesheet: ../css/dark.css
 
 Updates Sprint:
 

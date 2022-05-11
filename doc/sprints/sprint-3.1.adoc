@@ -3,8 +3,7 @@ Mctom Spdo
 1.0.0, {docdate}: MEDT
 :icons: font
 :toc: left
-:stylesheet: ./css/dark.css
-ifndef::imagesdir[:imagesdir: images]
+:stylesheet: ../css/dark.css
 
 Changes since the last Sprint:
 
