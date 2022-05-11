@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.17">
 <meta name="author" content="Mctom Spdo">
-<title>Sprints</title>
+<title>Sprint 3.1 Changelog</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
 
@@ -126,7 +126,7 @@ a {
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Sprints</h1>
+<h1>Sprint 3.1 Changelog</h1>
 <div class="details">
 <span id="author" class="author">Mctom Spdo</span><br>
 <span id="revnumber">version 1.0.0,</span>
@@ -136,41 +136,200 @@ a {
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_sprint_2_1">Sprint 2.1</a></li>
-<li><a href="#_sprint_3_1">Sprint 3.1</a></li>
-<li><a href="#_spring_3_2">Spring 3.2</a></li>
+<li><a href="#_code_repository">Code Repository</a></li>
+<li><a href="#_api">API</a>
+<ul class="sectlevel2">
+<li><a href="#_user">User</a></li>
+<li><a href="#_status">Status</a></li>
+</ul>
+</li>
+<li><a href="#_frontend">Frontend</a>
+<ul class="sectlevel2">
+<li><a href="#_user_2">User</a></li>
+<li><a href="#_post">Post</a></li>
+<li><a href="#_settings">Settings</a></li>
+</ul>
+</li>
+<li><a href="#_documentation">Documentation</a></li>
+<li><a href="#_bug_fixes">Bug Fixes</a>
+<ul class="sectlevel2">
+<li><a href="#_performance">Performance</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="_code_repository">Code Repository</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Not all Springs have documentation!</p>
+<p><a href="https://github.com/MctomSpdo/Medt_SSProject2022">GitHub Repository</a></p>
+</div>
+<div class="paragraph">
+<p>changes since the last Sprint:</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_sprint_2_1">Sprint 2.1</h2>
+<h2 id="_api">API</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p><a href="sprint-2.1.html">changelog</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p>search has been added (API/search)</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_user">User</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The user can now upload their own profile pictures (API/user/edit-userimg)</p>
+</li>
+<li>
+<p>The user can now follow other users (API/user/follow)</p>
+</li>
+<li>
+<p>The user can now edit their profile  (API/user/edit)</p>
+</li>
+<li>
+<p>User permissions in the backend have been improved</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_status">Status</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The status has been improved for further debugging (/API/status/*)</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_sprint_3_1">Sprint 3.1</h2>
+<h2 id="_frontend">Frontend</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p><a href="sprint-3.1.html">changelog</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p>The frontend got a new design for dark mode users</p>
+</li>
+<li>
+<p>The frontend was optimised</p>
+</li>
+<li>
+<p>The frontend got a new design for mobile users</p>
+</li>
+<li>
+<p>The search option for the frontend was added</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_user_2">User</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>You can now follow user in the frontend</p>
+</li>
+<li>
+<p>Added page to show follower</p>
+</li>
+<li>
+<p>Added page to show following</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_post">Post</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Added submitting comment on STRG + Enter</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_settings">Settings</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The Profile picture of the user can now be changed</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_spring_3_2">Spring 3.2</h2>
+<h2 id="_documentation">Documentation</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p><a href="sprint-3.2.html">changelog</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Most of the API backend now has a documentation (<a href="https://mctomspdo.github.io/Medt_SSProject2022/doc/">Avaliable here</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bug_fixes">Bug Fixes</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Fixed bug with the wrong image loading in the settings</p>
+</li>
+<li>
+<p>Fixed bug with likes not loading correctly in the home and discover views</p>
+</li>
+<li>
+<p>Fixed bug with comments not working on mobile devices</p>
+</li>
+<li>
+<p>Fixed bug with icons not loading correctly when in dark mode</p>
+</li>
+<li>
+<p>Fixed bug with cancel sending data to server in editing user</p>
+</li>
+<li>
+<p>Fixed bug with editing user required a phone number</p>
+</li>
+<li>
+<p>Fixed bug with upload getting stuck after showing an error</p>
+</li>
+<li>
+<p>Fixed bug with likes not updating after liking a post</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_performance">Performance</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The home view does now only take 2 instead of 50 database operations</p>
+</li>
+<li>
+<p>The newest view does now only take 2 instead of 51 database operations</p>
+</li>
+<li>
+<p>The newest view does not only take 2 instead of 52 database operations</p>
+</li>
+<li>
+<p>The User (in the backend) does now only take 1 instead of 2 database operations to load</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -178,7 +337,7 @@ a {
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br>
-Last updated 2022-05-11 22:43:29 +0200
+Last updated 2022-05-11 22:42:14 +0200
 </div>
 </div>
 </body>

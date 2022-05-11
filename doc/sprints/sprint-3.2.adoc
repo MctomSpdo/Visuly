@@ -1,0 +1,72 @@
+= Sprint 3.1 Changelog
+Mctom Spdo
+1.0.0, {docdate}: MEDT
+:icons: font
+:toc: left
+:stylesheet: ../css/dark.css
+
+== Code Repository
+
+link:https://github.com/MctomSpdo/Medt_SSProject2022[GitHub Repository]
+
+changes since the last Sprint:
+
+== API
+
+* search has been added (API/search)
+
+=== User
+
+* The user can now upload their own profile pictures (API/user/edit-userimg)
+* The user can now follow other users (API/user/follow)
+* The user can now edit their profile  (API/user/edit)
+* User permissions in the backend have been improved
+
+=== Status
+
+* The status has been improved for further debugging (/API/status/*)
+
+== Frontend
+
+* The frontend got a new design for dark mode users
+* The frontend was optimised
+* The frontend got a new design for mobile users
+
+* The search option for the frontend was added
+
+=== User
+
+* You can now follow user in the frontend
+* Added page to show follower
+* Added page to show following
+
+=== Post
+
+* Added submitting comment on STRG + Enter
+
+=== Settings
+
+* The Profile picture of the user can now be changed
+
+== Documentation
+
+* Most of the API backend now has a documentation (link:https://mctomspdo.github.io/Medt_SSProject2022/doc/[Avaliable here])
+
+== Bug Fixes
+
+* Fixed bug with the wrong image loading in the settings
+* Fixed bug with likes not loading correctly in the home and discover views
+* Fixed bug with comments not working on mobile devices
+* Fixed bug with icons not loading correctly when in dark mode
+* Fixed bug with cancel sending data to server in editing user
+* Fixed bug with editing user required a phone number
+* Fixed bug with upload getting stuck after showing an error
+* Fixed bug with likes not updating after liking a post
+
+
+=== Performance
+
+* The home view does now only take 2 instead of 50 database operations
+* The newest view does now only take 2 instead of 51 database operations
+* The newest view does not only take 2 instead of 52 database operations
+* The User (in the backend) does now only take 1 instead of 2 database operations to load

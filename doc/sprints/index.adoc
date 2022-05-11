@@ -14,3 +14,7 @@ link:sprint-2.1.html[changelog]
 == Sprint 3.1
 
 link:sprint-3.1.html[changelog]
+
+== Spring 3.2
+
+link:sprint-3.2.html[changelog]
