@@ -1,0 +1,190 @@
+= Visuly API / search
+Mctom Spdo
+0.0.1, {docdate}: MEDT
+:icons: font
+:sectnums:
+:toc: left
+:stylesheet: ../../css/dark.css
+
+== Getting started
+
+The search function of the API allows searching through the following 2 things:
+
+* users
+* posts
+* categories
+
+== General use
+
+[cols="1, 2"]
+|===
+
+| API Path
+| /API/search.php
+
+| Request
+| GET
+
+| requires login
+| true
+
+| needs database
+| true
+
+| needs config
+| true
+
+| output
+| JSON
+
+|===
+
+=== Input
+
+Takes 1 URL encoded parameter:
+
+* search
+
+example url (searches for 'e'):
+
+    https://localhost/API/search?search=e
+
+=== Output
+
+==== Default
+
+The search output is a bit more complicated then just having the option to search.
+The search result will be listed with a relevance factor.
+
+===== User
+
+The Server will respond with the following data for each user:
+
+* uuid
+* username
+* description
+* profilePic
+* relevance
+
+All the values are coming from the database, except for the relevance factor, which is being calculated:
+
+first, the server will count the amounts of search queries in the username or description of the users. +
+For example, if we search for 'e' and the user has 3 e in the username, this value will be 3.
+
+The matchfactor is used if the search query matches the username directly.
+If this is the case, the matfactor will be 1000, else 0
+
+The relevance is calculated in the following way:
+
+[source,text]
+----
+matchfactor + includesUsername * 2 + includesDescription
+----
+
+===== Post
+
+The search for the post works quite similar to the user.
+
+Except the matchfactor here is the uuid of the post.
+
+[source,text]
+----
+matchfactor + includesTitle * 2 + includesDescription
+----
+
+===== Category
+
+The search for the categories is not much different either:
+
+the matchfactors this time is the name of the category
+
+[source,text]
+----
+matchfactor + includesTitle * 2 + includesDescription
+----
+
+===== Example
+
+Example of the output given by a search (in this case we will search for 'e'):
+
+[source,json]
+----
+{
+  "searchTerm": "e", <.>
+  "user": [ <.>
+    {
+      "uuid": "UOaI8idh85JZ4fM-B8Cfy0LLA9Fg4b",
+      "username": "test",
+      "description": "",
+      "profilePic": "user.png",
+      "revelance": "2"
+    },
+    {
+      "uuid": "UXMIs77rrHOQk6r-AEYeREl0idWqJy",
+      "username": "test2",
+      "description": "",
+      "profilePic": "user.png",
+      "revelance": "2"
+    }
+  ],
+  "post" : [ <.>
+    {
+      "postId": "llwN9CRPr8hDDknsncB74DMnBSPwlSXpXKniZRz4ONWOoJGsqJH6EvPG9AVX",
+      "path": "llwN9CRPr8hDDknsncB74DMnBSPwlSXpXKniZRz4ONWOoJGsqJH6EvPG9AVX.jpg",
+      "title": "1 Image",
+      "description": "this is actually just a test of the new image algorythm behind the website :D",
+      "date": "2022-04-14 11:06:49",
+      "postedFromID": "UzoyQ28qr23O2Af-TlXot56i40SJxL",
+      "postedFrom": "mctomspdo",
+      "postedFromImage": "QD3oEE2UZlJW6IIdhUQw.jpg",
+      "relevance": "8",
+      "likes": 1,
+      "comments": 1,
+      "hasLiked": "false"
+    }
+  ],
+  "category" : [ <.>
+    {
+      "name": "test",
+      "description": "this is the test category",
+      "relevance": "5"
+    },
+    {
+      "name": "meme",
+      "description": "",
+      "relevance": "4"
+    }
+  ]
+}
+----
+<.> Term that was searched for
+<.> Array of user from the search
+<.> Array of posts from the search
+<.> Array of categories from the search
+
+The arrays will be sorted by relevance. 
+
+==== Error
+
+===== Invalid Request
+
+If the request does not the parameters, the server will respond with:
+
+[source,json]
+----
+{
+  "error" : "Invalid Request"
+}
+----
+
+===== Others:
+
+[source,json]
+----
+{
+    "error" : <.>
+}
+----
+
+<.> Error message
+

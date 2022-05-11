@@ -14,6 +14,10 @@ The Visuly API is structured in multiple departments:
 * status
 * user
 
+== Index
+
+* link:api/search.html[search]
+
 == User
 
 The user part of the API gives information about one or multiple users in the System.
