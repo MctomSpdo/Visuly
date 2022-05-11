@@ -16,6 +16,10 @@ The Visuly API is structured in multiple departments:
 
 == Index
 
+* feed
+** link:api/feed/home.html[home]
+** link:api/feed/newest.html[newest]
+** link:api/feed/top-posts.html[top posts]
 * link:api/search.html[search]
 
 == User

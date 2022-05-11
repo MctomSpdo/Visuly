@@ -275,6 +275,7 @@ The salt that the password uses.
 
 IMPORTANT: leaving this empty is a great security risk!
 
+[#_resplength]
 === respLength
 
     default value: 50

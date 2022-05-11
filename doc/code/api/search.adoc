@@ -39,24 +39,28 @@ The search function of the API allows searching through the following 2 things:
 
 |===
 
-=== Input
+== Input
 
 Takes 1 URL encoded parameter:
 
-* search
+[cols="1, 2"]
+|===
+| search
+| Value to search for
+|===
 
 example url (searches for 'e'):
 
     https://localhost/API/search?search=e
 
-=== Output
+== Output
 
-==== Default
+=== Default
 
 The search output is a bit more complicated then just having the option to search.
 The search result will be listed with a relevance factor.
 
-===== User
+==== User
 
 The Server will respond with the following data for each user:
 
@@ -81,7 +85,7 @@ The relevance is calculated in the following way:
 matchfactor + includesUsername * 2 + includesDescription
 ----
 
-===== Post
+==== Post
 
 The search for the post works quite similar to the user.
 
@@ -92,7 +96,7 @@ Except the matchfactor here is the uuid of the post.
 matchfactor + includesTitle * 2 + includesDescription
 ----
 
-===== Category
+==== Category
 
 The search for the categories is not much different either:
 
@@ -103,7 +107,7 @@ the matchfactors this time is the name of the category
 matchfactor + includesTitle * 2 + includesDescription
 ----
 
-===== Example
+==== Example
 
 Example of the output given by a search (in this case we will search for 'e'):
 
@@ -162,11 +166,11 @@ Example of the output given by a search (in this case we will search for 'e'):
 <.> Array of posts from the search
 <.> Array of categories from the search
 
-The arrays will be sorted by relevance. 
+The arrays will be sorted by relevance.
 
-==== Error
+=== Error
 
-===== Invalid Request
+==== Invalid Request
 
 If the request does not the parameters, the server will respond with:
 
@@ -177,7 +181,7 @@ If the request does not the parameters, the server will respond with:
 }
 ----
 
-===== Others:
+==== Others:
 
 [source,json]
 ----

@@ -1,0 +1,114 @@
+= Visuly API / feed / newest
+Mctom Spdo
+0.0.1, {docdate}: MEDT
+:icons: font
+:sectnums:
+:toc: left
+:stylesheet: ../../../css/dark.css
+
+NOTE: currently under construction
+
+== Getting started
+
+This will respond with the newest posts on the platform
+
+== General use
+
+[cols="1, 2"]
+|===
+
+| API Path
+| /API/feed/newest.php
+
+| Request
+| GET
+
+| requires login
+| true
+
+| needs database
+| true
+
+| needs config
+| true
+
+| output
+| JSON
+
+|===
+
+== Input
+
+Takes 1 URL encoded parameter:
+
+[cols="1, 2"]
+|===
+| offset
+| (optional) scroll offset for the input
+|===
+
+=== offset
+The offset will offset all the results by a given value. If no offset is specified, it will be 0
+
+=== Example urls:
+
+    https://localhost/API/feed/home.php
+    https://localhost/API/feed/home.php?offset=50
+
+== Output
+
+=== Default
+
+Lists of the newest posts from the database.
+The amount will be either limited by the dataset or with the config (link:../../config.html#_resplength[respLength])
+
+==== Example
+
+[source, json]
+----
+  {
+    "posts" : [<.>
+      {
+      "title": "Test",
+      "description": "",
+      "postId": "zu0dPMs479S17Qw6ZO9pAM33WGpR8YSMJlEGfMXUyChmNj3mWMm7rGVE2uRf",
+      "path": "zu0dPMs479S17Qw6ZO9pAM33WGpR8YSMJlEGfMXUyChmNj3mWMm7rGVE2uRf.jpg",
+      "hasLiked": false,
+      "likes": "1",
+      "postedFrom": "mctomspdo",
+      "postedFromImage": "QD3oEE2UZlJW6IIdhUQw.jpg",
+      "postedFromID": "UzoyQ28qr23O2Af-TlXot56i40SJxL",
+      "comments": "0"
+      }
+    ]
+  }
+----
+<.> Array of posts
+
+=== Default (no posts)
+
+If there are no posts available for the user, the server will respond with the following:
+
+[source, json]
+----
+{
+  "posts" : "no posts yet"
+}
+----
+
+=== Error
+
+If the request fails, it will either redirect to the following pages:
+
+* error
+* login
+
+or respond with the error:
+
+[source,json]
+----
+{
+    "error" : <.>
+}
+----
+<.> Error message
