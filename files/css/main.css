@@ -886,7 +886,6 @@ INPUTS
 }
 
 #settings-userpfp-wrapper img {
-    background-color: rgba(0, 0, 0, 0.2);
     border-radius: 100%;
     width: 100%;
     height: auto;
