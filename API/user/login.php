@@ -22,7 +22,7 @@ $sql = "select UserID, username
 from user
 where (username like '$dbusername'
     or email like '$dbusername')
-  and password like md5('$dbpassword')";
+  and password like md5('$dbpassword') and deleted = 0";
 
 $response = new stdClass();
 

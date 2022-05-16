@@ -12,7 +12,8 @@
 function checkTokenWRedirect(String $token, $config, mysqli $db)
 {
     $dbToken = $db->real_escape_string($config->token->salt . $token);
-    $sql = "select * from TOKEN where token like md5('$dbToken') and validUntil > current_date();";
+    $sql = "select UserID from token t inner join user u using (UserID)
+                where token like md5(concat('$dbToken')) and validUntil > current_date() and u.deleted = 0";
 
     //if database statement fails, redirect to the error page:
     if (!$res = $db->query($sql)) {
@@ -31,7 +32,7 @@ function checkTokenWRedirect(String $token, $config, mysqli $db)
     $result = $res->fetch_all()[0];
 
     $res->close();
-    return $result[2];
+    return $result[0];
 }
 
 /**
@@ -46,7 +47,7 @@ function checkTokenWRedirect(String $token, $config, mysqli $db)
 function checkToken(String $token, $config, mysqli $db)
 {
     $dbToken = $db->real_escape_string($config->token->salt . $token);
-    $sql = "select * from TOKEN where token like md5('$dbToken') and validUntil > current_date();";
+    $sql = "select UserId from TOKEN inner join user u using(UserID) where token like md5('$dbToken') and validUntil > current_date() and u.deleted = 0";
 
     //if database statement fails, redirect to the error page:
     if (!$res = $db->query($sql)) {
