@@ -29,7 +29,7 @@ $token = $_COOKIE[$config->token->name];
 //check token in db:
 $userId = checkTokenWRedirect($token, $config, $db);
 
-$pstmt = $db->prepare("update user set deleted = 1 where UserID like ?");
+$pstmt = $db->prepare("update user set deleted = 1 where UserID = ?");
 
 if($pstmt == false) {
     $db->close();
@@ -41,10 +41,24 @@ if(!($pstmt->bind_param("i", $userId) && $pstmt->execute())) {
     exit(getError("Internal Server Error (E002)"));
 }
 
+//delete all posts related to the user:
+$postpstmt = $db->prepare("update post set isDeleted = 1 where UserID = ?");
+
+if($postpstmt == false) {
+    $db->close();
+    exit(getError("Internal Server Error (E002)"));
+}
+
+if(!($postpstmt->bind_param("i", $userId) && $postpstmt->execute())) {
+    $db->close();
+    exit(getError("Internal Server Error (E002)"));
+}
+
 $resp = new stdClass();
 $resp->success = true;
 echo json_encode($resp);
 
+$postpstmt->close();
 $pstmt->close();
 $db->close();
 
