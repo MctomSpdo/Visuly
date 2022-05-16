@@ -69,9 +69,9 @@ $userSearchPstmt = $db->prepare("select uuid, username, description, profilePic,
        (select round((length(description) - length(replace(lower(description), lower(?), ''))) / length(?))) +
        (if(lower(?) = username, 1000, 0)) as revelance
 from user
-where lower(username) like lower(concat('%', ?, '%'))
+where (lower(username) like lower(concat('%', ?, '%'))
    or lower(description) like lower(concat('%', ?, '%'))
-   or uuid = ?
+   or uuid = ?)
 and deleted = 0
 order by revelance desc
 limit ?");
