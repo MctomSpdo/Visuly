@@ -105,10 +105,10 @@ $postSearchPstmt = $db->prepare("select p.uuid as postId,
                        'true'), 0, 'false')                                 as hasLiked
 from post p
          inner join user u using (UserID)
-where lower(p.title) like lower(concat('%', ?, '%'))
+where (lower(p.title) like lower(concat('%', ?, '%'))
    or lower(p.description) like lower(concat('%', ?, '%'))
-   or lower(p.uuid) = lower(?)
-    and deleted = 0
+   or lower(p.uuid) = lower(?))
+    and deleted = 0 and p.isDeleted = 0
 order by relevance desc
 limit ?");
 $postSearchPstmt->bind_param("sssssisssi", $needle, $needle, $needle, $needle, $needle, $user->UserID, $needle, $needle, $needle, $config->respLength);
