@@ -23,9 +23,9 @@
         <div id="login-box">
             <h2>Login</h2>
             <form method="post" id="login-form">
-                <input type="text" name="username" id="login-username" placeholder="Username or Email">
+                <input type="text" name="username" id="login-username" placeholder="Username or Email" autocomplete="username">
                 <br>
-                <input type="password" name="password" id="login-password" placeholder="Password">
+                <input type="password" name="password" id="login-password" placeholder="Password" autocomplete="current-password">
                 <p id="sign-in-error"></p>
                 <button type="submit">Log in</button>
                 
