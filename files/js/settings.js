@@ -1,6 +1,7 @@
 let api_newPassword = "./API/user/change-password.php";
-let api_edit = "./API/user/edit.php"
+let api_edit = "./API/user/edit.php";
 let api_userImage = "./API/user/edit-userimg.php"
+let api_delete = "./API/user/delete.php";
 
 //data
 let username = document.getElementById("data-username").innerHTML;
@@ -414,6 +415,54 @@ function pwSendToServer() {
             pwError("Unknown error while sending Request!");
         }
     });
+}
+
+/************************************************ DELETE USER ************************************************/
+
+let hasConfirmed;
+let deleteOutput;
+
+function loadDeleteUser(element) {
+    //change nav selected:
+    Array.from(document.getElementById("setting-nav").children).forEach((item) => {
+        item.id = "";
+    })
+    element.id = "nav-active";
+    //remove red text from Element (optional):
+    element.children[0].children[1].children[0].classList.remove("txt-red");
+
+    //change content:
+    contentArea.innerHTML = `<div id="delete-user">
+        <h1>Delete User</h1>
+        <p id="delete-output"></p>
+        <button onclick="userDeleteAction()">Delete</button>
+        </div>`;
+
+    deleteOutput = document.getElementById("delete-output");
+    outputError = deleteOutput;
+}
+
+function userDeleteAction() {
+    hasConfirmed = confirm("Are you sure you want to DELETE YOUR USER? \n(This cannot be undone)");
+
+    if(hasConfirmed) {
+        console.log("DELETE USER");
+        fetch(api_delete, {
+            credentials: 'same-origin',
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            if(data.success == true) {
+                deleteOutput.innerHTML = "User deleted";
+                window.location.href = "./logout.php";
+            } else if (data.error !== undefined) {
+                error(data.error);
+            } else {
+                deleteOutput.innerHTML = "Something went wrong";
+                error("Something went wrong :/");
+            }
+        });
+    }
 }
 
 /************************************************ UTIL ************************************************/

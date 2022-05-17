@@ -72,6 +72,16 @@ include "assets/header.php";
                 </div>
             </div>
         </a>
+        <a onclick="loadDeleteUser(this)">
+            <div>
+                <div class="nav-img">
+                    <img src="files/img/trash.svg" alt="Trash">
+                </div>
+                <div class="nav-txt">
+                    <p class="txt-red">Delete User</p>
+                </div>
+            </div>
+        </a>
     </nav>
     <div id="content">
         <div id="content-hidden">
