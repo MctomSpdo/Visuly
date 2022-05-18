@@ -6,10 +6,36 @@ require_once '../../assets/user.php';
 require_once '../../assets/token.php';
 require_once '../../assets/post.php';
 
-$sql = "select p.uuid, p.title, p.description, p.extention, p.UserID, u.username, u.uuid, u.profilePic, count(pl.UserID) as likes
+/**
+ *
+ * https://stackoverflow.com/questions/38437306/return-json-from-mysql-with-column-name
+ * @param mysqli_result $result
+ * @return array
+ */
+function resToJson(mysqli_result $result): array
+{
+    $jsonData = array();
+    if (mysqli_num_rows($result) > 0) {
+        while ($array = mysqli_fetch_assoc($result)) {
+            $jsonData[] = $array;
+        }
+    }
+    return $jsonData;
+}
+
+$sql = "select p.title as title,
+       p.description as description,
+       p.uuid as postId,
+       concat(p.uuid, '.', p.extention) as path,
+       count(pl.UserID) as likes,
+       u.username as postedFrom,
+       u.profilePic as postedFromImage,
+       u.uuid as postedFromID,
+       (if((select count(*) from postliked pl2 where pl2.UserID = ? and pl2.PostID = p.PostID) = 1, 'true', 'false')) as hasLiked,
+       (select count(*) from comment c where c.PostID = p.PostID) as comments
 from post p
-    inner join postliked pl on p.PostID = pl.PostID
-    inner join user u on p.UserID = u.UserID
+         inner join postliked pl on p.PostID = pl.PostID
+         inner join user u on p.UserID = u.UserID
 where p.isDeleted = 0 and u.deleted = 0
 group by p.uuid, p.title, p.description, p.extention, p.UserID, u.username, u.uuid, u.profilePic
 order by likes desc
@@ -57,7 +83,7 @@ if($pstmt === false) {
     exit(json_encode($resp));
 }
 
-$pstmt->bind_param("ii", $limit, $offset);
+$pstmt->bind_param("iii", $userId, $limit, $offset);
 
 if(!$pstmt->execute()) {
     $resp = new stdClass();
@@ -67,28 +93,7 @@ if(!$pstmt->execute()) {
 }
 
 $res = $pstmt->get_result();
-$result = $res->fetch_all();
-
-$resp = array();
-
-foreach ($result as $item) {
-    $respItem = new stdClass();
-    $respItem->postId = $item[0];
-    $respItem->title = $item[1];
-    $respItem->description = $item[2];
-    $respItem->path = $item[0] . "." . $item[3];
-    $respItem->likes = $item[8];
-    $respItem->postedFrom = $item[5];
-    $respItem->postedFromID = $item[6];
-    $respItem->postedFromImage = $item[7];
-    //TODO: fix this
-    $respItem->comments = 0;
-    $respItem->hasLiked = false;
-
-    $resp[] = $respItem;
-}
-
-echo json_encode($resp);
+echo json_encode(resToJson($res));
 
 $res->close();
 $pstmt->close();
