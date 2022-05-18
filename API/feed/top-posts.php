@@ -17,13 +17,10 @@ limit ? offset ?";
 
 //check request:
 
-if(!isset($_POST['offset'])) {
-    $resp = new stdClass();
-    $resp->error = "Invalid Request";
-    exit(json_encode($resp));
+$offset = 0;
+if(isset($_POST['offset'])) {
+    $offset = $_POST['offset'];
 }
-
-$offset = $_POST['offset'];
 $limit = $config->respLength;
 
 if(!is_numeric($offset)) {
@@ -76,16 +73,17 @@ $resp = array();
 
 foreach ($result as $item) {
     $respItem = new stdClass();
-    $respItem->post = new stdClass();
-    $respItem->user = new stdClass();
-    $respItem->post->id = $item[0];
-    $respItem->post->title = $item[1];
-    $respItem->post->desc = $item[2];
-    $respItem->post->url = $item[0] . "." . $item[3];
-    $respItem->post->likes = $item[8];
-    $respItem->user->name = $item[5];
-    $respItem->user->id = $item[6];
-    $respItem->user->img = $item[7];
+    $respItem->postId = $item[0];
+    $respItem->title = $item[1];
+    $respItem->description = $item[2];
+    $respItem->path = $item[0] . "." . $item[3];
+    $respItem->likes = $item[8];
+    $respItem->postedFrom = $item[5];
+    $respItem->postedFromID = $item[6];
+    $respItem->postedFromImage = $item[7];
+    //TODO: fix this
+    $respItem->comments = 0;
+    $respItem->hasLiked = false;
 
     $resp[] = $respItem;
 }

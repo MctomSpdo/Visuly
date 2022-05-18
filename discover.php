@@ -59,9 +59,9 @@ $user->DBLoadFromUserID($userId, $db);
         ?>
         <div id="suggested-root">
             <div id="discover-tab-nav">
-                <div id="suggested">suggested</div>
-                <div id="newest">newest</div>
-                <div id="top-posts">top posts</div>
+                <div id="discover-selected" onclick="loadSuggested()"><a>suggested</a></div>
+                <div onclick="loadDiscoverNewest()"><a>newest</a></div>
+                <div onclick="loadDiscoverTop(this)"><a>top posts</a></div>
             </div>
 
             <div id="content" class="post-3-wrapper">

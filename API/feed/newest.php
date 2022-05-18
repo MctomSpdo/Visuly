@@ -69,6 +69,6 @@ switch ($postArr) {
         break;
 }
 
-echo json_encode($resp);
+echo json_encode($resp->posts);
 $db->close();
 ?>

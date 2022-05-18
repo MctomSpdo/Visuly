@@ -306,6 +306,7 @@ nav > a > div {
     margin: 2vh 0;
     border-radius: 0.5vh;
     background-color: var(--secondBg);
+    box-sizing: border-box;
 }
 
 .post:hover {
@@ -783,6 +784,49 @@ INPUTS
     color: #ff0000;
 }
 
+/************************************************ DISCOVER ************************************************/
+
+#discover-tab-nav {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    height: 8vh;
+    margin-top: 2vh;
+    width: 104%
+}
+
+#discover-tab-nav > div {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+#discover-tab-nav > div:nth-child(1) {
+    border-bottom-left-radius: 0.5vh;
+    border-top-left-radius: 0.5vh;
+}
+
+#discover-tab-nav > div:nth-child(3) {
+    border-bottom-right-radius: 0.5vh;
+    border-top-right-radius: 0.5vh;
+}
+
+#discover-tab-nav > div:hover {
+    cursor: pointer;
+    background-color: var(--colorD);
+    color: var(--defaultBg);
+}
+
+#discover-selected {
+    background-color: var(--colorA)
+}
+
+#discover-tab-nav > div a {
+    margin: 0;
+    padding: 0;
+}
+
 /************************************************ SETTINGS ************************************************/
 
 
@@ -1027,6 +1071,13 @@ INPUTS
         grid-template-columns: 33% 33% 33%;
         grid-gap: 1.2vw;
     }
+
+    /* Discover */
+    #discover-tab-nav {
+        margin-left: 1vw;
+        margin-right: 1vw;
+        width: 90%;
+    }
 }
 
 @media (max-width: 600px) {
@@ -1152,6 +1203,14 @@ INPUTS
     .list-userelement {
         width: 100%;
     }
+
+    /* discover */
+
+    #discover-tab-nav {
+        margin-left: 1vw;
+        margin-right: 1vw;
+        width: 95%;
+    }
 }
 
 /************************************************ DARK MODE ************************************************/
@@ -1204,5 +1263,13 @@ INPUTS
 
     #comment-button {
         background-color: var(--colorB);
+    }
+
+    #discover-selected {
+        background-color: var(--secondBg)
+    }
+
+    #discover-tab-nav > div:hover {
+        color: var(--color);
     }
 }
