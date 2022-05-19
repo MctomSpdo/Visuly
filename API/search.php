@@ -1,54 +1,27 @@
 <?php
-
-function getError(string $errortext): string
-{
-    $err = new stdClass();
-    $err->error = $errortext;
-    return json_encode($err);
-}
-
-/**
- *
- * https://stackoverflow.com/questions/38437306/return-json-from-mysql-with-column-name
- * @param mysqli_result $result
- * @return array
- */
-function resToJson(mysqli_result $result): array
-{
-    $jsonData = array();
-    if (mysqli_num_rows($result) > 0) {
-        while ($array = mysqli_fetch_assoc($result)) {
-            $jsonData[] = $array;
-        }
-    }
-    return $jsonData;
-}
-
-//check values:
-if (!isset($_GET['search'])) {
-    $resp = new stdClass();
-    $resp->error = "Invalid Request";
-    exit(json_encode($resp));
-}
-
 $configPath = '../files/config.json';
 $config = json_decode(file_get_contents($configPath));
 
 require_once '../assets/token.php';
 require_once '../assets/user.php';
 require_once '../assets/post.php';
+require_once '../assets/util.php';
+
+//check values:
+if (!isset($_GET['search'])) {
+    exit(Util::invalidRequestError());
+}
 
 //check user token:
 if (!isset($_COOKIE[$config->token->name])) {
-    header("Location: ./login.php");
-    exit();
+    exit(Util::getLoginError());
 }
 
 //database connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if ($db->connect_error) {
-    header("Location: ./error.php");
+    exit(Util::getDBErrorJSON());
 }
 
 $token = $_COOKIE[$config->token->name];
@@ -80,9 +53,9 @@ $userSearchPstmt->bind_param("ssssssssi", $needle, $needle, $needle, $needle, $n
 if (!$userSearchPstmt->execute()) {
     $userSearchPstmt->close();
     $db->close();
-    exit(getError("Internal Server Error (E002)"));
+    exit(Util::getDBRequestError());
 }
-$response->user = resToJson($userSearchPstmt->get_result());
+$response->user = Util::resToJson($userSearchPstmt->get_result());
 $userSearchPstmt->close();
 
 //search posts:
@@ -116,9 +89,9 @@ $postSearchPstmt->bind_param("sssssisssi", $needle, $needle, $needle, $needle, $
 if (!$postSearchPstmt->execute()) {
     $postSearchPstmt->close();
     $db->close();
-    exit(getError("Internal Server Error (E002)"));
+    exit(Util::getDBRequestError());
 }
-$response->post = resToJson($postSearchPstmt->get_result());
+$response->post = Util::resToJson($postSearchPstmt->get_result());
 $postSearchPstmt->close();
 
 //category search:
@@ -139,9 +112,9 @@ $categorySearchPstmt->bind_param("sssssssi", $needle, $needle, $needle, $needle,
 if (!$categorySearchPstmt->execute()) {
     $categorySearchPstmt->close();
     $db->close();
-    exit(getError("Internal Server Error (E002)"));
+    exit(Util::getDBRequestError());
 }
-$response->category = resToJson($categorySearchPstmt->get_result());
+$response->category = Util::resToJson($categorySearchPstmt->get_result());
 $categorySearchPstmt->close();
 
 //send response:

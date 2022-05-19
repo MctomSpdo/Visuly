@@ -5,23 +5,7 @@ $config = json_decode(file_get_contents($configPath));
 require_once '../../assets/user.php';
 require_once '../../assets/token.php';
 require_once '../../assets/post.php';
-
-/**
- *
- * https://stackoverflow.com/questions/38437306/return-json-from-mysql-with-column-name
- * @param mysqli_result $result
- * @return array
- */
-function resToJson(mysqli_result $result): array
-{
-    $jsonData = array();
-    if (mysqli_num_rows($result) > 0) {
-        while ($array = mysqli_fetch_assoc($result)) {
-            $jsonData[] = $array;
-        }
-    }
-    return $jsonData;
-}
+require_once '../../assets/util.php';
 
 $sql = "select p.title as title,
        p.description as description,
@@ -93,7 +77,7 @@ if(!$pstmt->execute()) {
 }
 
 $res = $pstmt->get_result();
-echo json_encode(resToJson($res));
+echo json_encode(Util::resToJson($res));
 
 $res->close();
 $pstmt->close();

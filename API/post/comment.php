@@ -6,28 +6,23 @@ $config = json_decode(file_get_contents($configPath));
 require_once '../../assets/user.php';
 require_once '../../assets/token.php';
 require_once '../../assets/post.php';
+require_once '../../assets/util.php';
 
 //check request:
 if(!(isset($_POST['post']) && isset($_POST['comment']))) {
-    $resp = new stdClass();
-    $resp->error = "Invalid Request";
-    exit(json_encode($resp));
+    exit(Util::invalidRequestError());
 }
 
 $postId = $_POST['post'];
 $comment = $_POST['comment'];
 
 if(strlen($comment) == 0 || strlen($comment) > 300) {
-    $resp = new stdClass();
-    $resp->error = "Comment text invalid";
-    exit(json_encode($resp));
+    exit(Util::getErrorJSON("Comment text invalid"));
 }
 
 //check login:
 if (!isset($_COOKIE[$config->token->name])) {
-    $resp = new stdClass();
-    $resp->error = "No Permission";
-    exit(json_encode($resp));
+    exit(Util::getError("No Permission"));
 }
 $token = $_COOKIE[$config->token->name];
 
@@ -35,9 +30,7 @@ $token = $_COOKIE[$config->token->name];
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if($db->connect_error) {
-    $resp = new stdClass();
-    $resp->error = "Internal Server Error (004)";
-    exit(json_encode($resp));
+    exit(Util::getDBErrorJSON());
 }
 
 //check token in DB:
@@ -50,18 +43,14 @@ $post = new Post();
 $post->ImgPath = $postId;
 
 if(!$post->DBLoadFromPath($db)) {
-    $resp = new stdClass();
-    $resp->error = "Post does not exist";
     $db->close();
-    exit(json_encode($resp));
+    exit(Util::getErrorJSON("Post does not exist"));
 }
 
 //check if user can post comment:
 if(!$user->canComment) {
-    $resp = new stdClass();
-    $resp->error = "No permission to comment";
     $db->close();
-    exit(json_encode($resp));
+    exit(Util::getErrorJSON("No permission to comment"));
 }
 
 //save comment to db:
@@ -70,7 +59,7 @@ $resp = new stdClass();
 if($post->addComment($comment, $user->UserID, $db)) {
     $resp->comment = true;
 } else {
-    $resp->error = "Internal Server Error (002)";
+    $resp->error = Util::getDBErrorJSON();
 }
 
 echo json_encode($resp);

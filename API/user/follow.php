@@ -1,37 +1,28 @@
 <?php
 
-function getError(string $message): string
-{
-    $error = new stdClass();
-    $error->error = $message;
-    return json_encode($error);
-}
-
 $configPath = '../../files/config.json';
 $config = json_decode(file_get_contents($configPath));
 
 require_once '../../assets/user.php';
 require_once '../../assets/token.php';
 require_once '../../assets/post.php';
+require_once '../../assets/util.php';
 
 //check requests:
 if (!(isset($_GET['user']) && isset($_GET['follow']))) {
-    exit(getError("Invalid Request"));
+    exit(Util::invalidRequestError());
 }
 
 //check login:
 if (!isset($_COOKIE[$config->token->name])) {
-    header("Location: ./login.php");
-    exit();
+    exit(Util::getLoginError());
 }
 
 //db connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if ($db->connect_error) {
-    $resp = new stdClass();
-    $resp->error = "Internal Server Error (E004)";
-    exit(json_encode($resp));
+    exit(Util::getDBErrorJSON());
 }
 
 $token = $_COOKIE[$config->token->name];
@@ -44,51 +35,51 @@ $followUser = $_GET['user'];
 $follow = $_GET['follow'];
 
 //check if the user tries to follow itsself:
-if($followUser == $user->UUID) {
+if ($followUser == $user->UUID) {
     $db->close();
-    exit(getError("You can't follow yourself"));
+    exit(Util::getErrorJSON("You can't follow yourself"));
 }
 
 //check if user exists (and is not deleted), if not send error
 $pstmt = $db->prepare("select count(*) from user where uuid = ? and deleted = 0");
 if (!$pstmt->bind_param("s", $followUser) || !$pstmt->execute()) {
     $db->close();
-    exit(getError("Internal Server Error (E002)"));
+    exit(Util::getDBRequestError());
 }
 $userExistsRes = $pstmt->get_result();
 
-if(!$userExistsRes) {
+if (!$userExistsRes) {
     $pstmt->close();
     $db->close();
-    exit(getError("Internal Server Error (E002)"));
+    exit(Util::getDBRequestError());
 }
 
-if($userExistsRes->num_rows == 0) {
+if ($userExistsRes->num_rows == 0) {
     $pstmt->close();
     $db->close();
-    exit(getError("User does not exist!"));
+    exit(Util::getErrorJSON("User does not exist!"));
 }
 $userExistsRes->close();
 $pstmt->close();
 
 //if user wants to follow:
-if($follow == "true") {
+if ($follow == "true") {
     $pstmt = $db->prepare("insert into follow(UserID, Follows) value (?, (select UserID from user where uuid = ?))");
-    if(!$pstmt->bind_param("is", $user->UserID, $followUser) || !$pstmt->execute()) {
+    if (!$pstmt->bind_param("is", $user->UserID, $followUser) || !$pstmt->execute()) {
         $pstmt->close();
         $db->close();
-        exit(getError("Internal Server Error (E002)"));
+        exit(Util::getDBRequestError());
     }
 } else if ($follow == "false") {//if user wants to unfollow
     $pstmt = $db->prepare("delete from follow where UserID = ? and Follows = (select UserID from user where uuid = ?)");
-    if(!$pstmt->bind_param("is", $user->UserID, $followUser) || !$pstmt->execute()) {
+    if (!$pstmt->bind_param("is", $user->UserID, $followUser) || !$pstmt->execute()) {
         $pstmt->close();
         $db->close();
-        exit(getError("Internal Server Error (E002)"));
+        exit(Util::getDBRequestError());
     }
 } else {//invalid
     $db->close();
-    exit(getError("Invalid Request"));
+    exit(Util::invalidRequestError());
 }
 
 $resp = new stdClass();

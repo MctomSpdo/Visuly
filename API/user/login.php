@@ -2,6 +2,7 @@
 $configPath = '../../files/config.json';
 
 require_once('../../assets/token.php');
+require_once('../../assets/util.php.php');
 
 //read config file:
 $config = json_decode(file_get_contents($configPath));
@@ -28,9 +29,7 @@ $response = new stdClass();
 
 if($res = $db->query($sql)) {
     if($res->num_rows > 1) {
-
-        $response->error = "Internal Server error(E006)";
-        exit(json_encode($response));
+        exit(Util::getDBRequestError());
     } else if ($res->num_rows == 0) {
         $response = new stdClass();
         $response->userExists = false;

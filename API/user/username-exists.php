@@ -1,7 +1,8 @@
 <?php
 $configPath = '../../files/config.json';
 
-require_once('../../assets/user.php');
+require_once '../../assets/user.php';
+require_once '../../assets/util.php';
 
 $config = json_decode(file_get_contents($configPath));
 
@@ -16,9 +17,7 @@ $resp->username = $username;
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if($db->connect_error) {
-    $resp->error = "Internal Server error(E004)";
-    echo json_encode($resp);
-    exit;
+    exit(Util::getDBErrorJSON());
 }
 
 $user = new User();

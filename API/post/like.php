@@ -6,27 +6,23 @@ $config = json_decode(file_get_contents($configPath));
 require_once '../../assets/user.php';
 require_once '../../assets/token.php';
 require_once '../../assets/post.php';
+require_once '../../assets/util.php';
 
 //check request:
 if(!(isset($_POST['post']) && isset($_POST['like']))) {
-    $resp = new stdClass();
-    $resp->error = "Invalid Request";
-    exit(json_encode($resp));
+    exit(Util::getErrorJSON("Invalid Request"));
 }
 
 //check login:
 if (!isset($_COOKIE[$config->token->name])) {
-    header("Location: ./login.php");
-    exit();
+    exit(Util::getLoginError());
 }
 
 //db connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if($db->connect_error) {
-    $resp = new stdClass();
-    $resp->error = "Internal Server Error (E004)";
-    exit(json_encode($resp));
+    exit(Util::getDBErrorJSON());
 }
 
 $token = $_COOKIE[$config->token->name];
@@ -39,26 +35,20 @@ $user->DBLoadFromUserID($userId, $db);
 $post = new Post();
 $post->ImgPath = $_POST['post'];
 if(!$post->DBLoadFromPath($db)) {//when post does not exist
-    $resp = new stdClass();
-    $resp->error = "Post does not exist";
     $db->close();
-    exit(json_encode($resp));
+    exit(Util::getErrorJSON("Post does not exist"));
 }
 
 //set like:
 if($_POST['like'] == 'like') {
     if(!$post->DBSaveLike($post->PostId, $user->UserID, $db)) {
-        $resp = new stdClass();
-        $resp->error = "Internal Server Error (E002)";
         $db->close();
-        exit(json_encode($resp));
+        exit(Util::invalidRequestError());
     }
 } else if($_POST['like'] == 'unlike') {
     if(!$post->DBDeleteLike($post->PostId, $user->UserID, $db)) {
-        $resp = new stdClass();
-        $resp->error = "Internal Server Error (E002)";
         $db->close();
-        exit(json_encode($resp));
+        exit(Util::invalidRequestError());
     }
 } else {
     $resp = new stdClass();

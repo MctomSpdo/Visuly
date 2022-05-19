@@ -5,17 +5,7 @@ $config = json_decode(file_get_contents($configPath));
 require_once '../../assets/token.php';
 require_once '../../assets/user.php';
 require_once '../../assets/post.php';
-
-function generateString($length = 60): string
-{
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    return $randomString;
-}
+require_once '../../assets/util.php';
 
 /**
  * @param $new_width int new width for image
@@ -73,38 +63,29 @@ function save_image($new_image, $new_filename, $new_type='jpeg', $quality=80) {
 
 //validate all inputs:
 if (!(isset($_POST['title']) && isset($_POST['desc']) && isset($_FILES['image']))) {
-    $resp = new stdClass();
-    $resp->error = "Invalid Request";
-    exit(json_encode($resp));
+    exit(Util::invalidRequestError());
 }
 
 //file size upload Limit:
 if ($_FILES['image']['size'] > $config->post->maxSize) {
-    $resp = new stdClass();
-    $resp->error = "File is too big";
-    exit(json_encode($resp));
+    exit(Util::getErrorJSON("File is too big"));
 }
 
 //check if file is image:
 $check = getimagesize($_FILES['image']['tmp_name']);
 if ($check == false) {
-    $resp = new stdClass();
-    $resp->error = "File is not an Image";
-    exit(json_encode($resp));
+    exit(Util::getErrorJSON("File is not an Image"));
 }
 
 //check login:
 if (!isset($_COOKIE[$config->token->name])) {
-    header("Location: ./login.php");
-    exit();
+    exit(Util::getLoginError());
 }
 //db connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if ($db->connect_error) {
-    $resp = new stdClass();
-    $resp->error = "Internal Server Error (E004)";
-    exit(json_encode($resp));
+    exit(Util::getDBErrorJSON());
 }
 
 $token = $_COOKIE[$config->token->name];
@@ -122,7 +103,7 @@ $target_dir = "../.." . $config->post->defaultDir . "/";
 $target_file = null;
 
 do {
-    $target_fileName = generateRandomString($config->post->nameLength);
+    $target_fileName = Util::generateRandomString($config->post->nameLength);
     $target_file = $target_dir . $target_fileName . "." . $config->post->imgType;
 } while (file_exists($target_file));
 
@@ -132,16 +113,12 @@ list($width, $height, $type) = getimagesize($imageLocation);
 $old_image = load_image($imageLocation, $type);
 
 if($old_image === null) {
-    $resp = new stdClass();
-    $resp->error = "Invalid File type";
     $db->close();
-    exit(json_encode($resp));
+    exit(Util::getErrorJSON("Invalid File type"));
 }
 if($old_image === false) {
-    $resp = new stdClass();
-    $resp->error = "Image codec not supported or invalid!";
     $db->close();
-    exit(json_encode($resp));
+    exit(Util::getErrorJSON("Image codec not supported or invalid!"));
 }
 
 $newImage = resize_image_to_height($config->post->imgHeight, $old_image, $width, $height);
@@ -152,10 +129,8 @@ save_image($newImage, $target_file, $config->post->imgType, $config->post->imgQu
 //save in system (db):
 $post = new Post();
 if (!$post->createPost($target_fileName, $_POST['title'], $_POST['desc'], $user->UserID, $config->post->imgType, $db)) {
-    $resp = new stdClass();
-    $resp->error = "Internal Server Error (E002)";
     $db->close();
-    exit(json_encode($resp));
+    exit(Util::getDBRequestError());
 }
 
 $post->ImgPath = $target_fileName;
@@ -173,21 +148,17 @@ foreach ($categories as $cat) {
     $sql->bind_param("s", $cat);
 
     if (!$sql->execute()) {
-        $resp = new stdClass();
-        $resp->error = "Internal Server Error (E002)";
         $db->close();
         $sql->close();
-        exit(json_encode($resp));
+        exit(Util::getDBRequestError());
     }
     $sql->close();
 
     $dbCat = $db->real_escape_string($cat);
     $sql = "select CategoryID from category where name like '$dbCat';";
     if (!$res = $db->query($sql)) {
-        $resp = new stdClass();
-        $resp->error = "Internal Server Error (E002)";
         $db->close();
-        exit(json_encode($resp));
+        exit(Util::getDBRequestError());
     }
     $result = $res->fetch_all();
     $res->close();
@@ -198,11 +169,9 @@ foreach ($categories as $cat) {
     $sql->bind_param("ss", $post->PostId, $catId);
 
     if (!$sql->execute()) {
-        $resp = new stdClass();
-        $resp->error = "Internal Server Error (E002)";
         $db->close();
         $sql->close();
-        exit(json_encode($resp));
+        exit(Util::getDBRequestError());
     }
     $sql->close();
 }

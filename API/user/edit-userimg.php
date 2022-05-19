@@ -6,17 +6,7 @@ $config = json_decode(file_get_contents($configPath));
 require_once '../../assets/token.php';
 require_once '../../assets/user.php';
 require_once '../../assets/post.php';
-
-function generateString($length = 60): string
-{
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    return $randomString;
-}
+require_once '../../assets/util.php';
 
 /**
  * @param $new_width int new width for image
@@ -73,39 +63,29 @@ function save_image($new_image, $new_filename, $new_type='jpeg', $quality=80) {
 }
 
 if (!isset($_FILES['profilepic'])) {
-    $resp = new stdClass();
-    $resp->error = "Invalid Request";
-    exit(json_encode($resp));
+    exit(Util::invalidRequestError());
 }
 
 //file size upload limit
 if($_FILES['profilepic']['size'] > $config->user->maxImgSize) {
-    $resp = new stdClass();
-    $resp->error = "File is too big";
-    exit(json_encode($resp));
+    exit(Util::getErrorJSON("File is too big"));
 }
 
 //check if file is imag:
-$check = getimagesize($_FILES['profilepic']['tmp_name']);
-if($check == false) {
-    $resp = new stdClass();
-    $resp->error = "File is not an Image";
-    exit(json_encode($resp));
+if(getimagesize($_FILES['profilepic']['tmp_name']) == false) {
+    exit(Util::getErrorJSON("File is not an Image"));
 }
 
 //check login:
 if (!isset($_COOKIE[$config->token->name])) {
-    header("Location: ./login.php");
-    exit();
+    exit(Util::getLoginError());
 }
 
 //db connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if ($db->connect_error) {
-    $resp = new stdClass();
-    $resp->error = "Internal Server Error (E004)";
-    exit(json_encode($resp));
+    exit(Util::getDBErrorJSON());
 }
 
 $token = $_COOKIE[$config->token->name];
@@ -121,7 +101,7 @@ $target_dir = "../.." . $config->user->imageFolder . "/";
 $target_file = null;
 
 do {
-    $target_fileName = generateRandomString($config->user->imgNameLength);
+    $target_fileName = Util::generateRandomString($config->user->imgNameLength);
     $target_file = $target_dir . $target_fileName . "." . $config->user->imgType;
 } while (file_exists($target_fileName));
 
@@ -161,12 +141,9 @@ $dbFileName = $target_fileName . "." . $config->user->imgType;
 $pstmt = $db->prepare("update user set profilePic = ? where UserID = ?");
 $pstmt->bind_param("si", $dbFileName, $user->UserID);
 if(!$pstmt->execute()) {
-    $resp = new stdClass();
-    $resp->error = "Internal Server error (E002)";
-
     $pstmt->close();
     $db->close();
-    exit(json_encode($resp));
+    exit(Util::getDBRequestError());
 }
 
 $resp = new stdClass();

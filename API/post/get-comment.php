@@ -5,27 +5,22 @@ $config = json_decode(file_get_contents($configPath));
 require_once '../../assets/user.php';
 require_once '../../assets/token.php';
 require_once '../../assets/post.php';
+require_once '../../assets/util.php';
 
 //check request
 if(!(isset($_POST['post']) && isset($_POST['offset']))) {
-    $resp = new stdClass();
-    $resp->error = "Invalid Request";
-    exit(json_encode($resp));
+    exit(Util::invalidRequestError());
 }
 
 $postId = $_POST['post'];
 $offset = $_POST['offset'];
 
 if(strlen($postId) == 0)  {
-    $resp = new stdClass();
-    $resp->error = "invalid Request";
-    exit(json_encode($resp));
+    exit(Util::invalidRequestError());
 }
 
 if (!isset($_COOKIE[$config->token->name])) {
-    $resp = new stdClass();
-    $resp->error = "No Permission";
-    exit(json_encode($resp));
+    exit(Util::getLoginError());
 }
 $token = $_COOKIE[$config->token->name];
 
@@ -33,9 +28,7 @@ $token = $_COOKIE[$config->token->name];
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if($db->connect_error) {
-    $resp = new stdClass();
-    $resp->error = "Internal Server Error (004)";
-    exit(json_encode($resp));
+    exit(Util::getDBErrorJSON());
 }
 
 $userId = checkTokenWRedirect($token, $config, $db);
@@ -47,10 +40,7 @@ $post = new Post();
 $post->ImgPath = $postId;
 
 if(!$post->DBLoadFromPath($db)) {
-    $resp = new stdClass();
-    $resp->error = "Post does not exist";
-    $db->close();
-    exit(json_encode($resp));
+    exit(Util::getDBErrorJSON("Post does not exist"));
 }
 
 $res = $post->getComments($offset, $db);

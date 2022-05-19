@@ -1,59 +1,39 @@
 <?php
-function getDBErrorMessage() {
-    $resp = new StdClass();
-    $resp->error = "Internal Server error (E004)";
-    return json_encode($resp);
-}
 
-function hasLowerCase($str) {
-    return strtoupper($str) != $str;
-}
-
-function hasUpperCase($str) {
-    return strtolower($str) != $str;
-}
+require_once '../../assets/token.php';
+require_once '../../assets/user.php';
+require_once '../../assets/post.php';
+require_once '../../assets/util.php';
 
 //check request:
 if(!isset($_POST['currentPassword']) && !isset($_POST['newPassword'])) {
-    $resp = new stdClass();
-    $resp->error = "Invalid Request";
-    exit(json_encode($resp));
+    exit(Util::invalidRequestError());
 }
 
 //check passwords:
 if($_POST['currentPassword'] == $_POST['newPassword']) {
-    $resp = new stdClass();
-    $resp->error = "New Password can't be the same as the old one";
-    exit(json_encode($resp));
+    exit(Util::getErrorJSON("New Password can't be the same as the old one"));
 }
 
 $password = $_POST['newPassword'];
 
-if(strlen($password) < 8 && hasLowerCase($password) && hasUpperCase($password) && preg_match('~[0-9]~', $password) == 0) {
-    $resp = new stdClass();
-    $resp->error = "password invalid";
-    exit(json_encode($resp));
+if(strlen($password) < 8 && Util::hasLowerCase($password) && Util::hasUpperCase($password) && preg_match('~[0-9]~', $password) == 0) {
+    exit(Util::getErrorJSON("password invalid"));
 }
 
 $configPath = '../../files/config.json';
 $config = json_decode(file_get_contents($configPath));
 
-require_once '../../assets/token.php';
-require_once '../../assets/user.php';
-require_once '../../assets/post.php';
-
 //check user token:
 if(!isset($_COOKIE[$config->token->name])) {
-    header("Location: ./login.php");
-    exit();
+    exit(Util::getLoginError());
 }
 
 //database connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if($db->connect_error) {
-    header("Location: ./error.php");
-    exit();
+    exit(Util::getDBErrorJSON());
 }
 
 $token = $_COOKIE[$config->token->name];
@@ -80,11 +60,9 @@ if(!$pstmtCurrentPw->execute()) {
 $resultCurrentPw = $pstmtCurrentPw->get_result();
 
 if($resultCurrentPw->num_rows == 0) {//if current password is wrong
-    $resp = new stdClass();
-    $resp->error = "Current password invalid!";
     $pstmtCurrentPw->close();
     $db->close();
-    exit(json_encode($resp));
+    exit(Util::getErrorJSON("Current password invalid!"));
 }
 
 $pstmtNewPw = $db->prepare("update user set password = md5(?) where UserID = ?");
@@ -94,7 +72,7 @@ if(!$pstmtNewPw->execute()) {
     $pstmtCurrentPw->close();
     $pstmtNewPw->close();
     $db->close();
-    exit(getDBErrorMessage());
+    exit(Util::invalidRequestError());
 }
 
 $resp = new stdClass();

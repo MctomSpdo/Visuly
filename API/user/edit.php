@@ -1,18 +1,15 @@
 <?php
 $configPath = '../../files/config.json';
 $config = json_decode(file_get_contents($configPath));
-$emailReg = '/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
-
 
 require_once '../../assets/token.php';
 require_once '../../assets/user.php';
 require_once '../../assets/post.php';
+require_once '../../assets/util.php';
 
 //check request:
 if(!(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['phonenumber']) && isset($_POST['description']))) {
-    $resp = new stdClass();
-    $resp->error = "Invalid Request";
-    exit(json_encode($resp));
+    exit(Util::invalidRequestError());
 }
 
 //check values:
@@ -22,41 +19,31 @@ $email = $_POST['email'];
 $desc = $_POST['description'];
 
 if(strlen($desc) > 300) {
-    $resp = new stdClass();
-    $resp->error = "Invalid Description";
-    exit(json_encode($resp));
+    exit(Util::getErrorJSON("Invalid Description"));
 }
 
 if(strlen($username) < 4 || strlen($username) > 30) {
-    $resp = new stdClass();
-    $resp->error = "Invalid Username";
-    exit(json_encode($resp));
+    exit(Util::getErrorJSON("Invalid Username"));
 }
 
-if(preg_match($emailReg, $email) == 0) {
-    $resp = new stdClass();
-    $resp->error = "Invalid email";
-    exit(json_encode($resp));
+if(!Util::isEmail($email)) {
+    exit(Util::getErrorJSON("Invalid email"));
 }
 
-if(strlen($phoneNumber) > 15) {
-    $resp = new stdClass();
-    $resp->error = "Invalid phone number";
-    exit(json_encode($resp));
+if(strlen($phoneNumber) > 15 && Util::hasNumeric($phoneNumber)) {
+    exit(Util::getErrorJSON("Invalid phone number"));
 }
 
 //check user token:
 if(!isset($_COOKIE[$config->token->name])) {
-    header("Location: ./login.php");
-    exit();
+    exit(Util::getLoginError());
 }
 
 //database connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if($db->connect_error) {
-    header("Location: ./error.php");
-    exit();
+    exit(Util::getDBErrorJSON());
 }
 
 $token = $_COOKIE[$config->token->name];
@@ -69,16 +56,12 @@ $user->DBLoadFromUserID($userId, $db);
 $pstmt = $db->prepare("update user set username = ?, phoneNumber = ?, email = ?, description = ? where UserID = ?");
 
 if($pstmt == false) {
-    $resp = new stdClass();
-    $resp->error = "Internal Server Error(E002)";
-    exit(json_encode($resp));
+    exit(Util::getDBRequestError());
 }
 
 $pstmt->bind_param("sissi", $username, $phoneNumber, $email,$desc, $user->UserID);
 if(!$pstmt->execute()) {
-    $resp = new stdClass();
-    $resp->error = "Internal Server Error(E002)";
-    exit(json_encode($resp));
+    exit(Util::getDBRequestError());
 }
 
 $resp = new stdClass();

@@ -5,11 +5,11 @@ $config = json_decode(file_get_contents($configPath));
 require_once '../../assets/token.php';
 require_once '../../assets/user.php';
 require_once '../../assets/post.php';
+require_once '../../assets/util.php';
 
 //check user token:
 if(!isset($_COOKIE[$config->token->name])) {
-    header("Location: ./login.php");
-    exit();
+    exit(Util::getLoginError());
 }
 
 //database connection:
@@ -17,7 +17,7 @@ if(!isset($_COOKIE[$config->token->name])) {
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if($db->connect_error) {
-    header("Location: ./error.php");
+    exit(Util::getDBErrorJSON());
 }
 
 $token = $_COOKIE[$config->token->name];
