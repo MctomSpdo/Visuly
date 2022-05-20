@@ -2,7 +2,7 @@
 $configPath = '../../files/config.json';
 
 require_once('../../assets/token.php');
-require_once('../../assets/util.php.php');
+require_once('../../assets/util.php');
 
 //read config file:
 $config = json_decode(file_get_contents($configPath));
