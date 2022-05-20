@@ -98,12 +98,7 @@ If there are no posts available for the user, the server will respond with the f
 
 === Error
 
-If the request fails, it will either redirect to the following pages:
-
-* error
-* login
-
-or respond with the error:
+If the request fails, it will respond with the following error:
 
 [source,json]
 ----
