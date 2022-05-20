@@ -14,6 +14,7 @@
 
     <link rel="stylesheet" href="./files/css/main.css">
     <link rel="stylesheet" href="./files/css/login.css">
+    <link rel="icon" type="image/x-icon" href="./files/img/icon.svg">
 </head>
 <body>
     <div id="login-wrapper">

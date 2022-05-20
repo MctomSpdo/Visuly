@@ -39,6 +39,7 @@ $user->DBLoadFromUserID($userId, $db);
         <title>Discover - Visuly</title>
 
         <link rel="stylesheet" href="./files/css/main.css">
+        <link rel="icon" type="image/x-icon" href="./files/img/icon.svg">
 
         <!-- icon library -->
         <link rel="stylesheet"

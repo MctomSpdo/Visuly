@@ -58,6 +58,7 @@ $postUser->DBLoadFromUserID($post->fromUser, $db);
     <title><?php echo $post->Title ?> - Visuly</title>
 
     <link rel="stylesheet" href="./files/css/main.css">
+    <link rel="icon" type="image/x-icon" href="./files/img/icon.svg">
 
     <!-- icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
