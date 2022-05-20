@@ -79,6 +79,14 @@ header {
     font-size: 3.5vh;
     color: var(--defaultBg);
     text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#header-logo > img {
+    height: 4vh;
+    position: relative;
 }
 
 #header-user-img {
@@ -1095,7 +1103,7 @@ INPUTS
 
     /* HEADER */
     header {
-        grid-template-columns: 30% 50% 20%;
+        grid-template-columns: 40% 50% 10%;
     }
 
     #header-search form {

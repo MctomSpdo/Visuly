@@ -6,7 +6,7 @@
 ?>
 
 <header>
-    <a href="./" id="header-logo">VISULY</a>
+    <a href="./" id="header-logo" class="invert-image-dark"><img src="./files/img/logo.svg" alt="logo"></a>
     <div id="header-search">
         <form action="search.php" autocomplete="off">
             <input type="text" placeholder="Search" name="search" id="header-searchbar" maxlength="2048">
