@@ -52,8 +52,8 @@ $user->DBLoadFromUserID($userId, $db);
 include "assets/header.php";
 ?>
 <main>
-    <nav id="setting-nav" class="invert-image-dark">
-        <a id="nav-active" onclick="loadEditUser(this);">
+    <nav id="setting-nav">
+        <a id="nav-active" onclick="loadEditUser(this);" class="invert-image-dark">
             <div>
                 <div class="nav-img">
                     <img src="files/img/users/user.png" alt="Home">
@@ -63,7 +63,7 @@ include "assets/header.php";
                 </div>
             </div>
         </a>
-        <a onclick="loadPassword(this)">
+        <a onclick="loadPassword(this)" class="invert-image-dark">
             <div>
                 <div class="nav-img">
                     <img src="files/img/key.svg" alt="Home">
