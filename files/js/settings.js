@@ -212,7 +212,7 @@ function sendToServer() {
     //upload user image:
     let image = fileIput.files[0];
 
-    if(image === null) {
+    if(image === null || image === undefined) {
         imageSent = true;
         if(dataSent) {
             editShowCompletion();
