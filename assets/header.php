@@ -19,10 +19,10 @@
         </div>
     </div>
 
-    <div id="header-dropdown" class="invert-image-dark">
+    <div id="header-dropdown">
         <a href="user.php">
             <div>
-                <div class="header-dropdown-image">
+                <div class="header-dropdown-image invert-image-dark">
                     <img src="files/img/users/user.svg" alt="user">
                 </div>
                 <div class="header-dropdown-text">
@@ -32,7 +32,7 @@
         </a>
         <a href="settings.php">
             <div>
-                <div class="header-dropdown-image">
+                <div class="header-dropdown-image invert-image-dark">
                     <img src="files/img/settings.svg" alt="settings">
                 </div>
                 <div class="header-dropdown-text">
