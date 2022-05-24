@@ -76,6 +76,15 @@ class Permission {
     isAdmin: boolean
 }
 
+class PasswordReset {
+    <u>PasswordResetID</u>
+    ..
+    uuid: varchar(60)
+    code: number(4)
+    created: dateTime
+    validUntil: dateTime
+}
+
 class Comment {
     <u>CommentID</u>
     ..
@@ -92,6 +101,7 @@ User "1" -- "*" Token
 User "2" -- "*" Follow
 User "1" -- "*" PostLiked
 User "*" -- "1" Permission
+User "1" -- "*" PasswordReset
 
 Post "1" -- "*" PostLiked
 Post "1" -- "*" Comment
