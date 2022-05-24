@@ -32,51 +32,35 @@ if(isset($_GET['offset'])) {
     $offset = $_GET['offset'];
 }
 
-$postArr = Post::loadNewestPosts($db, $offset);
+$sql = "select p.uuid as postId,
+       p.title,
+       p.description,
+       p.postedOn as date,
+       u.uuid as postedFromID,
+       u.username as postedFrom,
+       u.profilePic as postedFromImage,
+       concat(p.uuid, '.', p.extention) as path,
+       (select count(*) from postliked pl where pl.PostID = p.PostID) as likes,
+       (select count(*) from comment cm where cm.PostID = p.PostID) as comments,
+       (if((select count(*) from postliked pl2 where pl2.UserID = ? and pl2.PostID = p.PostID) = 1, 'true', 'false')) as hasLiked       
+from post p
+         inner join user u using (UserID)
+where UserID in (select Follows from follow where UserID = ?) and p.isDeleted = 0
+order by postedOn desc
+limit ? offset ?";
 
-
-$resp = "no posts yet";
-
-switch ($postArr) {
-    case null:
-        $resp = new stdClass();
-        $resp->posts = "no posts yet";
-        break;
-    case -1:
-        header("Location: ./error.php");
-        break;
-    default:
-        $resp = new stdClass();
-        $resp->posts = array();
-
-        foreach ($postArr as $posts) {
-            $userPost = new User();
-            $userPost->DBLoadFromUserID($posts->fromUser, $db);
-
-            //response item:
-            $postRest = new stdClass();
-            $postRest->title = $posts->Title;
-            $postRest->description = $posts->Desc;
-            $postRest->postId = $posts->ImgPath;
-            $postRest->path = $posts->getImagePath();
-
-            $postRest->hasLiked = $posts->DBUserHasLiked($user->UserID, $db);
-            $postRest->likes = $posts->getLikes($db);
-
-            $postRest->postedFrom = $userPost->username;
-            $postRest->postedFromImage = $userPost->profilePic;
-            $postRest->postedFromID = $userPost->UUID;
-
-            $postRest->comments = $posts->getCommentAmount($db);
-
-            $resp->posts[] = $postRest;
-        }
-
-
-
-        break;
+$pstmt = $db->prepare($sql);
+if(!($pstmt->bind_param("iiii", $user->UserID, $user->UserID, $config->respLength, $offset) && $pstmt->execute())) {
+    exit(Util::getDBRequestError());
 }
+$result = $pstmt->get_result();
+
+$resp = new stdClass();
+$resp->posts = Util::resToJson($result);
 
 echo json_encode($resp);
-$db->close();
+
+$result->close();
+$pstmt->close();
+$db->close();;
 ?>

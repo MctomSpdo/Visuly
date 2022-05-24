@@ -62,7 +62,7 @@ function parsePostToHTML(post) {
                 <div class="post-interaction-wrapper">
                     <div class="post-like">
                         <div class="post-interaction-imgwrapper">
-                            <img src="./files/img/${postlikeImage}" alt="Likes" onclick="likeButtonPress(this); event.stopPropagation();">
+                            <img src="./files/img/${postlikeImage}" alt="Likes" onclick="likeButtonPress(this); event.stopPropagation();" ${(post.hasLiked) ? 'class="liked"' : ""}>
                         </div>
                         <div class="post-interaction-textwrapper">
                             <p>${getLikesSpelled(post.likes)}</p>
@@ -105,6 +105,7 @@ function postPressed(element) {
 /**************************************************** LIKE POST *******************************************************/
 
 function likeButtonPress(element) {
+    console.log(element)
     let parentNumber = 5;
     let postElement = element;
     for(let i = 0; i < parentNumber; i++) {
