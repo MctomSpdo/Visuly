@@ -99,7 +99,7 @@ create table COMMENT
     content   varchar(300) not null,
     UserID    int          not null,
     PostID    int          not null,
-    postedOn    datetime      not null,
+    postedOn  datetime     not null,
     isDeleted tinyint      not null,
     foreign key (UserID) references USER (UserID),
     foreign key (PostID) references POST (PostID)
@@ -113,8 +113,8 @@ create table POSTLIKED
         primary key,
     PostID      int not null,
     UserID      int not null,
-    foreign key (PostID) references POST(PostID),
-    foreign key (UserID) references USER(UserID)
+    foreign key (PostID) references POST (PostID),
+    foreign key (UserID) references USER (UserID)
 );
 
 /* Follow */
@@ -123,10 +123,10 @@ create table FOLLOW
 (
     FollowID int auto_increment
         primary key,
-    UserID    int not null,
+    UserID   int not null,
     Follows  int not null,
-    foreign key (UserID) references USER(UserID),
-    foreign key (Follows) references USER(UserID)
+    foreign key (UserID) references USER (UserID),
+    foreign key (Follows) references USER (UserID)
 );
 
 /* Token */
@@ -136,8 +136,25 @@ create table TOKEN
     TokenID    int auto_increment
         primary key,
     token      varchar(32) not null,
-    UserID      int         not null,
+    UserID     int         not null,
     created    datetime    not null,
     validUntil datetime    not null,
-    foreign key (UserID) references USER(UserID)
+    foreign key (UserID) references USER (UserID)
+);
+
+/* PasswordReset */
+drop table if exists `PASSWORDRESET`;
+create table PASSWORDRESET
+(
+    ID         int auto_increment primary key,
+    UserID     int         not null,
+    uuid       varchar(60) not null,
+    code       varchar(4)  not null,
+    created    datetime    not null,
+    validUntil datetime    not null,
+
+    constraint PASSWORDRESET_fguser
+        foreign key (UserID) references user (UserID),
+    constraint uuid
+        unique (uuid)
 );
