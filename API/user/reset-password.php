@@ -33,6 +33,11 @@ if(strlen($username) < 4) {
     exit(Util::getErrorJSON("Invalid Username"));
 }
 
+//check if email is even enabled:
+if($config->email->enable !== true) {
+    exit(Util::getErrorJSON("Emailing is not enabled!"));
+}
+
 //database connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
@@ -107,6 +112,42 @@ if($config->email->debugging == "SERVER") {
 //set host settings:
 $mail->Host = $config->email->host;
 $mail->Port = $config->email->port;
+
+//smtp auth:
+$smtpAuth = $config->email->SMTPAuth;
+if($smtpAuth === true) {
+    $mail->SMTPAuth = true;
+    $mail->Username = $config->email->username;
+    $mail->Password = $config->email->password;
+} else {
+    $mail->SMTPAuth = false;
+}
+
+//set from
+$mail->setFrom($config->email->fromEmail, $config->email->fromName);
+
+//set to
+//TODO: get Email from User!!
+try {
+    $mail->addAddress('', '');
+} catch (\PHPMailer\PHPMailer\Exception $e) {
+    $db->close();
+    exit(Util::getErrorJSON("Invalid Email / Something went wrong during adding the email!"));
+}
+
+//add subject:
+$mail->Subject = $config->email->subject;
+
+//add message:
+$mail->msgHTML(file_get_contents($config->email->HTMLMessageFile));
+$mail->AltBody = file_get_contents($config->email->altMessageFile);
+
+//send email:
+if (!$mail->send()) {
+    echo 'Mailer Error: ' . $mail->ErrorInfo;
+} else {
+    echo 'Message sent!';
+}
 
 $db->close();
 $pstmt->close();
