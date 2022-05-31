@@ -1,5 +1,4 @@
 let searchPath = './API/search.php'
-let loader = "<div class=\"loader\"></div>";
 
 let searchValue = document.getElementById("search-words").innerHTML;
 let searchbar = document.getElementById("header-searchbar");
