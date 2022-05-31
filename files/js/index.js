@@ -35,15 +35,17 @@ function loadNewPosts() {
         return response.json();
     }).then(function (data) {
         console.log(data);
-        removeLoaders();
 
-        if(data.posts == "no posts yet") {//reached end of page
+        if(data.posts == "no posts yet" || data.posts.length == 0) {//reached end of page
+            removeLoaders();
             return;
         }
 
         data.posts.forEach((postElement) => {
             contentBox.innerHTML += parsePostToHTML(postElement);
         });
+        removeLoaders();
+        contentBox.innerHTML += loader
         offset += 50;
         postsAreLoading = false;
     });

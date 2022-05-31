@@ -2,6 +2,8 @@ let api_posts = "./API/feed/home.php";
 let api_like = "./API/post/like.php";
 let api_newest = "./API/feed/newest.php";
 
+let loader = '<div class="content-loading"><div class="loader"></div></div>';
+
 function loadHome(element) {
     loadPosts(element, api_posts, 0);
 }
@@ -16,16 +18,18 @@ function loadPosts(element, apiPath) {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-        removeLoaders();
         console.log(data);
 
-        if(data.posts == "no posts yet") {
+        if(data.posts == "no posts yet" || data.posts.length == 0) {
+            removeLoaders();
             return;
         }
 
         data.posts.forEach((postElement) => {
             element.innerHTML += parsePostToHTML(postElement);
         });
+        removeLoaders();
+        element.innerHTML += loader;
     });
 }
 
@@ -215,7 +219,7 @@ function getCommentsSpelled(comments) {
  * removes all loaders from the site
  */
 function removeLoaders() {
-    Array.from(document.getElementsByClassName("loader")).forEach((element) => {
+    Array.from(document.getElementsByClassName("content-loading")).forEach((element) => {
         element.parentNode.removeChild(element);
     })
 }
