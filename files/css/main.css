@@ -45,6 +45,10 @@ main {
     color: #ff0000;
 }
 
+.content-loading {
+    margin: 5vh 0;
+}
+
 .loader {
     border: 3px solid rgba(255, 255, 255, 0.1);
     border-top: 3px solid #ffff;

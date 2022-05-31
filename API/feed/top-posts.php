@@ -28,8 +28,8 @@ limit ? offset ?";
 //check request:
 
 $offset = 0;
-if(isset($_POST['offset'])) {
-    $offset = $_POST['offset'];
+if(isset($_GET['offset'])) {
+    $offset = $_GET['offset'];
 }
 $limit = $config->respLength;
 
