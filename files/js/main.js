@@ -16,6 +16,7 @@ function loadPosts(element, apiPath) {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
+        removeLoaders();
         console.log(data);
 
         if(data.posts == "no posts yet") {
@@ -29,7 +30,7 @@ function loadPosts(element, apiPath) {
 }
 
 function parsePostToHTML(post) {
-    let postlikeImage = ((post.hasLiked) ? "heart_filled" : "heart") + ".svg";
+    let postlikeImage = ((post.hasLiked == "true" || post.hasLiked === true) ? "heart_filled" : "heart") + ".svg";
 
     let postdescr = post.description;
 
@@ -208,4 +209,13 @@ function getCommentsSpelled(comments) {
     } else {
         return `${comments} comments`
     }
+}
+
+/**
+ * removes all loaders from the site
+ */
+function removeLoaders() {
+    Array.from(document.getElementsByClassName("loader")).forEach((element) => {
+        element.parentNode.removeChild(element);
+    })
 }

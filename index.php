@@ -58,7 +58,11 @@ include "assets/header.php";
     <?php
     include "assets/nav.php";
     ?>
-    <div id="content" class="post-3-wrapper"></div>
+    <div id="content" class="post-3-wrapper">
+        <div class="content-loading">
+            <div class="loader"></div>
+        </div>
+    </div>
     <div></div>
 </main>
 </body>

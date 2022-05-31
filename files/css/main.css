@@ -443,6 +443,33 @@ nav > a > div {
     overflow-wrap: anywhere;
 }
 
+/** Loading sign for posts */
+
+.content-loading {
+    grid-column: 1/-1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid var(--color);
+    border-radius: 100vh;
+    width: 10vh;
+    height: 10vh;
+    animation: spin 1s cubic-bezier(0.7, 0.1, 0.1, 0.7) infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 /************************************************ POST COMMENTS ************************************************/
 
 /*comment post section*/

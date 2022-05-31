@@ -35,6 +35,7 @@ function loadNewPosts() {
         return response.json();
     }).then(function (data) {
         console.log(data);
+        removeLoaders();
 
         if(data.posts == "no posts yet") {//reached end of page
             return;
