@@ -2,73 +2,84 @@
 $configPath = '../../files/config.json';
 $config = json_decode(file_get_contents($configPath));
 
-require_once '../../assets/token.php';
 require_once '../../assets/user.php';
+require_once '../../assets/token.php';
 require_once '../../assets/post.php';
 require_once '../../assets/util.php';
 
-//check user token:
-if(!isset($_COOKIE[$config->token->name])) {
-    exit(Util::getLoginError());
+$sql = "select p.title as title,
+       p.description as description,
+       p.uuid as postId,
+       concat(p.uuid, '.', p.extention) as path,
+       count(pl.UserID) as likes,
+       u.username as postedFrom,
+       u.profilePic as postedFromImage,
+       u.uuid as postedFromID,
+       (if((select count(*) from postliked pl2 where pl2.UserID = ? and pl2.PostID = p.PostID) = 1, 'true', 'false')) as hasLiked,
+       (select count(*) from comment c where c.PostID = p.PostID) as comments
+from post p
+         inner join postliked pl on p.PostID = pl.PostID
+         inner join user u on p.UserID = u.UserID
+where p.isDeleted = 0 and u.deleted = 0
+group by p.uuid, p.title, p.description, p.extention, p.UserID, u.username, u.uuid, u.profilePic, p.postedOn
+order by p.postedOn desc
+limit ? offset ?";
+
+//check request:
+
+$offset = 0;
+if(isset($_GET['offset'])) {
+    $offset = $_GET['offset'];
+}
+$limit = $config->respLength;
+
+if(!is_numeric($offset)) {
+    $resp = new stdClass();
+    $resp->error = "Offset has to be numeric";
+    exit(json_encode($resp));
 }
 
-//database connection:
+//check login:
+if (!isset($_COOKIE[$config->token->name])) {
+    $resp = new stdClass();
+    $resp->error = "No Permission";
+    exit(json_encode($resp));
+}
+$token = $_COOKIE[$config->token->name];
 
+//db connection:
 $db = new mysqli($config->database->host, $config->database->username, $config->database->password, $config->database->database);
 
 if($db->connect_error) {
-    exit(Util::getDBErrorJSON());
+    $resp = new stdClass();
+    $resp->error = "Internal Server Error (004)";
+    exit(json_encode($resp));
 }
 
-$token = $_COOKIE[$config->token->name];
-//check token in db:
 $userId = checkTokenWRedirect($token, $config, $db);
 
-$user = new User();
-$user->DBLoadFromUserID($userId, $db);
+$pstmt = $db->prepare($sql);
 
-$postArr = Post::loadNewestPosts($db);
-
-
-$resp = "no posts yet";
-
-switch ($postArr) {
-    case null:
-        $resp = new stdClass();
-        $resp->posts = "no posts yet";
-        break;
-    case -1:
-        header("Location: ./error.php");
-        break;
-    default:
-        $resp = new stdClass();
-        $resp->posts = array();
-
-        foreach ($postArr as $posts) {
-            $userPost = new User();
-            $userPost->DBLoadFromUserID($posts->fromUser, $db);
-
-            //response item:
-            $postRest = new stdClass();
-            $postRest->title = $posts->Title;
-            $postRest->description = $posts->Desc;
-            $postRest->postId = $posts->ImgPath;
-            $postRest->path = $posts->getImagePath();
-
-            $postRest->hasLiked = $posts->DBUserHasLiked($user->UserID, $db);
-            $postRest->likes = $posts->getLikes($db);
-
-            $postRest->postedFrom = $userPost->username;
-            $postRest->postedFromImage = $userPost->profilePic;
-            $postRest->postedFromID = $userPost->UUID;
-
-            $postRest->comments = $posts->getCommentAmount($db);
-
-            $resp->posts[] = $postRest;
-        }
-        break;
+if($pstmt === false) {
+    $resp = new stdClass();
+    $resp->error = "Internal Server Error (E002)";
+    $db->close();
+    exit(json_encode($resp));
 }
 
-echo json_encode($resp->posts);
+$pstmt->bind_param("iii", $userId, $limit, $offset);
+
+if(!$pstmt->execute()) {
+    $resp = new stdClass();
+    $resp->error = "Internal Server Error (E002)";
+    $db->close();
+    exit(json_encode($resp));
+}
+
+$res = $pstmt->get_result();
+echo json_encode(Util::resToJson($res));
+
+$res->close();
+$pstmt->close();
 $db->close();
 ?>
