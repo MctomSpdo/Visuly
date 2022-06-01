@@ -67,7 +67,7 @@ function parsePostToHTML(post) {
                 <div class="post-interaction-wrapper">
                     <div class="post-like">
                         <div class="post-interaction-imgwrapper">
-                            <img src="./files/img/${postlikeImage}" alt="Likes" onclick="likeButtonPress(this); event.stopPropagation();" ${(post.hasLiked) ? 'class="liked"' : ""}>
+                            <img src="./files/img/${postlikeImage}" alt="Likes" onclick="likeButtonPress(this); event.stopPropagation();" ${(post.hasLiked == "true" || post.hasLiked === true) ? 'class="liked"' : ""}>
                         </div>
                         <div class="post-interaction-textwrapper">
                             <p>${getLikesSpelled(post.likes)}</p>
