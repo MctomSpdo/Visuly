@@ -103,12 +103,7 @@ $user->DBLoadFromUserID($userId, $db);
                                multiple list="upload-category-list">
 
                         <datalist id="upload-category-list">
-                            <option value="test1">Test1</option>
-                            <option value="test2">Test2</option>
-                            <option value="test3">Test3</option>
-                            <option value="test4">Test4</option>
-                            <option value="test5">Test5</option>
-                            <option value="test6">Test6</option>
+                            <option>Suggestions will appear as you type</option>
                         </datalist>
                     </div>
 
@@ -122,7 +117,6 @@ $user->DBLoadFromUserID($userId, $db);
                             <option value="loc1">Location 1</option>
                             <option value="loc2">Location 2</option>
                             <option value="loc3">Location 3</option>
-
                         </datalist>
                     </div>
 

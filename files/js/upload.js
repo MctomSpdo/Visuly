@@ -1,6 +1,9 @@
 let inputBoxHoverClass = "upload-filehover";
 
 let api_creatPost = "./API/post/create-post.php";
+let api_getCategory = "./API/getcategory.php";
+
+let TYPEDELAY = 500;
 
 //drag and drop API: https://www.w3schools.com/html/html5_draganddrop.asp
 
@@ -54,7 +57,6 @@ uploadForm.addEventListener('submit', (event) => {
 //allow pasting an image from the clipboards
 window.addEventListener('paste', e => {
     let file = e.clipboardData.files[0];
-    console.log(file);
     loadFile(file);
 });
 
@@ -72,6 +74,42 @@ document.querySelectorAll('input').forEach(input => {
     input.addEventListener('keyup', check);
     input.addEventListener('keypress', check);
 });
+
+//category suggestions:
+let categoryTime;
+
+inputCategory.addEventListener('keyup', () => {
+    let text = inputCategory.value;
+    let textArr = text.split(",");
+    let value = textArr[textArr.length -1].trim();
+    //prevent request spamming:
+    clearInterval(categoryTime);
+    categoryTime = setTimeout(() => {
+        updateCategorySuggestion(value);
+    }, TYPEDELAY);
+});
+
+/**
+ * Updates the category suggestions with doing a request to the Server
+ * @param searchTerm search Term for the categories
+ */
+function updateCategorySuggestion(searchTerm) {
+    fetch(`${api_getCategory}?search=${searchTerm}`, {
+        credentials: 'same-origin',
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.error !== undefined) {
+            console.error(data.error);
+            return;
+        }
+        let HTML = "";
+        data.forEach((element) => {
+            HTML += `<option>${element.name}</option>`;
+        })
+        inputCategoryList.innerHTML = HTML;
+    });
+}
 
 /**
  * Checks all the input fields
@@ -122,15 +160,13 @@ function upload() {
         body: formData
     }).then(function (response) {
         return response.json();
-    }).then(function (data) { 
-        console.log(data);
+    }).then(function (data) {
         if(data.postid === undefined || data.postid === null) {
             if(data.error == 'File is too big') {
                 alert("Your File is too big for the platform to handle!");
             } else {
                 alert("Something went wrong during your upload, try again later");
                 window.location.replace("./error.html");
-                console.log(data);
             }
         } else {
             uploadBox.innerHTML = "Redirecting....";
