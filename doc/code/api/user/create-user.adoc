@@ -1,0 +1,130 @@
+= Visuly API / user / create-user
+Mctom Spdo
+0.0.1, {docdate}: MEDT
+:icons: font
+:sectnums:
+:toc: left
+:stylesheet: ../../../css/dark.css
+
+== Getting started
+
+This API point allows you to create a user on the platform.
+
+* users
+* posts
+* categories
+
+== General use
+
+[cols="1, 2"]
+|===
+
+| API Path
+| /API/user/create-user.php
+
+| Request
+| GET JSON
+
+| requires login
+| true
+
+| needs database
+| true
+
+| needs config
+| true
+
+| output
+| JSON
+
+|===
+
+== Input
+
+Takes multiple JSON inputs in the POST header:
+
+[cols="1, 2"]
+|===
+| username
+| username for the new user
+
+| email
+| email for user
+
+| gender
+| gender for user
+
+| password
+| password for the user
+|===
+
+an Example for such an JSON:
+
+[source, json]
+----
+{
+  "username": "test",
+  "email": "test@test.com",
+  "gender": "d",
+  "password": "SuperSecret123"
+}
+----
+
+=== Gender:
+
+can support one of these values:
+
+* male
+* male
+* divers
+
+== Output
+
+=== Default
+
+If everything works correctly, the Server will respond with the following JSON:
+
+[source, json]
+----
+{
+  "result": "success",
+  "created": true
+}
+----
+
+=== Error
+
+==== User exists
+
+if the username already exists, the System will answer with the following:
+
+[source, json]
+----
+{
+  "result": "exists",
+  "error": "User already exists"
+}
+----
+
+==== Invalid Request
+
+If the request does not the parameters, the server will respond with:
+
+[source,json]
+----
+{
+  "result": "ERROR",
+  "error" : "Invalid Request"
+}
+----
+
+==== Others:
+
+[source,json]
+----
+{
+    "error" : <.>
+}
+----
+
+<.> Error message
