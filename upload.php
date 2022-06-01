@@ -110,14 +110,7 @@ $user->DBLoadFromUserID($userId, $db);
                     <div>
                         <label for="upload-location">Location</label>
                         <br>
-                        <input id="upload-location" name="upload-location" autocomplete="off" placeholder="Location"
-                               list="upload-location-list">
-
-                        <datalist id="upload-location-list">
-                            <option value="loc1">Location 1</option>
-                            <option value="loc2">Location 2</option>
-                            <option value="loc3">Location 3</option>
-                        </datalist>
+                        <input id="upload-location" name="upload-location" autocomplete="off" placeholder="Location">
                     </div>
 
                     <p id="upload-error"></p>
