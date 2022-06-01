@@ -42,7 +42,7 @@ class Util
      */
     static function invalidRequestError(): string
     {
-        $error = "Not logged in";
+        $error = "Invalid Request";
         return Util::getErrorJSON($error);
     }
 
