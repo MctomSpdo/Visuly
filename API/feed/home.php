@@ -58,7 +58,7 @@ $result = $pstmt->get_result();
 $resp = new stdClass();
 $resp->posts = Util::resToJson($result);
 
-if (sizeof($resp->posts) == 0) {
+if (sizeof($resp->posts) < 5) {
     $randomReq = $db->prepare("select p.uuid as postId,
                    p.title,
                    p.description,

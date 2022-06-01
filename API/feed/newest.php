@@ -18,7 +18,7 @@ $sql = "select p.title as title,
        (if((select count(*) from postliked pl2 where pl2.UserID = ? and pl2.PostID = p.PostID) = 1, 'true', 'false')) as hasLiked,
        (select count(*) from comment c where c.PostID = p.PostID) as comments
 from post p
-         inner join postliked pl on p.PostID = pl.PostID
+         left join postliked pl on p.PostID = pl.PostID
          inner join user u on p.UserID = u.UserID
 where p.isDeleted = 0 and u.deleted = 0
 group by p.uuid, p.title, p.description, p.extention, p.UserID, u.username, u.uuid, u.profilePic, p.postedOn
