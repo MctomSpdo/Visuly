@@ -1,6 +1,6 @@
 # VISULY
 
-Medientechnik SommerSemester Projekt 2022
+A little social Media platform written in PHP, with a MySQL Database
 
 [GitHub Repo](https://github.com/MctomSpdo/Medt_SSProject2022)
 
